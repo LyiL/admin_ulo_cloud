@@ -1,0 +1,35 @@
+
+<form class="form-layout" [formGroup]="formGroup">
+  <div class="three-detail">
+    <md-input-container horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="商户" name="organName" formControlName="organName" [(ngModel)]="model.organName" required/>
+    </md-input-container>
+    <div hidden>
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="商户" name="organNo" formControlName="organNo" [(ngModel)]="model.organNo" required/>
+      </md-input-container>
+    </div>
+    <md-select placeholder="银行账户" class="intoPieces-pt" horizontal="true" floatPlaceholder="never" name="accountId" formControlName="accountId" [(ngModel)]="model.accountId" required>
+      <md-option value="">请选择</md-option>
+      <md-option *ngFor="let bankAccount of bankAccounts" [value]="bankAccount?.acntId">
+        {{ bankAccount?.name }}
+      </md-option>
+    </md-select>
+    <md-select placeholder="产品类型" class="intoPieces-pt" horizontal="true" floatPlaceholder="never" name="productType" formControlName="productType" [(ngModel)]="model.productType">
+      <md-option value="">请选择</md-option>
+      <md-option *ngFor="let prodType of prodTypes" [value]="prodType?.id">
+        {{ prodType?.name }}
+      </md-option>
+    </md-select>
+    <md-input-container horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="收款银行所在城市" name="bankCity" formControlName="bankCity" [(ngModel)]="model.bankCity"/>
+    </md-input-container>
+    <md-input-container horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="提现金额（元）" name="extractPrice" formControlName="extractPrice" [(ngModel)]="model.extractPrice" required/>
+    </md-input-container>
+    <div class="btn-area">
+      <button color="primary" md-raised-button type="button" (click.stop)="onSave()" [disabled]="!formGroup.valid">保存</button>
+      <!--[md-dialog-close]-->
+    </div>
+  </div>
+</form>

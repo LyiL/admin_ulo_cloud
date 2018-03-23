@@ -1,0 +1,23 @@
+<form  class="form-layout"  (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+  <div  class="three-detail">
+    <div fxLayout="column" class="refundWin">
+      <md-input-container floatPlaceholder="never"  horizontal="true">
+        <input mdInput placeholder="授权目录"  formControlName="jsapiPath"  name="jsapiPath" [(ngModel)]="model.jsapiPath"/>
+      </md-input-container>
+
+      <md-input-container floatPlaceholder="never"  horizontal="true">
+        <input mdInput placeholder="关联APPID"   formControlName="subAppid"   name="subAppid" [(ngModel)]="model.subAppid" />
+      </md-input-container>
+      <md-input-container floatPlaceholder="never"  horizontal="true">
+        <input mdInput placeholder="推荐关注APPID"   formControlName="subscribeAppid"   name="subscribeAppid" [(ngModel)]="model.subscribeAppid" />
+      </md-input-container>
+    </div>
+  </div>
+  <div class="btn-area text-center" >
+    <button md-raised-button color="primary" [disabled]="!formGroup.valid">保存</button>
+  </div>
+  </form>
+
+
+
+

@@ -1,0 +1,54 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (submit)="onSearch()">
+    <md-card-content>
+      <md-input-container  >
+      <input mdInput placeholder="商户名称" name="name" id="name" [(ngModel)]="form.name" >
+      </md-input-container>
+
+      <md-input-container  >
+        <input mdInput placeholder="商户编号"  name="merchantNo"  id="merchantNo" [(ngModel)]="form.merchantNo">
+      </md-input-container>
+
+      <md-input-search placeholder="所属机构" name="bankNo" id="bankNo" [(ngModel)]="form.bankNo"
+                       [onBeforClick]="mchBank1beforClickFunc.bind(this)"
+                       [dataSource]="mchBank1DataSource"
+                       [displayFn]="mchBank1displayFn.bind(this)"
+                       (onSelected)="bankSelected($event)"
+                       [optionDisplayFn]="mchBank1OptionDisplayFn"
+                       [filterField]="mchBnak1FilterFields"
+                       valueField="orgNo"></md-input-search>
+
+      <md-input-search placeholder="所属上级" name="superior" id="superior" [(ngModel)]="form.superior"
+                       [onBeforClick]="mchAgentBeforClickFunc.bind(this)"
+                       [dataSource]="mchAgentDataSource"
+                       [displayFn]="mchAgentDisplayFn.bind(this)"
+                       (onSelected)="chanSelected($event)"
+                       [optionDisplayFn]="mchAgentOptionDisplayFn"
+                       [filterField]="mchAgentFilterFields"
+                       valueField="chanCode"></md-input-search>
+
+      <md-select placeholder="进件状态"    name="applyState" id="applyState" [(ngModel)]="form.applyState">
+        <md-option value="">全部</md-option>
+        <md-option *ngFor="let Status of applyState" [value]="Status?.id">{{Status?.name}}</md-option>
+      </md-select>
+
+
+      <button md-raised-button color="primary" >查询</button>
+      <button md-raised-button type="button" *ngIf="helper.btnRole('INTONEW')" (click.stop)="onAddIntopiece($event)">新增进件单</button>
+      <button md-raised-button type="button" *ngIf="helper.btnRole('BATCHAPPLY')" (click.stop)="onBatchIntopiece()">批量进件</button>
+    </md-card-content>
+  </form>
+</md-card>
+<md-card class="mt-20">
+
+
+  <md-table-extend mode="edit"
+                   #IntoPiecesTable
+                   (onCancel)="onCancel()"
+                   (onEditBefore)="onEditIntoPieces($event)"
+                   [columns]="IntoPiecesListColumns"
+                   [database]="intopiecesDB"
+                   [actionCfg]="tableActionCfg"
+                   (onSave)="onSaveIntoPieces($event)"
+                   initLoad="false"></md-table-extend>
+</md-card>

@@ -1,0 +1,50 @@
+<md-card class="mdcard-margin-bottom search-panel" >
+  <form #agencySearchForm="ngForm" (ngSubmit)="onSearch(agencySearchForm.value)">
+    <md-card-content>
+      <md-input-container>
+        <input mdInput name="" placeholder="代理商名称" name="name" [(ngModel)]="form.name"/>
+      </md-input-container>
+      <md-input-container>
+        <input mdInput name="" placeholder="代理商编号" name="chanCode" [(ngModel)]="form.chanCode"/>
+      </md-input-container>
+      <md-input-search placeholder="所属机构" name="bankCode" id="bankCode" [(ngModel)]="form.bankCode"
+                       [onBeforClick]="agencyBankbeforClickFunc.bind(this)"
+                       [dataSource]="agencyBankDataSource"
+                       [displayFn]="agencyBankdisplayFn.bind(this)"
+                       (onSelected)="bankSelected($event)"
+                       [optionDisplayFn]="agencyBankOptionDisplayFn"
+                       [filterField]="agencyBankFilterFields"
+                       valueField="orgNo"></md-input-search>
+      <md-input-search placeholder="上级代理" name="parentChanCode" id="parentChanCode" [(ngModel)]="form.parentChanCode"
+                       [onBeforClick]="agencyChanbeforClickFunc.bind(this)"
+                       [dataSource]="agencyChanDataSource"
+                       [displayFn]="agencyChandisplayFn.bind(this)"
+                       (onSelected)="agencySelected($event)"
+                       [optionDisplayFn]="agencyChanOptionDisplayFn"
+                       [filterField]="agencyChanFilterFields"
+                       valueField="chanCode"></md-input-search>
+      <md-select placeholder="用户状态" name="examState" [(ngModel)]="form.examState" class="intoPieces-pt">
+        <md-option value="">全部</md-option>
+        <md-option *ngFor="let userState of userStates" [value]="userState?.id">
+          {{ userState?.name }}
+        </md-option>
+      </md-select>
+
+      <md-select placeholder="代理类型" name="appCode" [(ngModel)]="form.appCode" class="intoPieces-pt">
+        <md-option value="">全部</md-option>
+        <md-option *ngFor="let agencyType of agencyTypes" [value]="agencyType?.id">
+          {{ agencyType?.name }}
+        </md-option>
+      </md-select>
+      <button md-raised-button type="submit" color="primary">查询</button>
+      <button md-raised-button type="button" color="default"  class="check-btn btn-margin-right" (click.stop)="onAddAgency()" *ngIf="helper.btnRole('AGENTNEW')">新增代理商</button>
+    </md-card-content>
+
+  </form>
+</md-card>
+
+<md-card>
+  <md-table-extend #agencyListTable [columns]="agencyListColumns" [database]="agencyListDB" isShowOddEffet="true" [actionCfg]="tableActionCfg" ></md-table-extend>
+</md-card>
+
+

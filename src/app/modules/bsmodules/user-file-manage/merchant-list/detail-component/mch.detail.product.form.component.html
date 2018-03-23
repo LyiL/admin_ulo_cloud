@@ -1,0 +1,14 @@
+<form class="form-layout p-20">
+  <div fxLayout="row">
+    <div class="column" fxLayout="column" fxFlex="50">
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput name="combName" id="combName" [(ngModel)]="mchProdInfo.combName" placeholder="产品名称" required/>
+      </md-input-container>
+    </div>
+  </div>
+  <md-table-extend mode="edit" #mchProdFormTable local="true" [columns]="mchProdFormColumns" [database]="mchProdFormDB" [saveConfirmFunc]="onBeforeSaveCfg.bind(this)"  (onSave)="onSaveProdCfg($event)"  (onCancel)="onCancelProdCfg($event)" (onDelete)="onDeleteProdCfg($event)" (onEditBefore)="onEditProduct($event)" [actionCfg]="mchProdFormActions"></md-table-extend>
+  <a (click.stop)="onNewProdCfg()">新增</a>
+  <div class="btn-area">
+    <button md-raised-button type="button" color="primary" [disabled]="!hasData()" (click.stop)="onSaveProdCfgInfo()">保存</button>
+  </div>
+</form>

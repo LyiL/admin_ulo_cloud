@@ -1,0 +1,59 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (ngSubmit)="doSearch()">
+    <md-card-content>
+      <md-input-group
+      isDateTimeGroup="true"
+      firstPlaceholder="开始时间"
+      lastPlaceholder="结束时间" [(firstField)]="form.tradeTimeStart"
+      [(lastField)]="form.tradeTimeEnd"
+      firstName="tradeTimeStart"
+      lastName="tradeTimeEnd"
+      groupPlaceholder="交易日期"
+      [dateOpts]="tradeTimeOpts"></md-input-group>
+      <md-input-search placeholder="受理机构" name="bankNo" id="bankNo" [(ngModel)]="form.bankNo"
+                       [onBeforClick]="mchBankbeforClickFunc.bind(this)"
+                       [dataSource]="mchBankDataSource"
+                       [displayFn]="mchBankdisplayFn.bind(this)"
+                       (onSelected)="bankSelected($event)"
+                       [optionDisplayFn]="mchBankOptionDisplayFn"
+                       [filterField]="mchBnakFilterFields"
+                       valueField="orgNo"></md-input-search>
+
+      <md-input-search placeholder="所属上级" name="agentno" id="agentno" [(ngModel)]="form.agentno"
+                       [onBeforClick]="mchAgentBeforClickFunc.bind(this)"
+                       [dataSource]="mchAgentDataSource"
+                       [displayFn]="mchAgentDisplayFn.bind(this)"
+                       (onSelected)="agentSelected($event)"
+                       [optionDisplayFn]="mchAgentOptionDisplayFn"
+                       [filterField]="mchAgentFilterFields"
+                       valueField="agentno"
+      ></md-input-search>
+      <md-input-search placeholder="商户名称" name="merchantId" id="merchantId" [(ngModel)]="form.merchantId"
+                       [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                       [dataSource]="merchantDataSource"
+                       [displayFn]="merchantDisplayFn.bind(this)"
+                       (onSelected)="merchantSelected($event)"
+                       [optionDisplayFn]="merchantOptionDisplayFn"
+                       [filterField]="merchantFilterFields"
+                       valueField="id"></md-input-search>
+      <button md-raised-button color="primary" >查询</button>
+      <button md-raised-button type="button" (click.stop)="goRatio()">交易比率</button>
+    </md-card-content>
+  </form>
+</md-card>
+<md-card style="overflow: hidden;">
+  <div [ngClass]="{'none':!isShow,'block':isShow}">
+    暂无交易数据
+  </div>
+  <div class="count-wrap" [ngClass]="{'none': isShow,'block':!isShow}">
+    <div class="btn-chart-group">
+      <button md-raised-button type="button" id="successBtn" class="active" (click.stop)="onSwitchData('successRatio',$event)">成功率(%)</button>
+      <button md-raised-button type="button" (click.stop)="onSwitchData('tradeMoney',$event)">交易金额(元)</button>
+      <button md-raised-button type="button" (click.stop)="onSwitchData('tradeSum',$event)">交易总数(笔)</button>
+    </div>
+    <div class="canvas-wrap" style="margin-bottom: 30px;">
+      <canvas baseChart height="130" [datasets]="lineChartData" [(labels)]="lineChartLabels" [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType">
+      </canvas>
+    </div>
+  </div>
+</md-card>

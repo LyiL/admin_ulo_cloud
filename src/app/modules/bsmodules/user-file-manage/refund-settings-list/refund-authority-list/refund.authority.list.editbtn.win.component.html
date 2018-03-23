@@ -1,0 +1,36 @@
+<form class="form-layout" [formGroup]="formGroup">
+  <div class="three-detail">
+    <div class="column refundAuth-ml" fxLayout="column">
+      <md-input-container  horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="商户名称" name="name" formControlName="name" [(ngModel)]="model.name" required/>
+      </md-input-container>
+      <div hidden>
+        <md-input-container  horizontal="true" floatPlaceholder="never">
+          <input mdInput placeholder="商户编号" name="merchantNo" formControlName="merchantNo" [(ngModel)]="model.merchantNo" required/>
+        </md-input-container>
+      </div>
+      <md-select placeholder="支付类型"  horizontal="true" floatPlaceholder="never"  name="transId" formControlName="transId" [(ngModel)]="model.transId" (change)="getTradeName($event)" required>
+        <md-option value="*">全部支付类型</md-option>
+        <md-option *ngFor="let payType of payTypes" [value]="payType?.transId">{{ payType?.transType}}</md-option>
+      </md-select>
+      <div class="form-group refundAuth-mb">
+        <div class="form-label">*退款权限：</div>
+        <div class="form-ctr">
+          <md-checkbox color="primary" *ngFor="let auth of refundAuthAny" [checked]="auth.checked" (change)="onChecked(auth,$event.checked)">
+            {{auth?.name}}
+            <!--[checked]="auth.checked"  [(ngModel)]="auth.checked"-->
+          </md-checkbox>
+        </div>
+      </div>
+      <md-select placeholder="审核类型" horizontal="true" floatPlaceholder="never" name="examType" formControlName="examType" [(ngModel)]="model.examType" required>
+        <md-option *ngFor="let approvalType of approvalTypes" [value]="approvalType?.id">
+          {{ approvalType?.name }}
+        </md-option>
+      </md-select>
+    </div>
+    <div class="btn-area">
+      <button color="primary" md-raised-button type="button" (click.stop)="onSave()" [disabled]="!formGroup.valid">保存</button>
+    </div>
+  </div>
+</form>
+

@@ -1,0 +1,144 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form #accountSummarySearchForm="ngForm" (submit)="onSearch()">
+    <md-card-content>
+    <md-input-group isDateTimeGroup="true"
+                    firstPlaceholder="起始日期"
+                    lastPlaceholder="结束日期"
+                    [(firstField)]="form.billTimeStart"
+                    [(lastField)]="form.billTimeEnd"
+                    [dateOpts]="dateOpts"
+                    firstName="billTimeStart"
+                    lastName="billTimeEnd">
+    </md-input-group>
+    <md-input-search placeholder="结算账户" name="ally" id="ally" [(ngModel)]="form.ally"
+                     [onBeforClick]="cashCompanionbeforClickFunc.bind(this)"
+                     [dataSource]="cashCompanionDataSource"
+                     [displayFn]="cashCompaniondisplayFn.bind(this)"
+                     (onSelected)="allySelected($event)"
+                     [optionDisplayFn]="cashCompanionOptionDisplayFn"
+                     [filterField]="cashCompanionFilterFields"
+                     valueField="companion">
+    </md-input-search>
+    <md-select placeholder="对账状态" name="reconState" [(ngModel)]="form.reconState" class="intoPieces-pt">
+      <md-option value="">全部</md-option>
+      <md-option *ngFor="let checkState of checkStates" [value]="checkState?.id">
+        {{ checkState?.name }}
+      </md-option>
+    </md-select>
+    <md-select placeholder="支付类型" name="transId" id="transId"  [(ngModel)]="form.transId" class="intoPieces-pt">
+      <md-option value="">全部</md-option>
+      <md-option *ngFor="let payType of payTypes" [value]="payType?.transId">{{ payType?.transType}}</md-option>
+    </md-select>
+    <md-input-search placeholder="支付中心" name="centerId" id="centerId" [(ngModel)]="form.centerId"
+                     [onBeforClick]="payCenterbeforClickFunc.bind(this)"
+                     [dataSource]="payCenterDataSource"
+                     [displayFn]="payCenterdisplayFn.bind(this)"
+                     (onSelected)="centerIdSelected($event)"
+                     [optionDisplayFn]="payCenterOptionDisplayFn"
+                     [filterField]="payCenterFilterFields"
+                     valueField="id">
+    </md-input-search>
+    <md-input-search placeholder="受理机构" name="agencyCode" id="agencyCode" [(ngModel)]="form.agencyCode"
+                     [onBeforClick]="accountBankbeforClickFunc.bind(this)"
+                     [dataSource]="accountBankDataSource"
+                     [displayFn]="accountBankdisplayFn.bind(this)"
+                     (onSelected)="agencyCodeSelected($event)"
+                     [optionDisplayFn]="accountBankOptionDisplayFn"
+                     [filterField]="accountBnakFilterFields"
+                     valueField="orgNo">
+    </md-input-search>
+    <button md-raised-button type="submit" color="primary">查询</button>
+
+    </md-card-content>
+  </form>
+</md-card>
+
+<div class="count-wrap mdcard-margin-bottom">
+  <md-card class="count-item">
+    <div class="count-title">交易总数（笔）</div>
+    <div class="count-content">
+      <i class="number">{{ summaryCount?.totalQua || 0 }}</i>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">交易金额（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <!--<i>{{ helper.priceFormat(helper.shuntElement(summaryCount?.totalFee || 0)) }}</i>-->
+        <i>{{ helper.priceFormat(summaryCount?.totalFee || 0) }}</i>
+      </div>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">退款总数（笔）</div>
+    <div class="count-content">
+      <i>{{ summaryCount?.refundQua || 0 }}</i>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">退款金额（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <!--<i>{{ helper.priceFormat(helper.shuntElement(summaryCount?.refundFee || 0)) }}</i>-->
+        <i>{{ helper.priceFormat(summaryCount?.refundFee || 0) }}</i>
+      </div>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">异常总数（笔）</div>
+    <div class="count-content">
+      <i>{{ summaryCount?.errTotalQua || 0 }}</i>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">异常金额（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <!--<i>{{ helper.priceFormat(helper.shuntElement(summaryCount?.errTotalFee || 0)) }}</i>-->
+        <i>{{ helper.priceFormat(summaryCount?.errTotalFee || 0) }}</i>
+      </div>
+    </div>
+  </md-card>
+</div>
+
+<div class="count-wrap mdcard-margin-bottom">
+  <md-card class="count-item">
+    <div class="count-title">交易净额（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <!--<i>{{ helper.priceFormat(helper.shuntElement((summaryCount?.totalFee || 0) - (summaryCount?.refundFee || 0))) }}</i>-->
+        <i>{{ helper.priceFormat((summaryCount?.totalFee || 0) - (summaryCount?.refundFee || 0)) }}</i>
+      </div>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">手续费支出（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <!--<i>{{ helper.priceFormat(helper.shuntElement(summaryCount?.procsFeeEx || 0)) }}</i>-->
+        <i>{{ helper.priceFormat(summaryCount?.procsFeeEx || 0) }}</i>
+      </div>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">到账金额（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <!--<i>{{ helper.priceFormat(helper.shuntElement(((summaryCount?.totalFee || 0) - (summaryCount?.refundFee || 0)) - (summaryCount?.procsFeeEx || 0))) }}</i>-->
+        <i>{{ helper.priceFormat(((summaryCount?.totalFee || 0) - (summaryCount?.refundFee || 0)) - (summaryCount?.procsFeeEx || 0)) }}</i>
+      </div>
+    </div>
+  </md-card>
+</div>
+
+<md-card>
+  <md-table-extend #accountSummaryListTable [columns]="accountSummaryColumns" [database]="accountSummaryDB"  isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>
+
+

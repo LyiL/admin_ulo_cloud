@@ -1,0 +1,10 @@
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>报备信息</h3>
+  </div>
+  <md-table-extend mode="editWin" #subMchIdcodeTable local="true"
+                   [(columns)]="subMchIdcodeColumns"
+                   [database]="subMchIdcodeDB"
+                   [actionCfg]="subMchIdcodeActionCfg">
+  </md-table-extend>
+</div>

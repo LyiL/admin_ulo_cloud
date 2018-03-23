@@ -1,0 +1,23 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form #accountDownloadSearchForm="ngForm" (submit)="onSearch()">
+    <md-card-content>
+    <md-input-group isDateTimeGroup="true"
+                    firstPlaceholder="起始日期"
+                    lastPlaceholder="结束日期"
+                    [(firstField)]="form.searchStartTime"
+                    [(lastField)]="form.searchEndTime"
+                    [dateOpts]="dateOpts"
+                    firstName="searchStartTime"
+                    lastName="searchEndTime">
+    </md-input-group>
+    <md-input-container  class="input-margin-right">
+      <input mdInput name="" placeholder="第三方商户号" name="companion" [(ngModel)]="form.companion"/>
+    </md-input-container>
+    <button md-raised-button type="submit" color="primary">查询</button>
+    </md-card-content>
+  </form>
+</md-card>
+<md-card>
+  <md-table-extend #accountDownloadListTable [columns]="accountDownloadColumns" [database]="accountDownloadListDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>
+

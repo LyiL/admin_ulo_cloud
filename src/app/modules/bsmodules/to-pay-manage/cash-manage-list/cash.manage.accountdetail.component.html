@@ -1,0 +1,22 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form #cashManageAccountdetailSearchForm="ngForm" (submit)="onSearch()">
+    <md-card-content>
+      <md-input-group isDateTimeGroup="true"
+                      firstPlaceholder="起始日期"
+                      lastPlaceholder="结束日期"
+                      [(firstField)]="form.startDate"
+                      [(lastField)]="form.endDate"
+                      [dateOpts]="dateOpts"
+                      firstName="startDate"
+                      lastName="endDate">
+      </md-input-group>
+      <button md-raised-button type="submit" color="primary">查询</button>
+    </md-card-content>
+  </form>
+</md-card>
+
+<md-card>
+  <md-table-extend #cashManageAccountdetailTable [columns]="cashManageAccountdetailColumns" [database]="cashManageAccountdetailDBService" isShowOddEffet="true" [actionCfg]="cashManageAccountDetailActionCfg"></md-table-extend>
+</md-card>
+
+

@@ -1,0 +1,39 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (submit)="onSearch()">
+    <md-card-content>
+      <md-input-container>
+          <input mdInput [mdDatepicker]="picker" format="yyyy-MM-dd"  [value]="form.statisticTime" (dateChange)="onChangeTime($event)" placeholder="结算日期">
+          <button mdSuffix [mdDatepickerToggle]="picker"></button>
+          <md-datepicker #picker format="yyyy-MM-dd"></md-datepicker>
+        </md-input-container>
+      <md-input-search placeholder="所属上级" name="agentno" id="agentno" [(ngModel)]="form.agentno"
+                       [onBeforClick]="mchAgentBeforClickFunc.bind(this)"
+                       [dataSource]="mchAgentDataSource"
+                       [displayFn]="mchAgentDisplayFn.bind(this)"
+                       (onSelected)="agentSelected($event)"
+                       [optionDisplayFn]="mchAgentOptionDisplayFn"
+                       [filterField]="mchAgentFilterFields"
+                       valueField="agentno"
+      ></md-input-search>
+        <md-input-search placeholder="商户名称" name="merchantId" id="merchantId" [(ngModel)]="form.merchantId"
+                          [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                          [dataSource]="merchantDataSource"
+                          [displayFn]="merchantDisplayFn.bind(this)"
+                          (onSelected)="merchantSelected($event)"
+                          [optionDisplayFn]="merchantOptionDisplayFn"
+                          [filterField]="merchantFilterFields"
+                          valueField="merchantNo">
+        </md-input-search>
+        <md-select placeholder="支付类型" name="transId"  [(ngModel)]="form.transId" >
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let States of tradeTypes" [value]="States?.transId">{{ States?.transType}}</md-option>
+        </md-select>
+        <button md-raised-button color="primary" >查询</button>
+        <button   md-raised-button    type="button"  *ngIf="helper.btnRole('TRADESCALEMAP')"  (click.stop)="goRatioChart()">成功比例图</button>
+    </md-card-content>
+  </form>
+</md-card>
+<md-card class="mdcard-margin-bottom">
+  <md-table-extend #TradeRatioTable [columns]="TradeRatioColumns" [database]="TradeRatioDB" isShowOddEffet="true" [actionCfg]="_actionCfg"></md-table-extend>
+</md-card>
+

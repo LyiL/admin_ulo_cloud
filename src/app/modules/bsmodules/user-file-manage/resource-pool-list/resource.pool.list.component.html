@@ -1,0 +1,160 @@
+<md-tab-group>
+  <md-tab label="批量查询">
+    <md-card class="mdcard-margin-bottom search-panel">
+      <form (submit)="onSearch()">
+        <md-card-content>
+          <md-input-group isDateTimeGroup="true"
+                          firstPlaceholder="起始日期"
+                          lastPlaceholder="结束日期"
+                          [(firstField)]="form.startDate"
+                          [(lastField)]="form.endDate "
+                          [dateOpts]="dateOpts"
+                          firstName="searchStartTime"
+                          lastName="searchEndTime">
+          </md-input-group>
+          <md-input-container>
+            <input mdInput placeholder="商户编号"  name="mchNo"  id="mchNo" [(ngModel)]="form.mchNo">
+          </md-input-container>
+          <md-input-container  >
+            <input mdInput placeholder="服务商编号" name="chanNo" id="chanNo" [(ngModel)]="form.chanNo" >
+          </md-input-container>
+          <md-input-container  >
+            <input mdInput placeholder="银行商户编号" name="bankMchno" id="bankMchno" [(ngModel)]="form.bankMchno" >
+          </md-input-container>
+          <md-input-container  >
+            <input mdInput placeholder="微信受理机构号" name="partner" id="partner" [(ngModel)]="form.partner" >
+          </md-input-container>
+          <md-input-container  >
+            <input mdInput placeholder="微信交易识别码" name="subPartner" id="subPartner" [(ngModel)]="form.subPartner" >
+          </md-input-container>
+          <md-input-container  >
+            <input mdInput placeholder="微信渠道编号" name="chanPartner" id="chanPartner" [(ngModel)]="form.chanPartner" >
+          </md-input-container>
+          <md-select placeholder="支付类型" name="tradeType" id="tradeType"  [(ngModel)]="form.tradeType" class="intoPieces-pt">
+            <md-option value="">全部</md-option>
+            <md-option *ngFor="let payType of payTypes" [value]="payType?.transId">{{ payType?.transType}}</md-option>
+          </md-select>
+          <md-select placeholder="支付权限" name="payState" id="payState" [(ngModel)]="form.payState" class="intoPieces-pt">
+            <md-option value="">全部</md-option>
+            <md-option *ngFor="let pState of payStates" [value]="pState.id">{{pState.name}}</md-option>
+          </md-select>
+          <md-select placeholder="启用状态"    name="useState" id="useState" [(ngModel)]="form.useState" class="intoPieces-pt">
+            <md-option value="">全部</md-option>
+            <md-option *ngFor="let uState of useStates" [value]="uState?.id">{{uState?.name}}</md-option>
+          </md-select>
+          <md-input-group groupPlaceholder="成功率区间"
+                          firstPlaceholder="开始成功率"
+                          lastPlaceholder="结束成功率"
+                          [(firstField)]="form.startSuRate"
+                          [(lastField)]="form.endSuRate"
+                          firstName="startSuRate"
+                          lastName="endSuRate">
+          </md-input-group>
+          <button md-raised-button color="primary">查询</button>
+          <button md-raised-button type="button" *ngIf="helper.btnRole('CLOUDDEALERSUBMCHPOOLADD')" (click.stop)="onNew()">新增</button>
+          <button md-raised-button type="button" *ngIf="helper.btnRole('PAYPERBATCHCHANGE')" (click.stop)="onChangePayAuth()">批量变更支付权限</button>
+          <button md-raised-button type="button" *ngIf="helper.btnRole('RESOURCEPOOLEXPORT')" (click.stop)="onExport()">导出报表</button>
+        </md-card-content>
+      </form>
+    </md-card>
+    <md-card class="mt-20">
+      <md-table-extend #resPoolListTable [columns]="resPoolListColumns" [(initLoad)]="resPoolFlag" [database]="resPoolListDB" [actionCfg]="tableActionCfg"></md-table-extend>
+    </md-card>
+  </md-tab>
+  <md-tab label="精确查询">
+    <form (submit)="onSearchAccurate()">
+      <md-card-content>
+        <md-card class="mdcard-margin-bottom search-panel" >
+          <md-input-container >
+            <input mdInput id="orderNo" name="orderNo" [(ngModel)]="formNumber.mchNo " placeholder="商户号"/>
+          </md-input-container>
+          <md-input-container >
+            <input mdInput  id="outTradeNo" name="outTradeNo" [(ngModel)]="formNumber.bankMchno "  placeholder="银行商户号"/>
+          </md-input-container>
+          <md-input-container >
+            <input mdInput id="transactionId" name="transactionId" [(ngModel)]="formNumber.subPartner " placeholder="交易识别码"/>
+          </md-input-container>
+          <button md-raised-button  color="primary"  >查询</button>
+        </md-card>
+      </md-card-content>
+    </form>
+    <md-card class="mt-20">
+      <md-table-extend #accuratePoolListTable [columns]="resPoolListColumns" initLoad="false"  [database]="accuratePoolDB" [actionCfg]="tableActionCfg"></md-table-extend>
+    </md-card>
+  </md-tab>
+</md-tab-group>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<md-card class="mdcard-margin-bottom search-panel">-->
+  <!--<form (submit)="onSearch()">-->
+    <!--<md-card-content>-->
+      <!--<md-input-group isDateTimeGroup="true"-->
+                      <!--firstPlaceholder="起始日期"-->
+                      <!--lastPlaceholder="结束日期"-->
+                      <!--[(firstField)]="form.startDate"-->
+                      <!--[(lastField)]="form.endDate "-->
+                      <!--[dateOpts]="dateOpts"-->
+                      <!--firstName="searchStartTime"-->
+                      <!--lastName="searchEndTime">-->
+      <!--</md-input-group>-->
+      <!--<md-input-container>-->
+        <!--<input mdInput placeholder="商户编号"  name="mchNo"  id="mchNo" [(ngModel)]="form.mchNo">-->
+      <!--</md-input-container>-->
+      <!--<md-input-container  >-->
+        <!--<input mdInput placeholder="服务商编号" name="chanNo" id="chanNo" [(ngModel)]="form.chanNo" >-->
+      <!--</md-input-container>-->
+      <!--<md-input-container  >-->
+        <!--<input mdInput placeholder="银行商户编号" name="bankMchno" id="bankMchno" [(ngModel)]="form.bankMchno" >-->
+      <!--</md-input-container>-->
+      <!--<md-input-container  >-->
+        <!--<input mdInput placeholder="微信受理机构号" name="partner" id="partner" [(ngModel)]="form.partner" >-->
+      <!--</md-input-container>-->
+      <!--<md-input-container  >-->
+        <!--<input mdInput placeholder="微信交易识别码" name="subPartner" id="subPartner" [(ngModel)]="form.subPartner" >-->
+      <!--</md-input-container>-->
+      <!--<md-input-container  >-->
+        <!--<input mdInput placeholder="微信渠道编号" name="chanPartner" id="chanPartner" [(ngModel)]="form.chanPartner" >-->
+      <!--</md-input-container>-->
+      <!--<md-select placeholder="支付类型" name="tradeType" id="tradeType"  [(ngModel)]="form.tradeType" class="intoPieces-pt">-->
+        <!--<md-option value="">全部</md-option>-->
+        <!--<md-option *ngFor="let payType of payTypes" [value]="payType?.transId">{{ payType?.transType}}</md-option>-->
+      <!--</md-select>-->
+      <!--<md-select placeholder="支付权限" name="payState" id="payState" [(ngModel)]="form.payState" class="intoPieces-pt">-->
+        <!--<md-option value="">全部</md-option>-->
+        <!--<md-option *ngFor="let pState of payStates" [value]="pState.id">{{pState.name}}</md-option>-->
+      <!--</md-select>-->
+      <!--<md-select placeholder="启用状态"    name="useState" id="useState" [(ngModel)]="form.useState" class="intoPieces-pt">-->
+        <!--<md-option value="">全部</md-option>-->
+        <!--<md-option *ngFor="let uState of useStates" [value]="uState?.id">{{uState?.name}}</md-option>-->
+      <!--</md-select>-->
+      <!--<md-input-group groupPlaceholder="成功率区间"-->
+                      <!--firstPlaceholder="开始成功率"-->
+                      <!--lastPlaceholder="结束成功率"-->
+                      <!--[(firstField)]="form.startSuRate"-->
+                      <!--[(lastField)]="form.endSuRate"-->
+                      <!--firstName="startSuRate"-->
+                      <!--lastName="endSuRate">-->
+      <!--</md-input-group>-->
+      <!--<button md-raised-button color="primary">查询</button>-->
+      <!--<button md-raised-button type="button" *ngIf="helper.btnRole('CLOUDDEALERSUBMCHPOOLADD')" (click.stop)="onNew()">新增</button>-->
+      <!--<button md-raised-button type="button" *ngIf="helper.btnRole('PAYPERBATCHCHANGE')" (click.stop)="onChangePayAuth()">批量变更支付权限</button>-->
+      <!--<button md-raised-button type="button" *ngIf="helper.btnRole('RESOURCEPOOLEXPORT')" (click.stop)="onExport()">导出报表</button>-->
+    <!--</md-card-content>-->
+  <!--</form>-->
+<!--</md-card>-->
+<!--<md-card class="mt-20">-->
+  <!--<md-table-extend #resPoolListTable [columns]="resPoolListColumns" [(initLoad)]="resPoolFlag" [database]="resPoolListDB" [actionCfg]="tableActionCfg"></md-table-extend>-->
+<!--</md-card>-->
+
+

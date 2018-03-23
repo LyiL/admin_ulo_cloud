@@ -1,0 +1,21 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (submit)="onSearch()">
+    <md-card-content>
+
+    <md-input-container >
+      <input mdInput id="platform" name="platform" [(ngModel)]="form.platform"  placeholder="客户端编号"/>
+    </md-input-container>
+    <md-input-container >
+      <input mdInput id="version" name="version" [(ngModel)]="form.version"  placeholder="版本号"/>
+    </md-input-container>
+    <button md-raised-button  color="primary"  >查询</button>
+    <button md-raised-button  (click.stop)="versionAdd($event)" *ngIf="helper.btnRole('VERSIONNEW')">新增</button>
+
+    </md-card-content>
+  </form>
+</md-card >
+<md-card class="mdcard-margin-bottom">
+  <md-table-extend #VersionManageTable [columns]="VersionManageColumns" [database]="versionManageDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>
+
+

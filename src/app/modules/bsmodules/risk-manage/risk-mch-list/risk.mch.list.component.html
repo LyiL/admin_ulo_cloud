@@ -1,0 +1,84 @@
+<!-- 搜索框 -->
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (ngSubmit)="onSearch()">
+    <md-card-content>
+      <!--接收时间-->
+      <md-input-group
+        isDateTimeGroup="true"
+        firstPlaceholder="接收开始时间"
+        lastPlaceholder="接收结束时间"
+        [(firstField)]="form.createStartTime"
+        [(lastField)]="form.createEndTime"
+        firstName="createStartTime"
+        lastName="createEndTime"
+        [dateOpts]="createTimeOpts"></md-input-group>
+
+      <!--识别码-->
+      <md-input-container>
+        <input mdInput
+               placeholder="识别码"
+               name="smid"
+               [(ngModel)]="form.smid">
+      </md-input-container>
+
+      <!--商户名称-->
+      <md-input-container  >
+        <input mdInput
+               placeholder="商户名称"
+               name="name"
+               id="name"
+               [(ngModel)]="form.merchantName" >
+      </md-input-container>
+
+      <!--商户编号-->
+      <md-input-container>
+        <input mdInput
+               placeholder="商户编号"
+               name="merchantNo"
+               [(ngModel)]="form.merchantNo"/>
+      </md-input-container>
+
+      <!--所属上级-->
+      <md-input-search placeholder="所属上级"
+                       name="chanNo"
+                       id="chanNo"
+                       [(ngModel)]="form.chanNo"
+                       [onBeforClick]="mchAgentBeforClickFunc.bind(this)"
+                       [dataSource]="mchAgentDataSource"
+                       [displayFn]="mchAgentDisplayFn.bind(this)"
+                       (onSelected)="chanSelected($event)"
+                       [optionDisplayFn]="mchAgentOptionDisplayFn"
+                       [filterField]="mchAgentFilterFields"
+                       valueField="chanCode"></md-input-search>
+
+      <!--风险类型-->
+      <md-select placeholder="风险类型"
+                 [(ngModel)]="form.risktype"
+                 name="risktype">
+        <md-option value="">全部</md-option>
+        <md-option *ngFor="let cRiskType of risktypes"
+                   [value]="cRiskType?.name">{{cRiskType?.name}}</md-option>
+      </md-select>
+
+      <!--处理结果-->
+      <md-select placeholder="处理结果"
+                 [(ngModel)]="form.processCode"
+                 name="status">
+        <md-option value="">全部</md-option>
+        <md-option *ngFor="let cProcessCode of processCodes"
+                   [value]="cProcessCode?.id">{{cProcessCode?.name}}</md-option>
+      </md-select>
+
+      <button md-raised-button color="primary">查询</button>
+
+    </md-card-content>
+  </form>
+</md-card>
+<!-- 表内容 -->
+<md-card>
+  <md-table-extend #riskMchListTable
+                   [columns]="riskMchColumns"
+                   [database]="riskMchDB"
+                   [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>
+

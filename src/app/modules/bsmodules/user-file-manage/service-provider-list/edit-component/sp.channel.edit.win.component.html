@@ -1,0 +1,117 @@
+<!--<form [formGroup]="spBaseInfoFormGroup"-->
+      <!--(ngSubmit)="hasSource() ? onBaseInfoSubmit(): onSave()"-->
+      <!--class="form-layout">-->
+<form class="form-layout" [formGroup]="spChannelFormGroup" (ngSubmit)="onSubmit()">
+    <div class="form-items">
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select class="intoPieces-pt"
+                     placeholder="支付类型"
+                     horizontal="true"
+                     formControlName="transId"
+                     name="transId"
+                     [(ngModel)]="model.transId"
+                     (change)="onChangeTransId($event)"
+                     required
+                     [disabled]="disableTransId()">
+            <md-option *ngFor="let tran of trans | async" [value]="tran.transId">{{tran.transType}}</md-option>
+          </md-select>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-search horizontal="true"
+                           floatPlaceholder="never"
+                           placeholder="所属银行"
+                           formControlName="agencyCode"
+                           name="agencyCode"
+                           [(ngModel)]="model.agencyCode"
+                           [disabled]="disableBank()"
+                           [onBeforClick]="agencyCodebeforClickFunc.bind(this)"
+                           [dataSource]="agencyCodeDataSource"
+                           [displayFn]="agencyCodedisplayFn.bind(this)"
+                           (onSelected)="agencyCodeSelected($event)"
+                           [optionDisplayFn]="agencyCodeOptionDisplayFn"
+                           [filterField]="agencyCodeFilterFields"
+                           valueField="orgNo" required></md-input-search>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select class="intoPieces-pt" placeholder="通道类型" horizontal="true" formControlName="ptCenterId" name="ptCenterId" [(ngModel)]="model.ptCenterId" required (change)="onChangePtCenterId($event)">
+            <md-option *ngFor="let center of centers | async" [value]="center.id">{{center.name}}</md-option>
+          </md-select>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="渠道编号" formControlName="providerNo" name="providerNo" [(ngModel)]="model.providerNo"/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="第三方平台商户号" formControlName="thirdMchId" name="thirdMchId" [(ngModel)]="model.thirdMchId"/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="第三方平台商户号密钥" formControlName="pcmPartkey" name="pcmPartkey" [(ngModel)]="model.pcmPartkey"/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select class="intoPieces-pt" placeholder="启用状态" horizontal="true" formControlName="used" name="used" [(ngModel)]="model.used" required>
+            <md-option *ngFor="let state of states | async" [value]="state.id">{{state.name}}</md-option>
+          </md-select>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="单日限额(元)" type="number" formControlName="limitDay" name="limitDay" [(ngModel)]="model.limitDay"/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="单笔限额最小值(元)" type="number" formControlName="limitSingleMin" name="limitSingleMin" [(ngModel)]="model.limitSingleMin"/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="单笔限额最大值(元)" type="number" formControlName="limitSingle" name="limitSingle" [(ngModel)]="model.limitSingle"/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="商户APPID" formControlName="thirdAppid" name="thirdAppid" [(ngModel)]="model.thirdAppid"/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select class="intoPieces-pt" placeholder="结算周期" horizontal="true" formControlName="settleCycle" name="settleCycle" [(ngModel)]="model.settleCycle" required>
+            <md-option *ngFor="let cycle of cycles | async" [value]="cycle.id">{{cycle.name}}</md-option>
+          </md-select>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="结算费率(‰)" type="number" required formControlName="settleRate" name="settleRate" [(ngModel)]="model.settleRate"/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+        </div>
+      </div>
+    </div>
+  <div class="btn-area">
+    <button md-raised-button [disabled]="!spChannelFormGroup.valid" color="primary">保存</button>
+  </div>
+</form>
+
+
+
+
+
+
+

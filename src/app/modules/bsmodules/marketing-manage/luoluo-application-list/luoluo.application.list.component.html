@@ -1,0 +1,15 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (ngSubmit)="onSearch()">
+    <md-card-content>
+      <md-input-container>
+        <input mdInput placeholder="应用名称" [(ngModel)]="form.appName" name="appName">
+      </md-input-container>
+      <button md-raised-button color="primary">查询</button>
+      <button md-raised-button type="button" *ngIf="helper.btnRole('LUOAPPADD')" (click.stop)="addApp()">新增</button>
+    </md-card-content>
+  </form>
+</md-card>
+
+<md-card>
+  <md-table-extend #luoAppTable [columns]="luoAppColumns" [database]="luoAppDB" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>

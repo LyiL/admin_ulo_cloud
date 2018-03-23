@@ -1,0 +1,17 @@
+<form  (ngSubmit)="onSubmit()" class="form-layout" [formGroup]="settlepay">
+  <div class="three-detail">
+    <div fxLayout="column" class="settlePayWin" >
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="打款标题" name="settleTitle"  formControlName="settleTitle" [(ngModel)]="model.settleTitle" required/>
+      </md-input-container>
+      <md-input-container horizontal="true" floatPlaceholder="never" >
+        <textarea mdInput placeholder="备注" name="remark" formControlName="remark" [(ngModel)]="model.remark" ></textarea>
+      </md-input-container>
+    </div>
+    <div class="btn-area text-center">
+      <button md-raised-button color="primary" [disabled]="!settlepay.valid">保存</button>
+    </div>
+  </div>
+
+</form>
+

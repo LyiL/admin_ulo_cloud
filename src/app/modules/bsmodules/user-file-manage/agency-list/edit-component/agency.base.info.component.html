@@ -1,0 +1,251 @@
+<form [formGroup]="agencyBaseInfoFormGroup" (ngSubmit)="hasSource()?onBaseInfoSubmit():onSave()" class="form-layout">
+  <fieldset>
+    <legend>企业信息</legend>
+    <div class="form-items">
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-search horizontal="true" floatPlaceholder="never" placeholder="所属机构" formControlName="bankCode" id="bankCode" name="bankCode" [(ngModel)]="model.bankCode"
+                           [onBeforClick]="onBeforClickFunc.bind(this)"
+                           [onDataLoaded]="onBankDataLoaded.bind(this)"
+                           [dataSource]="bankInputSearchSource"
+                           [displayFn]="agencyBankDisplayFn"
+                           [optionDisplayFn]="agencyBankOptionDisplayFn"
+                           [filterField]="agencyBankFilterFields"
+                           [disabled]="!helper.isEmpty(model['id'])"
+                           valueField="orgNo"
+                           (onSelected)="onBankSelected($event)"
+                           required></md-input-search>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <!--<md-input-container horizontal="true" floatPlaceholder="never">-->
+            <!--<input mdInput placeholder="上级代理" formControlName="parentChanCode" name="parentChanCode" id="parentChanCode" [(ngModel)]="model.parentChanCode"/>-->
+          <!--</md-input-container>-->
+          <md-input-search horizontal="true" floatPlaceholder="never" placeholder="上级代理" formControlName="parentChanCode" id="parentChanCode" name="parentChanCode" [(ngModel)]="model.parentChanCode"
+                           [onBeforClick]="onAgentBeforClickFunc.bind(this)"
+                           [onDataLoaded]="onAgentDataLoaded.bind(this)"
+                           [dataSource]="agentInputSearchSource"
+                           [displayFn]="agencyAgentDisplayFn"
+                           [optionDisplayFn]="agencyAgentOptionDisplayFn"
+                           [filterField]="agencyAgentFilterFields"
+                           [disabled]="!helper.isEmpty(model['id'])"
+                           valueField="chanCode"></md-input-search>
+        </div>
+      </div>
+
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select class="intoPieces-pt" placeholder="代理类型" horizontal="true" floatPlaceholder="never" required formControlName="appCode" name="appCode" id="appCode" [(ngModel)]="model.appCode" >
+            <md-option *ngFor="let agencyType of agencyTypes | async" [value]="agencyType?.id">
+              {{ agencyType?.name }}
+            </md-option>
+          </md-select>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput placeholder="企业名称" required formControlName="name" name="name" id="name" [(ngModel)]="model.name"/>
+          </md-input-container>
+        </div>
+      </div>
+
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="企业简称" required formControlName="shortName" name="shortName" id="shortName" [(ngModel)]="model.shortName"/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never" >
+            <input mdInput placeholder="企业邮箱" required formControlName="orgEmail" name="orgEmail" id="orgEmail" [(ngModel)]="model.orgEmail"/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="企业网站" required formControlName="orgWebsite" name="orgWebsite" id="orgWebsite" [(ngModel)]="model.orgWebsite"/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <div class="form-group group-h-40">
+            <div class="form-label">
+              * 所在地：
+            </div>
+            <div class="form-ctr">
+              <md-select placeholder="省" floatPlaceholder="never" required formControlName="province" name="province" id="province" [(ngModel)]="model.province">
+                <md-option *ngFor="let pro of provinces | async" [value]="pro.areaCode" (onSelectionChange)="onProvinceSelected($event)">{{pro.name}}</md-option>
+              </md-select>
+              <md-select placeholder="市" floatPlaceholder="never" required formControlName="city" name="city" id="city" [(ngModel)]="model.city">
+                <md-option *ngFor="let city of citys | async" [value]="city.areaCode" (onSelectionChange)="onCitySelected($event)">{{city.name}}</md-option>
+              </md-select>
+              <md-select placeholder="区" floatPlaceholder="never" required formControlName="county" name="county" id="county" [(ngModel)]="model.county">
+                <md-option *ngFor="let area of areas | async" [value]="area.areaCode" (onSelectionChange)="onAreasSelected($event)">{{area.name}}</md-option>
+              </md-select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="经营地址" required formControlName="comAddress" name="comAddress" id="comAddress" [(ngModel)]="model.comAddress"/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select class="intoPieces-pt" placeholder="商户证件类型" required horizontal="true" floatPlaceholder="never" formControlName="certificateType" name="certificateType" id="certificateType" [(ngModel)]="model.certificateType">
+            <md-option *ngFor="let certType of certificateTypes | async" [value]="certType.id">{{certType.name}}</md-option>
+          </md-select>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="商户证件编号" required formControlName="linenceNo" name="linenceNo" id="linenceNo" [(ngModel)]="model.linenceNo"/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-group isDateTimeGroup="true" horizontal="true" groupPlaceholder="证件有效期" firstPlaceholder="起始日期" lastPlaceholder="结束日期"
+                          [dateOpts]="certDateOpts"
+                          [(firstField)]="model.linenceTermStart" [(lastField)]="model.linenceTermEnd" firstName="linenceTermStart" lastName="linenceTermEnd"></md-input-group>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <div class="form-group group-h-40">
+            <div class="form-label">
+              * 所属行业：
+            </div>
+            <div class="form-ctr">
+              <md-select placeholder="类别" floatPlaceholder="never"
+                         formControlName="categoryTypeGroup" name="categoryTypeGroup" id="categoryTypeGroup" [(ngModel)]="model.categoryTypeGroup" required>
+                <md-option *ngFor="let cTypeGroup of cTypeGroups | async" [value]="cTypeGroup.id" (onSelectionChange)="onCategoryTypeSelected($event)">{{cTypeGroup.name}}</md-option>
+              </md-select>
+              <md-select placeholder="名称" floatPlaceholder="never" formControlName="categoryType" name="categoryType" id="categoryType" [(ngModel)]="model.categoryType" required>
+                <md-option *ngFor="let cType of categoryTypes | async" [value]="cType.categoryNo">{{cType.name}}</md-option>
+              </md-select>
+            </div>
+          </div>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput placeholder="客服电话" formControlName="customerPhone" name="customerPhone" id="customerPhone" [(ngModel)]="model.customerPhone" required/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-search horizontal="true" floatPlaceholder="never" placeholder="所属业务员" formControlName="salesmanNo" name="salesmanNo" id="salesmanNo" [(ngModel)]="model.salesmanNo"
+                           [onBeforClick]="onSalesmanBeforClickFunc.bind(this)"
+                           [onDataLoaded]="onSalesmanDataLoaded.bind(this)"
+                           [dataSource]="salesmanInputSearchSource"
+                           [displayFn]="agencySalesmanDisplayFn"
+                           [optionDisplayFn]="agencySalesmanOptionDisplayFn"
+                           [filterField]="agencySalesmanFilterFields"
+                           [disabled]="helper.isEmpty(model['parentChanCode'])"
+                           valueField="salesmanId">
+          </md-input-search>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select class="intoPieces-pt" placeholder="分润规则" horizontal="true" formControlName="shareRule" name="shareRule" id="shareRule" [(ngModel)]="model.shareRule" required>
+            <md-option *ngFor="let rule of shareRules | async" [value]="rule.id">{{rule.name}}</md-option>
+          </md-select>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>负责人信息</legend>
+    <div class="form-items">
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="负责人姓名" formControlName="operator" name="operator" id="operator" [(ngModel)]="model.operator" required/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select class="intoPieces-pt" placeholder="负责人类型" horizontal="never" formControlName="contactsType" name="contactsType" id="contactsType" [(ngModel)]="model.contactsType" required>
+            <md-option *ngFor="let contactsType of contactsTypes | async" [value]="contactsType.id">{{contactsType.name}}</md-option>
+          </md-select>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="身份证号" formControlName="operatorIdno" name="operatorIdno" id="operatorIdno" [(ngModel)]="model.operatorIdno" required/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="负责人手机" formControlName="operatorPhone" name="operatorPhone" id="operatorPhone" [(ngModel)]="model.operatorPhone"/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="负责人邮箱" formControlName="operatorEmail" name="operatorEmail" id="operatorEmail" [(ngModel)]="model.operatorEmail"/>
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>联系人信息</legend>
+    <div class="form-items">
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="联系人姓名" formControlName="linkman" name="linkman" id="linkman" [(ngModel)]="model.linkman" required/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="联系人邮箱" formControlName="email" name="email" id="email" [(ngModel)]="model.email" required/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="联系人手机" formControlName="phone" name="phone" id="phone" [(ngModel)]="model.phone" required/>
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>附件信息</legend>
+    <div class="form-items">
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="100">
+          <div class="form-group fill-form-group">
+            <div class="form-label">
+              * 证件资料图片：
+            </div>
+            <div class="form-ctr">
+              <ulo-file-select [options]="defFieldUploadSetting" placeholder="营业执照" required
+                               id="linenceImg" name="linenceImg" formControlName="linenceImg" [(ngModel)]="model.linenceImg" (onError)="onFileUploadError($event)"></ulo-file-select>
+              <ulo-file-select [options]="defFieldUploadSetting" placeholder="开户许可证" required
+                               id="orgAccountImg" name="orgAccountImg" formControlName="orgAccountImg" [(ngModel)]="model.orgAccountImg" (onError)="onFileUploadError($event)"></ulo-file-select>
+              <ulo-file-select [options]="defFieldUploadSetting" placeholder="法人身份证-正面" required
+                               id="indentityImg" name="indentityImg" formControlName="indentityImg" [(ngModel)]="model.indentityImg" (onError)="onFileUploadError($event)"></ulo-file-select>
+              <ulo-file-select [options]="defFieldUploadSetting" placeholder="身份证-反面" required
+                               id="indentityBackImg" name="indentityBackImg" formControlName="indentityBackImg" [(ngModel)]="model.indentityBackImg" (onError)="onFileUploadError($event)"></ulo-file-select>
+              <ulo-file-select [options]="defFieldUploadSetting" placeholder="银行卡照" required
+                               id="bankCardImg" name="bankCardImg" formControlName="bankCardImg" [(ngModel)]="model.bankCardImg" (onError)="onFileUploadError($event)"></ulo-file-select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <div class="btn-area">
+    <div *ngIf="hasSource()">
+      <button md-raised-button [disabled]="!agencyBaseInfoFormGroup.valid" color="primary">保存并下一步</button>
+    </div>
+    <div *ngIf="!hasSource()">
+      <button md-raised-button [disabled]="!agencyBaseInfoFormGroup.valid" color="primary">保存</button>
+      <button md-raised-button type="button" (click.stop)="onGoBack()">返回</button>
+    </div>
+  </div>
+</form>
+

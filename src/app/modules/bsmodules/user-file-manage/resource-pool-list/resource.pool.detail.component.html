@@ -1,0 +1,13 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <div class="detail-item">
+
+    <!--<div class="detail-title">-->
+      <!--<h3>识别码管理信息</h3>-->
+    <!--</div>-->
+    <ulo-detail #luoAppDetail [detailFields]="resourceDetailFields" [reqParams]="resourceDetailReqParam"></ulo-detail>
+
+  </div>
+  <div class="align-center-box btn-area">
+    <button md-raised-button type="button" (click.stop)="onBack()">返回</button>
+  </div>
+</md-card>

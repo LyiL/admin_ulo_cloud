@@ -1,0 +1,17 @@
+<form>
+    <div  style="margin-left: 30px">
+      <h6>请点击【本地文件】选择版本上传</h6>
+    </div>
+    <div  style="margin-left: 100px">
+      <ulo-file-select [options]="defFieldUploadSetting"
+                       placeholder="文件上传" required
+                       (onError)="onFileUploadError($event)"
+                       (onUpload)="handleUpload($event)"
+                       #fileUpload
+      ></ulo-file-select>
+    </div>
+  <div class="btn-area text-center">
+    <button md-raised-button color="primary" type="button" (click.stop)="onSubmit()">立即上传</button>
+  </div>
+</form>
+

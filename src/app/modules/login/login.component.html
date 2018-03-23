@@ -1,0 +1,22 @@
+<div class="login-wrap" [style.backgroundImage]="helpers.getDomainCfgVal('LOGIN_BG') ? 'url('+helpers.getDomainCfgVal('LOGIN_BG')+')' : undefined">
+  <div class="login-ipt-wrap" [style.backgroundImage]="helpers.getDomainCfgVal('LOGIN_TITLE_BG') ? 'url('+helpers.getDomainCfgVal('LOGIN_TITLE_BG')+')' : undefined">
+    <img src="{{helpers.getDomainCfgVal('LOGIN_LOGO')||'webassets/images/login_logo.png'}}" onerror="this.src='webassets/images/login_logo.png'">
+    <div class="login-title">{{helpers.getDomainCfgVal('TITLE')||'管理平台'}}</div>
+    <form [formGroup]="formGroup" class="login-form green" (ngSubmit)="onSubmit(formGroup.value)">
+      <md-input-container class="login-ipt-ctr">
+        <input mdInput placeholder="帐号" autocomplete=off formControlName="userName" name="userName" id="userName" [(ngModel)]="loginUser"/>
+      </md-input-container>
+      <md-input-container>
+        <input mdInput type="password" placeholder="密码" autocomplete=off formControlName="userPwd" name="userPwd" id="userPwd" [(ngModel)]="loginPass"/>
+      </md-input-container>
+      <div class="form-group yzm-wrap">
+        <md-input-container>
+          <input mdInput name="captcha" maxlength="4" formControlName="captcha" id="captcha" placeholder="验证码">
+        </md-input-container>
+        <div class="yzm" #yzm></div>
+      </div>
+      <md-checkbox [(checked)]="isChecked" (change)="onForChecked($event.checked)">记住帐号</md-checkbox>
+      <button md-button [disabled]="!formGroup.valid" type="submit">登录</button>
+    </form>
+  </div>
+</div>

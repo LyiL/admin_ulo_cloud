@@ -1,0 +1,49 @@
+.head-wrap{
+  line-height: 50px;
+  background-color:#fff;
+  padding:0 20px;
+  overflow: hidden;
+  .head-nav{
+    float:left;
+    width:40%;
+    text-align: left;
+  }
+  .head-func{
+    float:right;
+    width:60%;
+    text-align: right;
+  }
+}
+
+.head-nav{
+  ol{
+    list-style: none;
+    overflow: hidden;
+    margin:0;
+    padding:0;
+    li{
+      float:left !important;
+      a{
+        color:#049ab8;
+        text-decoration: inherit;
+        user-select: none;
+      }
+    }
+    li:not(:first-child):before{
+      color:#999;
+      margin:0 5px;
+      content: '/';
+    }
+  }
+}
+
+.head-func{
+  color:dimgray;
+  span{
+    margin-right: 48px;
+  }
+  a{
+    margin:0 5px;
+    user-select: none;
+  }
+}

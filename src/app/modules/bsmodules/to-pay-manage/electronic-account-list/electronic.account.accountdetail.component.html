@@ -1,0 +1,40 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form #electronicAccountAccountdetailSearchForm="ngForm" (submit)="onSearch()">
+    <md-card-content>
+      <md-input-group isDateTimeGroup="true"
+              firstPlaceholder="起始日期"
+              lastPlaceholder="结束日期"
+              [(firstField)]="form.startDate"
+              [(lastField)]="form.endDate"
+              [dateOpts]="dateOpts"
+              firstName="startDate"
+              lastName="endDate">
+      </md-input-group>
+
+      <!--<md-input-search placeholder="商户名称" name="mchNo" [(ngModel)]="form.mchNo"></md-input-search>-->
+      <md-input-search placeholder="商户名称" name="mchNo" id="mchNo" [(ngModel)]="form.mchNo"
+                       [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                       [dataSource]="merchantDataSource"
+                       [displayFn]="merchantDisplayFn.bind(this)"
+                       (onSelected)="merchantSelected($event)"
+                       [optionDisplayFn]="merchantOptionDisplayFn"
+                       [filterField]="merchantFilterFields"
+                       valueField="merchantNo">
+      </md-input-search>
+      <md-select placeholder="记账类型" name="incash" [(ngModel)]="form.incash" class="intoPieces-pt">
+        <md-option value="">全部</md-option>
+        <md-option *ngFor="let accountType of accountTypes" [value]="accountType?.id">
+        {{ accountType?.name }}
+        </md-option>
+      </md-select>
+
+      <button md-raised-button type="submit" color="primary">查询</button>
+    </md-card-content>
+  </form>
+</md-card>
+
+<md-card>
+  <md-table-extend #electronicAccountAccountdetailTable [columns]="electronicAccountAccountdetailColumns" [database]="electronicAccountAccountdetailDB" isShowOddEffet="true" [actionCfg]="electronicAccountAccountdetailActionCfg"></md-table-extend>
+</md-card>
+
+

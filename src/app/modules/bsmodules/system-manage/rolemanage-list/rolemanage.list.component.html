@@ -1,0 +1,17 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (submit)="onSearch()">
+    <md-card-content>
+      
+    <md-input-container >
+      <input mdInput id="roleName" name="roleName" [(ngModel)]="form.roleName" placeholder="角色名称"/>
+    </md-input-container>
+    <button md-raised-button  color="primary" >查询</button>
+    <button md-raised-button   type="button"  (click.stop)="Onaddrole($event)" *ngIf="helper.btnRole('ROLENEW')">新增角色</button>
+
+    </md-card-content>
+  </form>
+</md-card >
+<md-card class="mdcard-margin-bottom">
+  <md-table-extend #RoleManageTable [columns]="RoleManageColumns" [database]="RoleManageDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>
+

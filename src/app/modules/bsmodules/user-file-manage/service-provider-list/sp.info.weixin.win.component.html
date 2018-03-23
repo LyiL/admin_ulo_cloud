@@ -1,0 +1,31 @@
+<form class="form-layout" novalidate (ngSubmit)="onSubmit()" [formGroup]="spInfoWeixinGroup">
+    <div class="three-detail">
+        <div fxLayout="column" class="versionWin">
+            <md-input-container floatPlaceholder="never" horizontal="true">
+                <input mdInput placeholder="关联公众号APPID"
+                        formControlName="subAppid"
+                        required
+                        [(ngModel)]="model.subAppid"
+                        (blur)="onBlurRelate()"/>
+            </md-input-container>
+
+            <md-input-container floatPlaceholder="never" horizontal="true">
+                <input mdInput placeholder="推荐关注公众号APPID"
+                        formControlName="subscribeAppid"
+                        required
+                        [(ngModel)]="model.subscribeAppid"/>
+            </md-input-container>
+
+            <md-input-container floatPlaceholder="never" horizontal="true">
+                <textarea mdInput placeholder="支付授权目录"
+                        formControlName="jsapiPath"
+                        required
+                        [(ngModel)]="model.jsapiPath"></textarea>
+                <!-- <md-hint align="end">请使用符号"|"分隔目录</md-hint> -->
+            </md-input-container>
+        </div>
+        <div class="btn-area">
+            <button md-raised-button color="primary" [disabled]="!spInfoWeixinGroup.valid">保存</button>
+        </div>
+    </div>
+</form>

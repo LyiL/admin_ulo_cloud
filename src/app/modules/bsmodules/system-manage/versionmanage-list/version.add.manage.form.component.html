@@ -1,0 +1,28 @@
+<form  (ngSubmit)="onSubmit()" [formGroup]="versionAdd">
+    <div  class="three-detail">
+      <div fxLayout="column" class="versionWin">
+
+          <md-input-container floatPlaceholder="never"  horizontal="true">
+            <input mdInput placeholder="客户端编码" formControlName="platform"  name="platform" [(ngModel)]="model.platform" required/>
+          </md-input-container>
+
+
+          <md-input-container  floatPlaceholder="never"  horizontal="true">
+            <input mdInput placeholder="版本名称" formControlName="versionName"  name="versionName" [(ngModel)]="model.versionName"/>
+          </md-input-container>
+
+
+          <md-input-container floatPlaceholder="never"  horizontal="true">
+            <input mdInput placeholder="版本号" formControlName="version"  name="version" [(ngModel)]="model.version" required/>
+          </md-input-container>
+
+        <md-input-container horizontal="true" floatPlaceholder="never" >
+          <textarea mdInput placeholder="版本说明" name="versionRemark" formControlName="versionRemark" [(ngModel)]="model.versionRemark" ></textarea>
+        </md-input-container>
+      </div>
+    </div>
+  <div class="btn-area text-center">
+    <button md-raised-button color="primary" [disabled]="!versionAdd.valid">保存</button>
+  </div>
+  </form>
+

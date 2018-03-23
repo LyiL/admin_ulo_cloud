@@ -1,0 +1,27 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (submit)="onSearch()">
+    <md-card-content>
+      <md-input-container>
+          <input mdInput name="userName" id="userName" placeholder="用户名称" [(ngModel)]="form.userName"/>
+        </md-input-container>
+        <md-input-container>
+          <input mdInput name="userNo" id="userNo" placeholder="用户编号" [(ngModel)]="form.userNo"/>
+        </md-input-container>
+        <md-select name="userType" placeholder="用户类型" [(ngModel)]="form.userType">
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let type of userTypes | async" [value]="type?.id">{{type?.name}}</md-option>
+        </md-select>
+        <md-input-container>
+          <input mdInput name="combName" id="combName" placeholder="产品名称" [(ngModel)]="form.combName"/>
+        </md-input-container>
+        <md-select name="state" placeholder="开通状态" [(ngModel)]="form.state">
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let apply of states | async" [value]="apply?.id">{{apply?.name}}</md-option>
+        </md-select>
+        <button md-raised-button color="primary">查询</button>
+    </md-card-content>
+  </form>
+</md-card>
+<md-card class="mt-20">
+  <md-table-extend #prodOpenTable [columns]="openProdColumns" [actionCfg]="openProdActionCfg" [database]="openProdDB"></md-table-extend>
+</md-card>

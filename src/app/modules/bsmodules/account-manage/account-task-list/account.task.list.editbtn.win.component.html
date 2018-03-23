@@ -1,0 +1,20 @@
+<form class="form-layout" [formGroup]="formGroup">
+    <div class="three-detail">
+        <md-input-container  horizontal="true" floatPlaceholder="never">
+          <input mdInput placeholder="对账文件路径" name="reconPath" formControlName="reconPath" [(ngModel)]="model.reconPath"/>
+        </md-input-container>
+        <md-select placeholder="对账类型"  horizontal="true" floatPlaceholder="never"  name="reconType" formControlName="reconType" [(ngModel)]="model.reconType"  (change)="getAccountName($event)" required>
+          <md-option *ngFor="let accountType of accountTypes" [value]="accountType?.id">
+            {{ accountType?.name }}
+          </md-option>
+        </md-select>
+        <md-select placeholder="退款依据" horizontal="true" floatPlaceholder="never" fillRow="true"  name="refundType" formControlName="refundType" [(ngModel)]="model.refundType" (change)="getRefundName($event)" required>
+          <md-option *ngFor="let drawbackAccording of drawbackAccordings" [value]="drawbackAccording?.id">
+            {{ drawbackAccording?.name }}
+          </md-option>
+        </md-select>
+        <div class="btn-area">
+          <button color="primary" md-raised-button type="button" [md-dialog-close]="true" (click.stop)="onSave()" [disabled]="!formGroup.valid">保存</button>
+        </div>
+    </div>
+</form>

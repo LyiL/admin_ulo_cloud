@@ -1,0 +1,70 @@
+<form (ngSubmit)="onSubmit()" class="edit-win-wrap">
+  <div class="row" *ngFor="let row of rows">
+    <div class="column" *ngFor="let cell of row" [ngSwitch]="cell.type">
+      <md-input-container *ngSwitchDefault horizontal="true" >
+        <input mdInput [name]="cell.name"
+               type="{{cell.xtype ? cell.xtype : 'text'}}"
+               (blur)="cell?.otherOpts?.onBlur(row,$event)"
+               [placeholder]="cell.title"
+               [disabled]="cell?.otherOpts?.disabled(rowData,cell)"
+               [required]="cell?.otherOpts?.required(rowData,cell)"
+               [(ngModel)]="rowData[cell.name]"/>
+      </md-input-container>
+      <md-input-group *ngSwitchCase="'inputGroup'" horizontal="true"
+                      groupType="{{cell.xtype ? cell.xtype : 'text'}}"
+                      [groupPlaceholder]="cell?.title"
+                      [firstName]="cell?.name[0]"
+                      [(firstField)]="rowData[cell?.name[0]]"
+                      [firstPlaceholder]="cell.firstTitle"
+                      [lastName]="cell?.name[1]"
+                      [(lastField)]="rowData[cell?.name[1]]"
+                      [lastPlaceholder]="cell.lastTitle"
+                      [disabled]="cell?.otherOpts?.disabled(rowData,cell)"
+                      [required]="cell?.otherOpts?.required(rowData,cell)"></md-input-group>
+      <md-select *ngSwitchCase="'select'"
+                 horizontal="true"
+                 [name]="cell.name"
+                 [placeholder]="cell.title"
+                 [(ngModel)]="rowData[cell.name]"
+                 [disabled]="cell?.otherOpts?.disabled(rowData,cell)"
+                 [color]="cell?.otherOpts?.color"
+                 [required]="cell?.otherOpts?.required(rowData,cell)"
+                 (onOpen)="cell?.otherOpts?.open(cell,rowData,$event)"
+                 (change)="cell?.otherOpts?.onChange(rowData,$event)"
+      >
+        <md-option *ngFor="let option of cell?.otherOpts?.data | async" [res]="option" [value]="option[cell?.otherOpts?.valueField]">{{option[cell?.otherOpts?.displayField]}}</md-option>
+      </md-select>
+      <md-select multiple *ngSwitchCase="'multipleSelect'"
+                 horizontal="true"
+                 [name]="cell.name"
+                 [placeholder]="cell.title"
+                 [(ngModel)]="rowData[cell.name]"
+                 [color]="cell?.otherOpts?.color"
+                 [disabled]="cell?.otherOpts?.disabled(rowData,cell)"
+                 [required]="cell?.otherOpts?.required(rowData,cell)"
+                 (change)="cell?.otherOpts?.onChange(rowData,$event)"
+      >
+        <md-option *ngFor="let option of cell?.otherOpts?.data | async" [res]="option" [value]="option[cell?.otherOpts?.valueField]">{{option[cell?.otherOpts?.displayField]}}</md-option>
+      </md-select>
+      <md-input-search *ngSwitchCase="'inputSearch'"
+                       horizontal="true"
+                       (onBlur)="cell?.otherOpts?.onBlur(rowData,$event)"
+                       (onSelected)="cell?.otherOpts?.onSelected(rowData,$event)"
+                       [onBeforClick]="cell?.otherOpts?.onBeforClick"
+                       [displayFn]="cell?.otherOpts?.displayFn"
+                       [optionDisplayFn]="cell?.otherOpts?.optionDisplayFn"
+                       [filterField]="cell?.otherOpts?.filterField"
+                       [valueField]="cell?.otherOpts?.valueField"
+                       [disabled]="cell?.otherOpts?.disabled(rowData,cell)"
+                       [dataSource]="cell?.otherOpts?.dataSource"
+                       [name]="cell.name"
+                       [placeholder]="cell.title"
+                       [required]="cell?.otherOpts?.required(rowData,cell)"
+                       [(ngModel)]="rowData[cell.name]"></md-input-search>
+    </div>
+  </div>
+  <div class="btn-area">
+    <button md-raised-button color="primary">保存</button>
+    <button md-raised-button type="button" (click.stop)="onCancel()">取消</button>
+  </div>
+</form>

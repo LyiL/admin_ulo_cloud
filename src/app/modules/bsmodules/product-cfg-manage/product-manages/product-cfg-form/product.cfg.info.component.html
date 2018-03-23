@@ -1,0 +1,11 @@
+<div class="prod-cfg-info-wrap form-layout">
+  <a class="prod-cfg-new-btn" (click.stop)="onNewProdCfg(prodCfgTable)">新增</a>
+  <md-tab-group [(selectedIndex)]="selectedIndex" (selectChange)="onProdCfgSelectChange($event)">
+    <md-tab *ngFor="let tab of prodCfgTabs | async" label="{{tab?.label}}" >
+      <md-table-extend mode="edit" #prodCfgTable local="true" [(columns)]="prodCfgColumns" (onSave)="onTableSave($event)" (onDelete)="onTableDel()" [delConfirmFunc]="onDelete.bind(this)" [saveConfirmFunc]="onBeforeSave.bind(this)" [database]="prodCfgDB" [actionCfg]="prodActionCfg" (onEditBefore)="onEditProdCfg($event)"></md-table-extend>
+    </md-tab>
+  </md-tab-group>
+  <div class="btn-area">
+    <button md-raised-button type="button" color="primary" [disabled]="!hasData()" (click.stop)="onSaveProdCfgInfo()">保存</button>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<form class="form-layout" [formGroup]="formGroup">
+  <div class="three-detail">
+    <div class="column settlePayWin" fxLayout="column">
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="账户姓名"  name="accountName" formControlName="accountName" [(ngModel)]="model.accountName" required/>
+      </md-input-container>
+
+      <md-input-search placeholder="所属商户" name="organNo" id="organNo" [(ngModel)]="model.organNo" formControlName="organNo" horizontal="true" floatPlaceholder="never"
+                       [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                       [dataSource]="merchantDataSource"
+                       [displayFn]="merchantDisplayFn"
+                       [optionDisplayFn]="merchantOptionDisplayFn"
+                       [filterField]="merchantFilterFields"
+                       valueField="merchantNo"
+                       (onSelected)="onSelect($event)"
+                       required>
+      </md-input-search>
+      <md-select placeholder="银行账户" class="intoPieces-pt" horizontal="true" floatPlaceholder="never" name="accountId" formControlName="accountId" [(ngModel)]="model.accountId">
+        <md-option value="">请选择</md-option>
+        <md-option *ngFor="let bankAccount of bankAccounts" [value]="bankAccount?.acntId">
+          {{ bankAccount?.name }}
+        </md-option>
+      </md-select>
+      <md-select placeholder="资金池账户" class="intoPieces-pt" horizontal="true" floatPlaceholder="never" name="cashpoolNo" id="cashpoolNo"  [(ngModel)]="model.cashpoolNo" formControlName="cashpoolNo" (change)="getAccountName($event)" required>
+        <!--<md-option value="">全部</md-option>-->
+        <md-option *ngFor="let accountType of accountTypes" [value]="accountType?.poolNo">{{ accountType?.accountName}}</md-option>
+      </md-select>
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="外部商户号" name="outMchno" formControlName="outMchno" [(ngModel)]="model.outMchno"/>
+      </md-input-container>
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="签名密钥" name="signkey" formControlName="signkey" [(ngModel)]="model.signkey"/>
+      </md-input-container>
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="对公手续费（元）" name="singleProcsFee" formControlName="singleProcsFee" [(ngModel)]="model.singleProcsFee" required/>
+      </md-input-container>
+
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="对私手续费（元）" name="privProcsFee" formControlName="privProcsFee" [(ngModel)]="model.privProcsFee" required/>
+      </md-input-container>
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="垫资手续费（%）" name="advanceProcsFee" formControlName="advanceProcsFee" [(ngModel)]="model.advanceProcsFee" required/>
+      </md-input-container>
+    </div>
+    <div class="btn-area">
+      <button color="primary" md-raised-button type="button" (click.stop)="onSave()" [disabled]="!formGroup.valid">保存</button>
+    </div>
+  </div>
+</form>
+

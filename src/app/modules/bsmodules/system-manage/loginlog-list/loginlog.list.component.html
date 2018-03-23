@@ -1,0 +1,25 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (submit)="onSearch()">
+    <md-card-content>
+    <md-input-container >
+      <input mdInput id="userName" name="userName" [(ngModel)]="form.userName"placeholder="用户名"/>
+    </md-input-container>
+
+    <md-input-group
+    isDateTimeGroup="true"
+     firstPlaceholder="登录开始时间"
+    lastPlaceholder="登录结束时间" [(firstField)]="form.loginTime"
+    [(lastField)]="form.loginTimeAt"
+    firstName="loginTime"
+    lastName="loginTimeAt"
+      [dateOpts]="certDateOpts"
+    ></md-input-group>
+
+      <button md-raised-button  color="primary"   >查询</button>
+
+    </md-card-content>
+  </form>
+</md-card >
+<md-card class="mdcard-margin-bottom">
+  <md-table-extend #loginTable  [columns]="LoginLogColumns" [database]="loginDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>

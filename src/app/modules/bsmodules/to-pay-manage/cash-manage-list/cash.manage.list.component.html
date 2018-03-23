@@ -1,0 +1,33 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form #cashManageSearchForm="ngForm" (submit)="onSearch()">
+    <md-card-content>
+      <md-input-container>
+          <input mdInput placeholder="账户名称" name="accountName" [(ngModel)]="form.accountName"/>
+        </md-input-container>
+        <md-select placeholder="启用状态" name="useState" [(ngModel)]="form.useState" class="intoPieces-pt">
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let startState of startStates" [value]="startState?.id">
+            {{ startState?.name }}
+          </md-option>
+        </md-select>
+        <!--<md-input-search placeholder="受理机构" name="bankNo" [(ngModel)]="form.bankNo"></md-input-search>-->
+        <md-input-search placeholder="受理机构" name="bankNo" id="bankNo" [(ngModel)]="form.bankNo"
+                          [onBeforClick]="cashBankbeforClickFunc.bind(this)"
+                          [dataSource]="cashBankDataSource"
+                          [displayFn]="cashBankdisplayFn.bind(this)"
+                          (onSelected)="bankSelected($event)"
+                          [optionDisplayFn]="cashBankOptionDisplayFn"
+                          [filterField]="cashBnakFilterFields"
+                          valueField="orgNo">
+        </md-input-search>
+        <button md-raised-button type="submit" color="primary" >查询</button>
+        <button md-raised-button type="button" (click.stop)="onAddNewDialog()" *ngIf="helper.btnRole('MONEYPOOLNEW')">新增</button>
+    </md-card-content>
+  </form>
+</md-card>
+
+<md-card>
+  <md-table-extend #cashManageListTable [columns]="cashManageListColumns" [database]="cashManageListDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>
+
+

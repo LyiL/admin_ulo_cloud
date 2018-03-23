@@ -1,0 +1,16 @@
+<!--交易限额配置-->
+<fieldset *ngIf="helper.btnRole('MCHSETTOTALFEELIMIT')">
+  <legend>
+    <span>交易限额配置</span>
+    <a (click.stop)="onEditTradeLimit()">配置</a>
+  </legend>
+  <ulo-detail #mchTradeLimitDetail [detailFields]="mchTradeLimitFields" [(reqParams)]="mchTradeLimitReqParam" hasGroup="false"></ulo-detail>
+</fieldset>
+<!--公钥配置-->
+<fieldset *ngIf="helper.btnRole('MCHSETRSAKEYCONFIG')">
+  <legend>
+    <span>公钥配置</span>
+    <a (click.stop)="onSetOrgRsakey()">配置</a>
+  </legend>
+  <ulo-detail #mchRsakeyDetail [detailFields]="rsakeyParamFields" [(reqParams)]="rsakeyParam" hasGroup="false"></ulo-detail>
+</fieldset>

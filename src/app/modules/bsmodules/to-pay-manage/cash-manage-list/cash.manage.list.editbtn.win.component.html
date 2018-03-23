@@ -1,0 +1,37 @@
+<form class="form-layout" [formGroup]="formGroup">
+  <div class="three-detail">
+    <md-input-container horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="账户名称" name="accountName" formControlName="accountName" [(ngModel)]="model.accountName" required/>
+    </md-input-container>
+    <!--<md-input-search placeholder="受理机构*"  horizontal="true" floatPlaceholder="never" name="bankNo" formControlName="bankNo" [(ngModel)]="model.bankNo"></md-input-search>-->
+    <!--<md-input-search placeholder="受理机构*"  horizontal="true" floatPlaceholder="never" name="bankName" formControlName="bankName" [(ngModel)]="model.bankName"></md-input-search>-->
+    <md-input-search placeholder="受理机构" name="bankNo" id="bankNo" [(ngModel)]="model.bankNo" formControlName="bankNo" horizontal="true" floatPlaceholder="never"
+                     [onBeforClick]="cashBankbeforClickFunc.bind(this)"
+                     [dataSource]="cashBankDataSource"
+                     [displayFn]="cashBankdisplayFn"
+                     [optionDisplayFn]="cashBankOptionDisplayFn"
+                     [filterField]="cashBnakFilterFields"
+                     valueField="orgNo"
+                     (onSelected)="onSelect($event)"
+                     required>
+    </md-input-search>
+    <md-input-container horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="手续费（元）" name="singleProcsFee" formControlName="singleProcsFee" [(ngModel)]="model.singleProcsFee" required/>
+    </md-input-container>
+    <md-input-container horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="垫资手续费（%）" name="advanceProcsFee" formControlName="advanceProcsFee" [(ngModel)]="model.advanceProcsFee" required/>
+    </md-input-container>
+    <md-select placeholder="资金池类型" class="intoPieces-pt" horizontal="true" floatPlaceholder="never" name="poolType" formControlName="poolType" [(ngModel)]="model.poolType" required>
+      <md-option *ngFor="let cashPoolType of cashPoolTypes" [value]="cashPoolType?.id">
+        {{ cashPoolType?.name }}
+      </md-option>
+    </md-select>
+    <md-input-container horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="接口编号" name="apiCode" formControlName="apiCode" [(ngModel)]="model.apiCode" required/>
+    </md-input-container>
+    <div class="btn-area">
+      <button color="primary" md-raised-button type="button" (click.stop)="onSave()" [disabled]="!formGroup.valid">保存</button>
+    </div>
+  </div>
+</form>
+

@@ -1,0 +1,15 @@
+<form class="form-layout" [formGroup]="formGroup">
+  <div class="three-detail">
+    <div class="column refundAuth-ml" fxLayout="column">
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="账号" name="externalAccount" formControlName="externalAccount" [(ngModel)]="model.externalAccount" required/>
+      </md-input-container>
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="密码" type="password" name="externalPassword" formControlName="externalPassword" [(ngModel)]="model.externalPassword" required/>
+      </md-input-container>
+    </div>
+    <div class="btn-area">
+      <button color="primary" md-raised-button type="button" (click.stop)="onSave()" [disabled]="!formGroup.valid">保存</button>
+    </div>
+  </div>
+</form>

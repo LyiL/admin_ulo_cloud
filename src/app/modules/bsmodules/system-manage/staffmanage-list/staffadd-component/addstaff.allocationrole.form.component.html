@@ -1,0 +1,22 @@
+<form (ngSubmit)="onSubmit()" >
+  <div  fxLayout="row">
+    <div class="column " fxLayout="column " fxFlex="8" >
+      <div>
+        <span>请选择该员工角色<span style="color: red;">*</span></span>
+        <span>（可多选）</span>
+      </div>
+    </div>
+    <div class="column"   fxFlex="80">
+
+      <md-checkbox  style="margin-left: 35px"  *ngFor="let role of roles"  name="role.id" [checked]="role.checked" (change)="onRoleChecked(role,$event.checked)">
+        {{role.roleName}}
+      </md-checkbox>
+    </div>
+  </div>
+
+  <div class="btn-area text-center">
+    <button md-raised-button [disabled]="form.roleIds.length == 0"   color="primary" >保存</button>
+    <button  md-raised-button type="button"  (click.stop)="Cancel()">取消</button>
+  </div>
+</form>
+

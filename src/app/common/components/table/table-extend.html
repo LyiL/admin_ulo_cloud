@@ -1,0 +1,92 @@
+<md-table [dataSource]="dataSource" [ngClass]="{'detail-table':isDetailTable}">
+    <ng-container *ngFor="let cell of columns; let cellIndex=index;" cdkColumnDef="{{cellName(cell?.name)}}">
+      <md-header-cell *cdkHeaderCellDef [style.width]="cell.width" [style.flex]="hasWith(cell.width)" [help]="cell?.des"><span *ngIf="isDetailTable && cellIndex == 0" class="detail-down"></span> <span [innerHTML]="cell?.title"></span> </md-header-cell>
+        <md-cell *cdkCellDef="let row" [style.width]="cell.width" [style.flex]="hasWith(cell.width)">
+            <md-render-cell *ngIf="cell && !row?.isEdit" [cell]="cell" [row]="row"></md-render-cell>
+            <div *ngIf="row?.isEdit && mode == 'edit'" [ngSwitch]="cell.type" class="cell-edit">
+                <md-input-container *ngSwitchDefault floatPlaceholder="never" [help]="cell?.inputDes">
+                    <input mdInput [name]="cell.name"
+                           type="{{cell.xtype ? cell.xtype : 'text'}}"
+                           (blur)="cell?.otherOpts?.onBlur(row,$event)"
+                           [placeholder]="cell.title"
+                           [disabled]="cell?.otherOpts?.disabled(row,cell)"
+                           [required]="cell?.otherOpts?.required(row,cell)"
+                           [(ngModel)]="row[cell.name]"/>
+                </md-input-container>
+                <md-input-group *ngSwitchCase="'inputGroup'"
+                                groupType="{{cell.xtype ? cell.xtype : 'text'}}"
+                                [firstName]="cell?.name[0]"
+                                [(firstField)]="row[cell?.name[0]]"
+                                [firstPlaceholder]="cell.firstTitle"
+                                [lastName]="cell?.name[1]"
+                                [(lastField)]="row[cell?.name[1]]"
+                                [lastPlaceholder]="cell.lastTitle"
+                                [disabled]="cell?.otherOpts?.disabled(row,cell)"
+                                [required]="cell?.otherOpts?.required(row,cell)"></md-input-group>
+                <md-select *ngSwitchCase="'select'"
+                           floatPlaceholder="never"
+                           [name]="cell.name"
+                           [placeholder]="cell.title"
+                           [(ngModel)]="row[cell.name]"
+                           [disabled]="cell?.otherOpts?.disabled(row,cell)"
+                           [color]="cell?.otherOpts?.color"
+                           [required]="cell?.otherOpts?.required(row,cell)"
+                           (onOpen)="cell?.otherOpts?.open(cell,row,$event)"
+                           (change)="cell?.otherOpts?.onChange(row,$event)"
+                >
+                    <md-option *ngFor="let option of cell?.otherOpts?.data | async" [res]="option" [value]="option[cell?.otherOpts?.valueField]">{{option[cell?.otherOpts?.displayField]}}</md-option>
+                </md-select>
+                <md-select multiple *ngSwitchCase="'multipleSelect'"
+                           floatPlaceholder="never"
+                           [name]="cell.name"
+                           [placeholder]="cell.title"
+                           [(ngModel)]="row[cell.name]"
+                           [color]="cell?.otherOpts?.color"
+                           [disabled]="cell?.otherOpts?.disabled(row,cell)"
+                           [required]="cell?.otherOpts?.required(row,cell)"
+                           (change)="cell?.otherOpts?.onChange(row,$event)"
+                >
+                    <md-option *ngFor="let option of cell?.otherOpts?.data | async" [res]="option" [value]="option[cell?.otherOpts?.valueField]">{{option[cell?.otherOpts?.displayField]}}</md-option>
+                </md-select>
+                <md-input-search *ngSwitchCase="'inputSearch'"
+                                 floatPlaceholder="never"
+                                 (onBlur)="cell?.otherOpts?.onBlur(row,$event)"
+                                 (onSelected)="cell?.otherOpts?.onSelected(row,$event)"
+                                 [onBeforClick]="cell?.otherOpts?.onBeforClick"
+                                 [displayFn]="cell?.otherOpts?.displayFn"
+                                 [optionDisplayFn]="cell?.otherOpts?.optionDisplayFn"
+                                 [filterField]="cell?.otherOpts?.filterField"
+                                 [valueField]="cell?.otherOpts?.valueField"
+                                 [disabled]="cell?.otherOpts?.disabled(row,cell)"
+                                 [dataSource]="cell?.otherOpts?.dataSource"
+                                 [name]="cell.name"
+                                 [placeholder]="cell.title"
+                                 [required]="cell?.otherOpts?.required(row,cell)"
+                                 [(ngModel)]="row[cell.name]"></md-input-search>
+            </div>
+        </md-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="{{_defColumn}}">
+        <md-header-cell *cdkHeaderCellDef class="action-wrap" [style.width]="actionCfg.width" [style.flex]="hasWith(actionCfg.width)" [style.display]="_actionDisplay"> 操作 </md-header-cell>
+        <md-cell *cdkCellDef="let row" class="action-wrap" [style.display]="_actionDisplay" [style.width]="actionCfg.width" [style.flex]="hasWith(actionCfg.width)">
+            <span *ngFor="let btn of actionCfg.actions;let indx = index;" [ngClass]="{lborder: hasShowBtns(indx,row,actionCfg.actions)}">
+                <button *ngIf="hasShowBtn(row,btn)" [disabled]="btnDisabled(row,btn)"  md-button (click.stop)="btnClick(btn,row,cell,$event)">{{btnDisplay(row,btn)}}</button>
+            </span>
+        </md-cell>
+    </ng-container>
+    <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row (rowClick)="onRowClick(row,$event)" uuid="{{row['table_id']}}" *cdkRowDef="let row; columns: displayedColumns;let odd = odd;" [ngClass]="{'tb-odd': odd && _isShowOddEffet }"></md-row>
+</md-table>
+<div class="no-data" *ngIf="hasData()">暂时没有数据</div>
+<md-paginator [ngClass]="{'show':(dataSource && dataSource.resultsLength > 0)}" #paginator
+              [length]="dataSource && dataSource.resultsLength || 0"
+              [(pageSize)]="database.pageSize"
+              [(pageIndex)]="database.pageIndex"
+              itemsPerPageLabel="总共{records}记录/总共{pages}页"
+              toPageLabel="跳转到"
+              pageLabal="页"
+              nextPageLabel="下一页"
+              previousPageLabel="上一页"
+              homePageLabel="首页"
+              lastPageLabel="末页">
+</md-paginator>

@@ -1,0 +1,17 @@
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>产品信息</h3><a *ngIf="helper.btnRole('SPPRODADD')" (click.stop)="onAddSPProdCfg()">添加产品配置</a>
+  </div>
+  <md-table-extend mode="edit"
+                   #spProdTable
+                   local="true"
+                   [columns]="spProdColumns"
+                   [database]="spProdDB"
+                   [actionCfg]="spProdActions"
+                   [detailCfg]="spProdDetailCfg"
+                   (rowClick)="onRowClick($event)"></md-table-extend>
+  <div class="btn-area text-center" *ngIf="!hasSource()">
+    <button md-raised-button type="button" color="primary" (click.stop)="onLastStep()">返回上一步</button>
+    <button md-raised-button type="button" color="primary" (click.stop)="onNextStep()">下一步</button>
+  </div>
+</div>

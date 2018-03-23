@@ -1,0 +1,59 @@
+<md-card class="mdcard-margin-bottom search-panel" >
+  <form (submit)="onSearch()">
+    <md-card-content>
+      <md-input-container>
+        <input mdInput name="name" id="name" placeholder="商户名称" [(ngModel)]="form.name"/>
+      </md-input-container>
+      <md-input-container  >
+        <input mdInput placeholder="商户编号"  name="merchantNo"  id="merchantNo" [(ngModel)]="form.merchantNo" >
+      </md-input-container>
+      <md-input-container  >
+        <input mdInput placeholder="进件批次号"  name="outerBatchId"  id="outerBatchId" [(ngModel)]="form.outerBatchId" >
+      </md-input-container>
+      <md-input-search placeholder="所属机构" name="bankNo" id="bankNo" [(ngModel)]="form.bankNo"
+                       [onBeforClick]="mchBankbeforClickFunc.bind(this)"
+                       [dataSource]="mchBankDataSource"
+                       [displayFn]="mchBankdisplayFn.bind(this)"
+                       (onSelected)="bankSelected($event)"
+                       [optionDisplayFn]="mchBankOptionDisplayFn"
+                       [filterField]="mchBnakFilterFields"
+                       valueField="orgNo"></md-input-search>
+
+      <md-input-search placeholder="所属上级" name="chanNo" id="chanNo" [(ngModel)]="form.chanNo"
+                       [onBeforClick]="mchAgentBeforClickFunc.bind(this)"
+                       [dataSource]="mchAgentDataSource"
+                       [displayFn]="mchAgentDisplayFn.bind(this)"
+                       (onSelected)="chanSelected($event)"
+                       [optionDisplayFn]="mchAgentOptionDisplayFn"
+                       [filterField]="mchAgentFilterFields"
+                       valueField="chanCode"></md-input-search>
+
+      <md-select placeholder="用户状态"    name="examState" id="examState" [(ngModel)]="form.examState" >
+        <md-option value="">全部</md-option>
+        <md-option *ngFor="let States of examState" [value]="States?.id">{{States?.name}}</md-option>
+      </md-select>
+
+      <md-input-container  >
+          <input mdInput placeholder="商户识别码"  name="ally"  id="ally" [(ngModel)]="form.ally">
+        </md-input-container>
+      <md-input-search placeholder="通道类型" name="centerId" id="centerId" [(ngModel)]="form.centerId"
+                       [onBeforClick]="mchCenterbeforClickFunc.bind(this)"
+                       [dataSource]="mchCenterDataSource"
+                       [displayFn]="mchCenterdisplayFn.bind(this)"
+                       (onSelected)="centerSelected($event)"
+                       [optionDisplayFn]="mchCenterOptionDisplayFn"
+                       [filterField]="mchCenterFilterFields"
+                       valueField="id"></md-input-search>
+      <md-select class="select-ptb" placeholder="支付权限" name="tradeAuth"  [(ngModel)]="form.tradeAuth" >
+        <md-option value="">全部</md-option>
+        <md-option *ngFor="let Auth of tradeAuth" [value]="Auth?.id">{{ Auth?.name }}</md-option>
+      </md-select>
+      <button md-raised-button color="primary" >查询</button>
+      <button md-raised-button type="button" color="default"   *ngIf="helper.btnRole('MCHNEW')" (click.stop)="onAddmch($event)">新增商户</button>
+      <button md-raised-button type="button" color="default"  *ngIf="helper.btnRole('BATCHAPPROVEMCHCLOUD')" (click.stop)="onAuthentication($event)">批量认证</button>
+    </md-card-content>
+  </form>
+</md-card>
+<md-card>
+  <md-table-extend  #mchlistTable [columns]="mchListColumns" [database]="mchDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>

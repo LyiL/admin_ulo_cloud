@@ -1,0 +1,20 @@
+.edit-win-wrap {
+  padding:10px 20px;
+  .row {
+    width: 100%;
+    .column {
+      width: 50%;
+      display: inline-block;
+    }
+  }
+
+  .mat-focused .mat-input-placeholder.mat-float, .mat-input-placeholder.mat-empty, .mat-input-placeholder.mat-float:not(.mat-empty){
+    -webkit-transform: translateY(0rem) translateX(-4rem) scale(1) perspective(100px) translateZ(0.001px);
+    transform: translateY(0rem) translateX(-4rem) scale(1) perspective(100px) translateZ(0.001px);
+    -ms-transform: translateY(0rem) translateX(-4rem) scale(1) perspective(100px) translateZ(0.001px);
+  }
+
+  .btn-area{
+    text-align: center;
+  }
+}

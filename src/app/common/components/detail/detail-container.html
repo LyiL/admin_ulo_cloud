@@ -1,0 +1,5 @@
+<md-tab-group class="{{className}}" [(selectedIndex)]="selectedIndex" (selectChange)="onSelectChange()">
+  <md-tab *ngFor="let tab of tabs;let ind=index;" label="{{tab?.label}}" [disabled]="hasStep(ind)">
+    <ng-template #dynamicTarget></ng-template>
+  </md-tab>
+</md-tab-group>

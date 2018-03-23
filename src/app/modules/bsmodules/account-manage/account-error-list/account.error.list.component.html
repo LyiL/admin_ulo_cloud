@@ -1,0 +1,53 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form #accountErrorSearchForm="ngForm" (submit)="onSearch()">
+    <md-card-content>
+    <md-input-group isDateTimeGroup="true"
+                    firstPlaceholder="起始日期"
+                    lastPlaceholder="结束日期"
+                    [(firstField)]="form.checkTimeStart"
+                    [(lastField)]="form.checkTimeEnd"
+                    [dateOpts]="dateOpts"
+                    firstName="checkTimeStart"
+                    lastName="checkTimeEnd">
+    </md-input-group>
+    <md-input-search placeholder="结算账户" name="partner" id="partner" [(ngModel)]="form.partner"
+                     [onBeforClick]="cashCompanionbeforClickFunc.bind(this)"
+                     [dataSource]="cashCompanionDataSource"
+                     [displayFn]="cashCompaniondisplayFn.bind(this)"
+                     (onSelected)="partnerSelected($event)"
+                     [optionDisplayFn]="cashCompanionOptionDisplayFn"
+                     [filterField]="cashCompanionFilterFields"
+                     valueField="companion">
+    </md-input-search>
+    <md-select placeholder="处理状态" name="handleState" [(ngModel)]="form.handleState" class="intoPieces-pt">
+      <md-option value="">全部</md-option>
+      <md-option *ngFor="let handleState of handleStates" [value]="handleState?.id">
+        {{ handleState?.name }}
+      </md-option>
+    </md-select>
+    <button md-raised-button type="submit" color="primary">查询</button>
+
+    <button md-raised-button type="button" class="ifShow-btn" (click.stop)="show = !show">{{show ? '隐藏高级查询' : '显示高级查询'}}</button>
+
+    <div *ngIf="show">
+      <md-input-container>
+        <input mdInput name="" placeholder="平台单号" name="orderNo" [(ngModel)]="form.orderNo"/>
+      </md-input-container>
+      <md-input-container>
+        <input mdInput name="" placeholder="第三方订单号" name="transactionId" [(ngModel)]="form.transactionId"/>
+      </md-input-container>
+      <md-input-container>
+        <input mdInput name="" placeholder="退款单号" name="refundNo" [(ngModel)]="form.refundNo"/>
+      </md-input-container>
+      <md-input-container>
+        <input mdInput name="" placeholder="第三方退款单号" name="refundId" [(ngModel)]="form.refundId"/>
+      </md-input-container>
+    </div>
+
+    </md-card-content>
+  </form>
+</md-card>
+
+<md-card>
+  <md-table-extend #accountErrorListTable [columns]="accountErrorColumns" [database]="accountErrorDB"  isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>

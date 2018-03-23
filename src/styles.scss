@@ -1,0 +1,290 @@
+@import '~@angular/material/_theming';/* You can add global styles to this file, and also import other style files */
+
+@include mat-core();
+$candy-app-primary: mat-palette($mat-blue);
+$candy-app-accent: mat-palette($mat-pink, A200, A100, A400);
+$candy-app-warn: mat-palette($mat-red);
+$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+@include angular-material-theme($candy-app-theme);
+
+$dark-primary: mat-palette($mat-green);
+$dark-accent:  mat-palette($mat-green, 500, 500, 500);
+$dark-warn:    mat-palette($mat-green);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+$logo-bg: #fff;
+
+.login-form{
+  &.green{
+    @include mat-input-theme($dark-theme);
+    @include mat-checkbox-theme($dark-theme);
+  }
+}
+
+@import "app/common/styles/form";
+@import "app/common/styles/layout";
+@import "app/common/styles/rewrite";
+//@import "googleapis.icon";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  height: 100%;
+  line-height: normal;
+  font-family: Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size:14px;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a{
+  cursor:pointer;
+  color:#5898fc;
+  text-decoration: blink;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+md-sidenav-container {
+  height: 100%;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+
+pre {
+  margin: 0;
+}
+
+code {
+  white-space: pre;
+}
+
+h3, h4, h5, p {
+  margin: 0 0 16px;
+}
+
+h4 {
+  font-weight: 500;
+  color: #777777;
+  font-size: 18px;
+}
+
+p {
+  line-height: 1.5;
+}
+
+.inline {
+  display: inline-block;
+  padding: 0 0.5em;
+  white-space: normal;
+  vertical-align: text-bottom;
+}
+
+[md-prefix] > md-icon, [md-suffix] > md-icon {
+  font-size: 18px;
+  vertical-align: middle;
+  height: 16px;
+  width: 22px;
+}
+
+.subline {
+  color: #999999;
+}
+
+.avatar-flex {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.widget {
+  margin: 12px;
+}
+
+.border-radius {
+  border-radius: 50%;
+}
+
+.avatar {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.middle {
+  vertical-align: middle;
+}
+
+.quickpanel .mat-tab-body-content,
+.quickpanel .mat-tab-body-wrapper,
+.quickpanel md-tab-body,
+.quickpanel md-tab-group {
+  height: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.mt0 {
+  margin-top: 0 !important;
+}
+
+md-card.mat-card{
+  box-shadow:none;
+  border:solid #e6eaed;
+  border-width: 1px 0;
+  padding:15px 24px;
+}
+
+ul,li{list-style: none;}
+
+.page-loading-wrap{
+  width:100%;
+  height:100%;
+  background: -webkit-linear-gradient(315deg, #00C4FF, #9D1BB2);
+  background: linear-gradient(135deg, #00C4FF, #9D1BB2);
+}
+
+@-webkit-keyframes progress1 {
+  0% {
+    -webkit-transform: scalex(0);
+    transform: scalex(0);
+    opacity: .5;
+  }
+  90% {
+    -webkit-transform: scalex(1);
+    transform: scalex(1);
+    opacity: 1;
+  }
+  92% {
+    -webkit-transform: scalex(1);
+    transform: scalex(1);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scalex(1);
+    transform: scalex(1);
+    opacity: 0;
+  }
+}
+
+@keyframes progress1 {
+  0% {
+    -webkit-transform: scalex(0);
+    transform: scalex(0);
+    opacity: .5;
+  }
+  90% {
+    -webkit-transform: scalex(1);
+    transform: scalex(1);
+    opacity: 1;
+  }
+  92% {
+    -webkit-transform: scalex(1);
+    transform: scalex(1);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scalex(1);
+    transform: scalex(1);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes progress2 {
+  0% {
+    -webkit-transform: scale(0.3, 0.8) translatez(0);
+    transform: scale(0.3, 0.8) translatez(0);
+    opacity: 0;
+  }
+  90% {
+    -webkit-transform: scale(1, 1) translatex(300px) translatez(0);
+    transform: scale(1, 1) translatex(300px) translatez(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1, 1) translatex(300px) translatez(0);
+    transform: scale(1, 1) translatex(300px) translatez(0);
+    opacity: 0;
+  }
+}
+@keyframes progress2 {
+  0% {
+    -webkit-transform: scale(0.3, 0.8) translatez(0);
+    transform: scale(0.3, 0.8) translatez(0);
+    opacity: 0;
+  }
+  90% {
+    -webkit-transform: scale(1, 1) translatex(300px) translatez(0);
+    transform: scale(1, 1) translatex(300px) translatez(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1, 1) translatex(300px) translatez(0);
+    transform: scale(1, 1) translatex(300px) translatez(0);
+    opacity: 0;
+  }
+}
+.line {
+  position: absolute;
+  top: 50%;
+  width: 300px;
+  left: 50%;
+  margin-left: -150px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.line:before {
+  -webkit-animation: progress1 4s infinite;
+  animation: progress1 4s infinite;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  content: "";
+  display: block;
+  width: 300px;
+  height: 100%;
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.1) 10%, rgba(255, 255, 255, 0.4) 80%, white);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.1) 10%, rgba(255, 255, 255, 0.4) 80%, white);
+}
+.line:after {
+  content: "";
+  position: absolute;
+  -webkit-animation: progress2 4s infinite;
+  animation: progress2 4s infinite;
+  -webkit-transform-origin: 90% 50%;
+  transform-origin: 90% 50%;
+  margin-left: -24px;
+  top: -9px;
+  width: 30px;
+  height: 21px;
+  border-radius: 2px;
+  background: rgba(210, 189, 255, 0.55);
+  -webkit-filter: blur(8px);
+  filter: blur(8px);
+  box-shadow: 0 0 10px 6px rgba(210, 189, 255, 0.4), -20px 0 15px 4px rgba(210, 189, 255, 0.3), -40px 0 15px 2px rgba(210, 189, 255, 0.2), -60px 0 10px 1px rgba(210, 189, 255, 0.1), -80px 0 10px 1px rgba(210, 189, 255, 0.05);
+}
+
+.textarea-style-rsakey {
+  height: 90px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+

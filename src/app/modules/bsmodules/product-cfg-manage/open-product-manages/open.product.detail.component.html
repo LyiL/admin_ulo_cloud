@@ -1,0 +1,10 @@
+<div class="three-detail">
+  <ulo-detail [detailFields]="openProdDetailField" #detail [(reqParams)]="openProdDetailParam" (detailData)="openProdDetailData($event)" threeColumn="true"></ulo-detail>
+</div>
+<div class="three-detail last-child">
+  <md-table-extend #productTable mode="edit" local="true" [saveConfirmFunc]="onBeforeSaveCfg.bind(this)"  (onCancel)="onCancel()" (onSave)="onOpenProdCfgSave($event)" [columns]="openProdDetailColumns" [(actionCfg)]="openProdDetailActionCfg" [database]="openProdDetailDB" (onEditBefore)="onEditProdCfg($event)"></md-table-extend>
+</div>
+<div class="btn-area text-center">
+  <button md-raised-button type="button" color="primary" *ngIf="curProdHasAudited()" (click.stop)="onAudited()">审核通过</button>
+  <button md-raised-button type="button" *ngIf="curProdHasAudited()" (click.stop)="onAuditReject()">审核拒绝</button>
+</div>

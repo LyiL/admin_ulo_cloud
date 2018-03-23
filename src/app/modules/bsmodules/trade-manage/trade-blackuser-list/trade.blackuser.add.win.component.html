@@ -1,0 +1,12 @@
+<form  class="form-layout"  (ngSubmit)="onSubmit()" [formGroup]="tradeBlackuser">
+  <div  class="three-detail">
+    <div fxLayout="column" class="refundWin">
+      <md-input-container floatPlaceholder="never"  horizontal="true">
+        <input mdInput placeholder="平台单号" formControlName="orderNo"  name="orderNo" [(ngModel)]="model.orderNo" required/>
+      </md-input-container>
+    </div>
+  </div>
+  <div class="btn-area text-center" >
+    <button md-raised-button color="primary" [disabled]="!tradeBlackuser.valid">保存</button>
+  </div>
+</form>

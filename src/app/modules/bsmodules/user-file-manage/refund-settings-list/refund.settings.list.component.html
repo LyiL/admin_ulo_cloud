@@ -1,0 +1,19 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form #refundSettingsSearchForm="ngForm" (submit)="onSearch()">
+    <md-card-content>
+    <md-input-container>
+      <input mdInput placeholder="商户名称" name="name" [(ngModel)]="form.name"/>
+    </md-input-container>
+    <md-input-container>
+      <input mdInput placeholder="商户编号" name="merchantNo" [(ngModel)]="form.merchantNo"/>
+    </md-input-container>
+    <button md-raised-button type="submit" color="primary">查询</button>
+    </md-card-content>
+  </form>
+</md-card>
+
+<md-card>
+  <md-table-extend #refundSettingsListTable [columns]="refundSettingsColumns" [database]="refundSettingsListDBService" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>
+
+

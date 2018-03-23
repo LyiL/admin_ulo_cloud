@@ -1,0 +1,67 @@
+.chartjs-tooltip{
+  opacity: 1;
+  position: absolute;
+  background: rgba(0, 0, 0, .7);
+  color: white;
+  border-radius: 3px;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+  pointer-events: none;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+}
+.none{
+  display:none;
+}
+.block{
+  display:block;
+  position: relative;
+}
+.count-wrap{
+  position: relative;
+}
+.canvas-wrap{
+  position: relative;
+  top:20px;
+  canvas{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+}
+
+.time-line{
+  border:1px solid #ccc;
+  overflow: hidden;
+  clear: both;
+  zoom: 1;
+  display: -webkit-box;
+  .before-interval,.after-interval{
+    width:40px;
+    line-height: 30px;
+    height:30px;
+    border:0 solid #ccc;
+    cursor: pointer;
+    user-select: none;
+  }
+  .before-interval{
+    border-right-width: 1px;
+  }
+  .after-interval{
+    border-left-width:1px;
+  }
+  .interval-wrap{
+    line-height: 30px;
+    height:30px;
+    position: relative;
+    -webkit-box-flex: 1;
+  }
+  .interval-btn{
+    position: absolute;
+    border:1px solid #4c9afa;
+    background-color:#4c9afa;
+    left:0;
+    min-width: 80px;
+    height:30px;
+  }
+}

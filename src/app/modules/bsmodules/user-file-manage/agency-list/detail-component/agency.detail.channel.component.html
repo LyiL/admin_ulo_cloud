@@ -1,0 +1,17 @@
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>渠道信息</h3><a *ngIf="helper.btnRole('AGENTPGNEW')" (click.stop)="onNewChannel(channelTable)">新增</a>
+  </div>
+  <md-table-extend mode="editWin" #channelTable local="true"
+                   [editWinOption]="channelEditWinOption"
+                   [(columns)]="channelColumns"
+                   [database]="channelDB"
+                   [actionCfg]="channelActionCfg"
+                   (onEditBefore)="onEditAgencyChannel($event)"
+                   (onCancel)="onCancelChannel()"
+                   [onSaveOb]="onSaveChannel.bind(this)"
+                   [saveConfirmFunc]="onBeforeSaveChannel.bind(this)"
+  ></md-table-extend>
+</div>
+
+

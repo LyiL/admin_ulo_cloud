@@ -1,0 +1,40 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (submit)="onSearch()">
+    <md-card-content>
+    <md-input-container>
+      <input mdInput name="name" id="name" placeholder="服务商名称" [(ngModel)]="form.name"/>
+    </md-input-container>
+    <md-input-container>
+      <input mdInput name="chanCode" id="chanCode" placeholder="服务商编号"  [(ngModel)]="form.chanCode"/>
+    </md-input-container>
+    <md-input-search placeholder="所属机构" name="bankCode" id="bankCode" [(ngModel)]="form.bankCode"
+                     [onBeforClick]="beforClickFunc.bind(this)"
+                     [dataSource]="spDataSource"
+                     [displayFn]="displayFn.bind(this)"
+                     (onSelected)="bankSelected($event)"
+                     [optionDisplayFn]="spOptionDisplayFn"
+                     [filterField]="spFilterFields"
+                     valueField="orgNo"></md-input-search>
+
+    <md-input-search placeholder="所属上级" name="parentChanCode" id="parentChanCode" [(ngModel)]="form.parentChanCode"
+                     [onBeforClick]="agencyChanbeforClickFunc.bind(this)"
+                     [dataSource]="agencyChanDataSource"
+                     [displayFn]="agencyChandisplayFn.bind(this)"
+                     (onSelected)="agencySelected($event)"
+                     [optionDisplayFn]="agencyChanOptionDisplayFn"
+                     [filterField]="agencyChanFilterFields"
+                     valueField="chanCode"></md-input-search>
+
+    <md-select name="examState" id="examState" placeholder="用户状态" [(ngModel)]="form.examState" class="intoPieces-pt">
+      <md-option value="">全部</md-option>
+      <md-option *ngFor="let state of examineStatus | async" [value]="state?.id">{{state?.name}}</md-option>
+    </md-select>
+
+    <button md-raised-button color="primary" type="submit">查询</button>
+    <button md-raised-button (click.stop)="onNewSp()" *ngIf="helper.btnRole('SPNEW')" color="default" type="button" class="check-btn btn-margin-right">新增服务商</button>
+    </md-card-content>
+  </form>
+</md-card>
+<md-card class="mt-20">
+  <md-table-extend #spTable [columns]="serviceProviderColumns" [database]="_spDBService" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>

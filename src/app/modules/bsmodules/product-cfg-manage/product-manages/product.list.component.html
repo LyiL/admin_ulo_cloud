@@ -1,0 +1,34 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (submit)="onSearch()">
+    <md-card-content>
+      <md-input-container>
+          <input mdInput name="combName" id="combName" placeholder="产品名称" [(ngModel)]="form.combName"/>
+        </md-input-container>
+        <md-select name="productType" placeholder="产品类型" [(ngModel)]="form.productType">
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let type of prodTypes" [value]="type?.id">{{type?.name}}</md-option>
+        </md-select>
+        <md-select name="productType" placeholder="适用商家" [(ngModel)]="form.applyType">
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let apply of applyTypes" [value]="apply?.id">{{apply?.name}}</md-option>
+        </md-select>
+        <md-select name="productType" placeholder="产品状态" [(ngModel)]="form.productState">
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let state of prodStates" [value]="state?.id">{{state?.name}}</md-option>
+        </md-select>
+        <md-input-search placeholder="所属机构" name="bankNo" id="bankNo" [(ngModel)]="form.bankNo"
+                          [onBeforClick]="beforClickFunc.bind(this)"
+                          [dataSource]="prodDataSource"
+                          [displayFn]="displayFn.bind(this)"
+                          (onSelected)="bankSelected($event)"
+                          [optionDisplayFn]="prodOptionDisplayFn"
+                          [filterField]="prodFilterFields"
+                          valueField="orgNo"></md-input-search>
+        <button md-raised-button color="primary">查询</button>
+        <button md-raised-button type="button" (click.stop)="onNewProd()">新增产品</button>
+    </md-card-content>
+  </form>
+</md-card>
+<md-card class="mt-20">
+  <md-table-extend #prodTable [columns]="prodColumns" [actionCfg]="prodActionCfg" [database]="prodDB"></md-table-extend>
+</md-card>

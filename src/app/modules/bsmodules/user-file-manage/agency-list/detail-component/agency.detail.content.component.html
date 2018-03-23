@@ -1,0 +1,41 @@
+<div class="detail-user-state {{userState()}}"><span *ngIf="agencyDetailData">{{helper.dictTrans('EXAMINE_STATUS',agencyDetailData['examState'])}}</span></div>
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>基本信息</h3><a *ngIf="helper.btnRole('AGENTEDIT')" (click.stop)="onEditBaseInfo()">编辑</a>
+  </div>
+  <ulo-detail #agencyDetail [detailFields]="agencyDetailFields" (detailData)="agencyDetailDataLoaded($event)" [(reqParams)]="agencyDetailReqParam" hasGroup="true"></ulo-detail>
+</div>
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>账户信息</h3><a *ngIf="helper.btnRole('AGENTACCOUNTNEW')" (click.stop)="onNewAccount(accountTable)">新增</a>
+  </div>
+  <md-table-extend mode="editWin" #accountTable local="true"
+                   [editWinOption]="accountEditWinOption"
+                   [columns]="accountColumns"
+                   [database]="accountDB"
+                   [actionCfg]="accountActionCfg"
+                   (onEditBefore)="onEditAgencyAccount($event)"
+                   (onCancel)="onCancelAccount()"
+                   [onSaveOb]="onSaveAccount.bind(this)"
+                   [saveConfirmFunc]="onBeforeSaveAccount.bind(this)"
+  ></md-table-extend>
+</div>
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>操作记录</h3>
+  </div>
+  <div class="operation_record_wrap">
+    <div class="record" *ngFor="let record of agencyOperationLog | async">
+      <span class="time">{{record.examineTime|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+      <span>{{record.examineRemark}}</span>
+      <span class="status">{{record.examineStatus}}</span>
+      <span class="operation">(操作者：{{record.examineUser}})</span>
+    </div>
+  </div>
+  <div class="btn-area align-center-box">
+    <button md-raised-button type="button" *ngIf="helper.btnRole('AGENTEXAMINE')" color="primary" (click.stop)="onExamine($event)">审核</button>
+    <button md-raised-button type="button" *ngIf="helper.btnRole('AGENTEMAILSMI')" (click.stop)="onSendEmailAndSTM($event)">发送邮件和短信</button>
+  </div>
+</div>
+
+

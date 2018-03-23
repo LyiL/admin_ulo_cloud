@@ -1,0 +1,30 @@
+  <div class="detail-user-state {{userState()}}"><span *ngIf="submerchantDetailData">{{helper.dictTrans('EXAMINE_STATUS',submerchantDetailData['examState'])}}</span></div>
+  <div class="detail-item">
+    <div class="detail-title">
+      <h3>基本信息</h3>
+      <!--<a *ngIf="helper.btnRole('SUBMCHEDIT')" (click.stop)="onEdit()">编辑</a>-->
+    </div>
+    <ulo-detail #submerchantDetail [detailFields]="submerchantDetailFields" (detailData)="submerchantDetailDataLoaded($event)" [(reqParams)]="submerchantDetailReqParam" hasGroup="true"></ulo-detail>
+    <div class="btn-area align-center-box" *ngIf="helper.hasConfigValueMatch('CLOUD_ULO_BANK_NO', bankNo)">
+      <!--登录进来的账号为优络时才显示审核按钮-->
+      <button md-raised-button type="button" *ngIf="helper.btnRole('SUBMCHEXAMINE')" color="primary" (click.stop)="onExamine($event)">审核</button>
+    </div>
+  </div>
+  <!--<div class="detail-item" *ngIf="!(orgNo == '20000')">-->
+    <!--<div class="detail-title">-->
+      <!--<h3>操作记录</h3>-->
+    <!--</div>-->
+    <!--<div class="operation_record_wrap">-->
+      <!--<div class="record" *ngFor="let record of subMchOperationLog | async">-->
+        <!--<span class="time">{{record.examineTime|date:'yyyy-MM-dd HH:mm:ss'}}</span>-->
+        <!--<span>{{record.examineRemark}}</span>-->
+        <!--<span class="status">{{record.examineStatus}}</span>-->
+        <!--<span class="operation">(操作者：{{record.examineUser}})</span>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="btn-area align-center-box">-->
+      <!--<button md-raised-button type="button" *ngIf="helper.btnRole('SUBMCHEXAMINE')" color="primary" (click.stop)="onExamine($event)">审核</button>-->
+    <!--</div>-->
+  <!--</div>-->
+
+

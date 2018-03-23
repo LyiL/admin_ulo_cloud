@@ -1,0 +1,12 @@
+<form class="form-layout" novalidate (ngSubmit)="onSubmit()">
+  <div class="three-detail">
+    <div fxLayout="column" class="versionWin">
+      <md-input-container floatPlaceholder="never" horizontal="true">
+        <input mdInput placeholder="交易当日总限额(元)" type="number" required  step="0.01" [(ngModel)]="totalFeeLimit" name="tradeLimit"/>
+      </md-input-container>
+    </div>
+    <div class="btn-area">
+      <button md-raised-button color="primary" [disabled]="helper.isEmpty(totalFeeLimit)">保存</button>
+    </div>
+  </div>
+</form>

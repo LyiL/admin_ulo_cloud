@@ -1,0 +1,184 @@
+<md-card class="mdcard-margin-bottom search-panel">
+    <form #bussinessDaySearchForm="ngForm" (submit)="onSearch()">
+      <md-card-content>
+        <md-select placeholder="查询类型" name="searchType" id="searchType" [(ngModel)]="form.searchType" class="intoPieces-pt">
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let query of queryTypes" [value]="query?.id">
+            {{ query?.name }}
+          </md-option>
+        </md-select>
+      <md-input-group isDateTimeGroup="true"
+                      firstPlaceholder="起始日期"
+                      lastPlaceholder="结束日期"
+                      [(firstField)]="form.beginTime"
+                      [(lastField)]="form.endTime"
+                      [dateOpts]="dateOpts"
+                      firstName="beginTime"
+                      lastName="endTime">
+      </md-input-group>
+        <md-input-search placeholder="受理机构" name="agencyCode" id="agencyCode" [(ngModel)]="form.agencyCode"
+                         [onBeforClick]="businessBankbeforClickFunc.bind(this)"
+                         [dataSource]="businessBankDataSource"
+                         [displayFn]="businessBankdisplayFn.bind(this)"
+                         (onSelected)="bankSelected($event)"
+                         [optionDisplayFn]="businessBankOptionDisplayFn"
+                         [filterField]="businessBnakFilterFields"
+                         valueField="orgNo">
+        </md-input-search>
+        <!--<md-input-search placeholder="渠道层级编号" name="agentno" id="agentno" [(ngModel)]="form.agentno"-->
+        <md-input-search placeholder="渠道名称" name="agentno" id="agentno" [(ngModel)]="form.agentno"
+                         [onBeforClick]="chanelAgentbeforClickFunc.bind(this)"
+                         [dataSource]="chanelAgentDataSource"
+                         [displayFn]="chanelAgentdisplayFn.bind(this)"
+                         (onSelected)="chanelSelected($event)"
+                         [optionDisplayFn]="chanelAgentOptionDisplayFn"
+                         [filterField]="chanelAgentFilterFields"
+                         valueField="agentno">
+        </md-input-search>
+
+        <!--<md-input-search placeholder="服务商层级编号" name="chanProNo" id="chanProNo" [(ngModel)]="form.chanProNo"-->
+        <md-input-search placeholder="服务商名称" name="chanProNo" id="chanProNo" [(ngModel)]="form.chanProNo"
+                         [onBeforClick]="providerBeforClickFunc.bind(this)"
+                         [dataSource]="providerDataSource"
+                         [displayFn]="providerDisplayFn.bind(this)"
+                         (onSelected)="providerSelected($event)"
+                         [optionDisplayFn]="providerOptionDisplayFn"
+                         [filterField]="providerFilterFields"
+                         valueField="agentno">
+        </md-input-search>
+        <md-input-search placeholder="商户名称" name="merchantNo" id="merchantNo" [(ngModel)]="form.merchantNo"
+                         [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                         [dataSource]="merchantDataSource"
+                         [displayFn]="merchantDisplayFn.bind(this)"
+                         (onSelected)="merchantSelected($event)"
+                         [optionDisplayFn]="merchantOptionDisplayFn"
+                         [filterField]="merchantFilterFields"
+                         valueField="merchantNo">
+        </md-input-search>
+        <md-input-search placeholder="结算账户" name="ally" id="ally" [(ngModel)]="form.ally"
+                         [onBeforClick]="cashCompanionbeforClickFunc.bind(this)"
+                         [dataSource]="cashCompanionDataSource"
+                         [displayFn]="cashCompaniondisplayFn.bind(this)"
+                         (onSelected)="cashCompaniondSelected($event)"
+                         [optionDisplayFn]="cashCompanionOptionDisplayFn"
+                         [filterField]="cashCompanionFilterFields"
+                         valueField="companion">
+        </md-input-search>
+        <md-input-search placeholder="支付中心" name="centerId" id="centerId" [(ngModel)]="form.centerId" class="intoPieces-pt"
+                         [onBeforClick]="payCenterbeforClickFunc.bind(this)"
+                         [dataSource]="payCenterDataSource"
+                         [displayFn]="payCenterdisplayFn.bind(this)"
+                         (onSelected)="payCenterSelected($event)"
+                         [optionDisplayFn]="payCenterOptionDisplayFn"
+                         [filterField]="payCenterFilterFields"
+                         valueField="id">
+        </md-input-search>
+        <md-select placeholder="支付类型" name="transId" id="transId"  [(ngModel)]="form.transId" class="intoPieces-pt">
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let payType of payTypes" [value]="payType?.transId">{{ payType?.transType}}</md-option>
+        </md-select>
+        <md-select placeholder="付款状态" name="cashState" [(ngModel)]="form.cashState" class="intoPieces-pt">
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let statu of accountStatus" [value]="statu?.id">
+            {{statu?.name}}
+          </md-option>
+        </md-select>
+        <md-select placeholder="结算周期" name="cashCycle" [(ngModel)]="form.cashCycle" class="intoPieces-pt">
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let cycle of accountCycles" [value]="cycle?.id">
+            {{cycle?.name}}
+          </md-option>
+        </md-select>
+         <button md-raised-button type="submit" color="primary">查询</button>
+         <button md-raised-button type="button" *ngIf="helper.btnRole('MCHBILLREMIT')" (click.stop)="onSettleAccounts()">结算打款</button>
+         <button md-raised-button type="button" *ngIf="helper.btnRole('MCHBILLEXPORT')" (click.stop)="onExport()">导出报表</button>
+
+      </md-card-content>
+    </form>
+</md-card>
+
+<div class="count-wrap mdcard-margin-bottom">
+  <md-card class="count-item">
+    <div class="count-title">交易笔数（笔）</div>
+    <div class="count-content">
+      <i class="number">{{ summaryCount?.totalQua || 0 }}</i>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">交易金额（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <i>{{ helper.priceFormat(summaryCount?.totalFee || 0 )}}</i>
+      </div>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">退款笔数（笔）</div>
+    <div class="count-content">
+      <i>{{ summaryCount?.refundQua || 0 }}</i>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">退款金额（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <i>{{ helper.priceFormat(summaryCount?.refundFee || 0) }}</i>
+      </div>
+    </div>
+  </md-card>
+</div>
+
+<div class="count-wrap mdcard-margin-bottom">
+  <md-card class="count-item">
+    <div class="count-title">交易净额（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <i>{{ helper.priceFormat((summaryCount?.totalFee || 0)-(summaryCount?.refundFee || 0)) }}</i>
+      </div>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">商户总净额（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <i>{{ helper.priceFormat(summaryCount?.cashTotalFee || 0) }}</i>
+      </div>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">手续费总收入（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <i>{{ helper.priceFormat(summaryCount?.poundage2 || 0) }}</i>
+      </div>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">手续费总成本（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <i>{{ helper.priceFormat(summaryCount?.trdPodg || 0) }}</i>
+      </div>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">手续费净收入（元）</div>
+    <div class="count-content">
+      <!--<span>￥</span>-->
+      <div class="num-wrap">
+        <i>{{ helper.priceFormat(summaryCount?.cashPodg2 || 0) }}</i>
+      </div>
+    </div>
+  </md-card>
+</div>
+
+<md-card>
+    <md-table-extend #serviceBusinessListTable [columns]="serviceBusinessColumns" [database]="businessDayDB" isShowOddEffet="true" [actionCfg]="bussinessDayActionCfg"></md-table-extend>
+</md-card>
+

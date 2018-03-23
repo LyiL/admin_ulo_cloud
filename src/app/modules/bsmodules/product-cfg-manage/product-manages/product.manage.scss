@@ -1,0 +1,11 @@
+.prod-cfg-info-wrap{
+  position: relative;
+  .prod-cfg-new-btn{
+    position: absolute;
+    top:14px;
+    right:10px;
+    color:#4c9afa;
+    cursor:pointer;
+    z-index: 9999;
+  }
+}

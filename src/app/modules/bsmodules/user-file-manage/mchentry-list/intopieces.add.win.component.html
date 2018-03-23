@@ -1,0 +1,61 @@
+<form    (ngSubmit)="onSubmit()" [formGroup]="intopieces">
+  <div class="  three-detail">
+    <div class="intoPieces">
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-search placeholder="商户名称" name="merchantId" required formControlName="merchantId" [(ngModel)]="model.merchantId" horizontal="true" floatPlaceholder="never"
+                           [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                           [dataSource]="merchantDataSource"
+                           [displayFn]="merchantDisplayFn"
+                           [optionDisplayFn]="merchantOptionDisplayFn"
+                           [filterField]="merchantFilterFields"
+                           [disabled]="!helper.isEmpty(model['id'])"
+                           valueField="merchantNo"  (onSelected)="onSelect($event)">
+          </md-input-search>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select class="intoPieces-pt" placeholder="支付类型" name="transId" (change)="onSelectTransId($event)"  [(ngModel)]="model.transId" required formControlName="transId"  horizontal="true" floatPlaceholder="never">
+            <md-option *ngFor="let States of tradeTypes" [value]="States?.transId">{{ States?.transType}}</md-option>
+          </md-select>
+
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <!--<md-select placeholder="所属银行" name="agencyCode" required formControlName="agencyCode" [(ngModel)]="model.agencyCode" horizontal="true" floatPlaceholder="never">-->
+          <!--<md-option *ngFor="let prod of agencyCode" [value]="prod.id">{{agencyCode?.name}}</md-option>-->
+          <!--</md-select>-->
+          <md-input-search placeholder="所属银行" name="agencyCode" id="agencyCode" required formControlName="agencyCode" [(ngModel)]="model.agencyCode" horizontal="true" floatPlaceholder="never"
+                           [onBeforClick]="mchBankbeforClickFunc.bind(this)"
+                           [dataSource]="mchBankDataSource"
+                           [displayFn]="mchBankdisplayFn"
+                           [optionDisplayFn]="mchBankOptionDisplayFn"
+                           [filterField]="mchBnakFilterFields"
+                           valueField="orgNo" (onSelected)="onSelectPtBankno($event)"></md-input-search>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-search placeholder="通道类型" name="ptCenterId" id="ptCenterId" required formControlName="ptCenterId" [(ngModel)]="model.ptCenterId" horizontal="true" floatPlaceholder="never"
+                           [onBeforClick]="mchCenterbeforClickFunc.bind(this)"
+                           [dataSource]="mchCenterDataSource"
+                           [displayFn]="mchCenterdisplayFn"
+                           [optionDisplayFn]="mchCenterOptionDisplayFn"
+                           [filterField]="mchCenterFilterFields"
+                           valueField="id" (onSelected)="onSelectPtCenterd($event)"></md-input-search>
+        </div>
+
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true"  >
+            <input mdInput placeholder="渠道编号" formControlName="providerNo" />
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+      <div class="btn-area text-center">
+        <button md-raised-button color="primary" [disabled]="!intopieces.valid">保存</button>
+      </div>
+  </div>
+</form>
+
+

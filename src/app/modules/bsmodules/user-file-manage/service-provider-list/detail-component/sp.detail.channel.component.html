@@ -1,0 +1,56 @@
+<div class="detail-item" *ngIf="helper.hasConfigValueMatch('CLOUD_ULO_BANK_NO', this._bankCode)">
+  <div class="detail-title">
+    <h3>总通道配置</h3><a (click.stop)="onNewTotalChannel(totalChannelTable)">新增</a>
+  </div>
+  <md-table-extend mode="editWin"
+                   #totalChannelTable
+                   local="true"
+                   [editWinOption]="totalChannelWinOption"
+                   [(columns)]="totalChannelColumns"
+                   [database]="totalChannelDB"
+                   [actionCfg]="totalChannelActionCfg"
+                   (onEditBefore)="onEditSPTotalChannel($event)"
+                   (onCancel)="onCancelTotalChannel()"
+                   [onSaveOb]="onSaveTotalChannel.bind(this)"
+                   [saveConfirmFunc]="onBeforeSaveTotalChannel.bind(this)"></md-table-extend>
+</div>
+
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>渠道信息</h3><a *ngIf="helper.btnRole('SPPGNEW')" (click.stop)="onNewChannel(channelTable)">新增</a>
+  </div>
+  <md-table-extend #channelTable
+                   local="true"
+                   [(columns)]="channelColumns"
+                   [database]="channelDB"
+                   [actionCfg]="channelActionCfg"></md-table-extend>
+</div>
+
+
+<div class="detail-item" *ngIf="helper.btnRole('PROCONFUSEPOLLING') && helper.hasConfigValueMatch('CLOUD_ULO_BANK_NO', this._bankCode)">
+  <div class="detail-title " >
+    <h3>轮循配置</h3>
+  </div>
+  <div class="detail-config-item">
+    <span style="display: inline-block;">总资源池轮循</span>
+    <a style="margin-left: 40px; display: inline-block" class="intoPieces"
+       (click.stop)="changePoil($event)">{{ poil == 0? '禁用' : '启用'}}<span><i class="fa fa-toggle-right" ></i></span>
+    </a>
+  </div>
+</div>
+
+
+<div class="detail-item" *ngIf="helper.btnRole('MCHRULECONFEDIT') && helper.hasConfigValueMatch('CLOUD_ULO_BANK_NO', this._bankCode)">
+  <div class="detail-title" >
+    <h3>路由配置</h3>
+  </div>
+  <div class="detail-config-item" style="padding-bottom: 0">
+    <span style="display: inline-block;">业务路由</span>
+    <a style="margin-left: 40px;display: inline-block" class="intoPieces"
+      (click.stop)="onUsed($event)">{{ruleState == 0? '禁用' : '启用'}}<span><i class="fa fa-toggle-right" ></i></span>
+    </a>
+  </div>
+  <div class="detail-config-item">
+    <span>业务配置</span> <span style="display: inline-block;margin-left: 40px">{{tradeType? tradeType :'--'  }}</span>
+  </div>
+</div>

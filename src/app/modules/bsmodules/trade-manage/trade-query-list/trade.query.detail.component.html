@@ -1,0 +1,11 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <div class="detail-item">
+    <div class="detail-title">
+      <h3>订单详情</h3>
+    </div>
+    <ulo-detail [detailFields]="TradeQueryDetailFields" [reqParams]="TradeQueryDetailReqParam" hasGroup="false"></ulo-detail>
+  </div>
+  <div class="align-center-box">
+    <button md-raised-button type="button" (click.stop)="onBack()">返回</button>
+  </div>
+</md-card>

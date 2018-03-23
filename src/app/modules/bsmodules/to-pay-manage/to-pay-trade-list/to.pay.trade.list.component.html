@@ -1,0 +1,93 @@
+  <md-tab-group class="mdcard-margin-bottom search-panel" (selectedIndexChange)="onChangeSearchTab($event)">
+    <md-tab label="批量订单查询">
+      <md-card class="mdcard-margin-bottom search-panel">
+        <form  #toPayTradeSearchForm1="ngForm" (submit)="onSearch()">
+          <md-card-content>
+              <md-input-group isDateTimeGroup="true"
+              firstPlaceholder="起始日期"
+              lastPlaceholder="结束日期"
+              [(firstField)]="form.startDate"
+              [(lastField)]="form.endDate"
+              [dateOpts]="dateOpts"
+              firstName="startDate"
+              lastName="endDate">
+          </md-input-group>
+          <md-input-search placeholder="商户名称" name="mchName" id="mchName" [(ngModel)]="form.mchName"
+                        [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                        [dataSource]="merchantDataSource"
+                        [displayFn]="merchantDisplayFn.bind(this)"
+                         (onSelected)="merchantSelected($event)"
+                        [optionDisplayFn]="merchantOptionDisplayFn"
+                        [filterField]="merchantFilterFields"
+                        valueField="name">
+          </md-input-search>
+          <md-select placeholder="交易状态" class="intoPieces-pt" name="tradeState" [(ngModel)]="form.tradeState">
+          <md-option value="">全部</md-option>
+          <md-option *ngFor="let tradeState of tradeStates" [value]="tradeState?.id">
+            {{ tradeState?.name }}
+          </md-option>
+          </md-select>
+          <md-input-container>
+          <input mdInput placeholder="银行账户" name="payName" [(ngModel)]="form.payName"/>
+          </md-input-container>
+          <md-input-container>
+          <input mdInput placeholder="银行卡号" name="payCardNo" [(ngModel)]="form.payCardNo"/>
+          </md-input-container>
+          <button md-raised-button type="submit" color="primary">查询</button>
+          <button md-raised-button type="button" (click.stop)="onExport()"  *ngIf="helper.btnRole('PAYEXPORT')">导出报表</button>
+          </md-card-content>
+        </form>
+      </md-card>
+      <div class="count-wrap ">
+        <md-card class="count-item">
+          <div class="count-title">代付金额（元）</div>
+          <div class="count-content">
+            <!--<span>￥</span>-->
+            <div class="num-wrap">
+              <i>{{ helper.priceFormat(helper.shuntElement(summaryCount?.totalFeeSum || 0)) }}</i>
+            </div>
+          </div>
+        </md-card>
+        <md-card class="count-item">
+          <div class="count-title">代付手续费（元）</div>
+          <div class="count-content">
+            <!--<span>￥</span>-->
+            <div class="num-wrap">
+              <i>{{ helper.priceFormat(helper.shuntElement(summaryCount?.procsFeeSum || 0)) }}</i>
+            </div>
+          </div>
+        </md-card>
+        <md-card class="count-item">
+          <div class="count-title">总金额（元）</div>
+          <div class="count-content">
+            <!--<span>￥</span>-->
+            <div class="num-wrap">
+              <i>{{ helper.priceFormat(helper.shuntElement(summaryCount?.totalAmountSum || 0)) }}</i>
+            </div>
+          </div>
+        </md-card>
+      </div>
+    </md-tab>
+    <md-tab label="订单号查询">
+      <md-card class="search-panel">
+        <form  #toPayTradeSearchForm2="ngForm" (submit)="onSearchOrder()">
+          <md-card-content>
+            <md-input-container>
+              <input mdInput name="" placeholder="商户单号" name="transNo" [(ngModel)]="orderForm.outTradeNo"/>
+            </md-input-container>
+            <md-input-container>
+              <input mdInput name="" placeholder="代付单号" name="outTradeNo" [(ngModel)]="orderForm.transNo"/>
+            </md-input-container>
+            <button md-raised-button type="submit" color="primary">查询</button>
+          </md-card-content>
+        </form>
+      </md-card>
+    </md-tab>
+  </md-tab-group>
+  <md-card>
+    <md-table-extend #toPayTradeListTable [columns]="toPayTradeListColumns" [database]="toPayTradeListDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+  </md-card>
+
+
+
+

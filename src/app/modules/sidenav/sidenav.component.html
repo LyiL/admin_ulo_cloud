@@ -1,0 +1,16 @@
+<div class="sidenav-container" fxLayout="column">
+  <div class="side-top">
+    <div class="logo"><img src="{{helper.getDomainCfgVal('INSIDE_PAGE_MAX_LOGO')||'webassets/images/list_logo.png'}}" onerror="this.src='webassets/images/list_logo.png'"></div>
+    <div class="logo1"><img src="{{helper.getDomainCfgVal('INSIDE_PAGE_MIN_LOGO')||'webassets/images/logo.png'}}" onerror="this.src='webassets/images/logo.png'"></div>
+    <h5>{{helper.getDomainCfgVal('TITLE')||'管理平台'}}</h5>
+  </div>
+
+  <div class="sidenav-scrollbar-container stb-dark" fxLayout="column">
+    <perfect-scrollbar>
+      <md-nav-list fxLayout="column" class="sidenav-list sidenav-toplevel">
+        <sidenav-item *ngFor="let item of items" [item]="item" [ngClass]="{'bleft':service.isOpen(item)}"></sidenav-item>
+      </md-nav-list>
+    </perfect-scrollbar>
+  </div>
+
+</div>

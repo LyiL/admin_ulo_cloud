@@ -1,0 +1,16 @@
+<form class="form-layout" (ngSubmit)="onSubmit()">
+  <div class="three-detail">
+    <div fxLayout="column">
+      <div class="form-group">
+        <md-radio-group [(ngModel)]="tradeTypeChecked" name="tradeTypeChecked" required="true">
+          <md-radio-button *ngFor="let tradeType of tradeTypes"
+                           [value]="tradeType['id']"
+                           [checked]="tradeType['id'] == tradeTypeChecked">{{tradeType['name']}}</md-radio-button>
+        </md-radio-group>
+      </div>
+    </div>
+    <div class="btn-area text-center">
+      <button md-raised-button color="primary" [disabled] ="helper.isEmpty(tradeTypeChecked)">保存</button>
+    </div>
+  </div>
+</form>

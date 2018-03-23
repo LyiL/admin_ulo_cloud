@@ -1,0 +1,43 @@
+<form class="form-layout" [formGroup]="formGroup">
+  <div class="three-detail">
+    <md-input-container  horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="商户名称" name="name" formControlName="name" [(ngModel)]="model.name" required/>
+    </md-input-container>
+    <div hidden>
+      <md-input-container  horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="商户编号" name="merchantNo" formControlName="merchantNo" [(ngModel)]="model.merchantNo" required/>
+      </md-input-container>
+    </div>
+    <md-select placeholder="支付类型"  horizontal="true" floatPlaceholder="never"  name="transId" formControlName="transId" [(ngModel)]="model.transId" (change)="getTradeName($event)" required>
+      <md-option value="*">全部支付类型</md-option>
+      <md-option *ngFor="let payType of payTypes" [value]="payType?.transId">{{ payType?.transType}}</md-option>
+    </md-select>
+    <md-select placeholder="启用状态"  horizontal="true" floatPlaceholder="never"  name="useState" formControlName="useState" [(ngModel)]="model.useState" required>
+      <md-option *ngFor="let useState of useStates" [value]="useState.id">
+        {{ useState.name }}
+      </md-option>
+    </md-select>
+    <md-input-container horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="允许退款天数" name="refundDayRange" formControlName="refundDayRange" [(ngModel)]="model.refundDayRange" required/>
+    </md-input-container>
+    <!--<div [hidden]="!formGroup.hasError('number','refundDayRange')">-->
+      <!--输入有效数字-->
+    <!--</div>-->
+    <md-input-container horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="当日退款笔数" name="dayRefundCount" formControlName="dayRefundCount" [(ngModel)]="model.dayRefundCount" required/>
+    </md-input-container>
+    <md-input-container horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="单笔退款金额" name="singleRefundFee" formControlName="singleRefundFee" [(ngModel)]="model.singleRefundFee" required/>
+    </md-input-container>
+    <md-input-container horizontal="true" floatPlaceholder="never">
+      <input mdInput placeholder="当日退款金额" name="dayRefundFee" formControlName="dayRefundFee" [(ngModel)]="model.dayRefundFee" required/>
+    </md-input-container>
+    <div class="btn-area">
+      <button color="primary" md-raised-button type="button" (click.stop)="onSave()" [disabled]="!formGroup.valid">保存</button>
+    </div>
+  </div>
+</form>
+
+
+
+

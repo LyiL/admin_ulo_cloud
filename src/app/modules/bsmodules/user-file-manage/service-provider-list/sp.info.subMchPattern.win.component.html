@@ -1,0 +1,16 @@
+<form class="form-layout" (ngSubmit)="onSubmit()">
+  <div class="three-detail">
+    <div fxLayout="column">
+      <div class="form-group">
+        <md-radio-group [(ngModel)]="checkedStyle" name="checkedStyle">
+          <md-radio-button *ngFor="let examStyle of examStyles"
+                         [value]="examStyle['id']"
+                         [checked]="examStyle['id'] == checkedStyle">{{examStyle['name']}}</md-radio-button>
+        </md-radio-group>
+      </div>
+    </div>
+    <div class="btn-area text-center">
+      <button md-raised-button color="primary" [disabled]="helper.isEmpty(checkedStyle)">保存</button>
+    </div>
+  </div>
+</form>

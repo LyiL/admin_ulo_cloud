@@ -1,0 +1,30 @@
+ <form (ngSubmit)="onSubmit()">
+        <div  fxLayout="row">
+          <div class="column" fxLayout="column" fxFlex="10">
+           <span>角色功能权限<span style="color: red;">*</span></span>
+            <span>（可多选）</span>
+          </div>
+          <div class="column" fxLayout="column" fxFlex="50">
+            <div class="form-group" *ngFor="let func of funcs">
+              <md-checkbox class="col-xs-12 black-color" [checked]="itemAllChecked(func)" [indeterminate]="itemAllIndeterminate(func['children'])" (change)="setItemAllChecked(func['children'],$event.checked)">{{func.name}}</md-checkbox>
+              <div style=" margin-left:50px;">
+                <md-checkbox style=" margin-left:30px;"  class="col-xs-3" *ngFor="let cFunc of func['children']" name="children_{{cFunc.id}}" [(ngModel)]="cFunc.checked">
+                  {{cFunc.name}}
+                </md-checkbox>
+
+              </div>
+            </div>
+          </div>
+        </div>
+    <div  class="btn-area text-center">
+      <button md-raised-button  [disabled]="hasDisabled()"  color="primary" >保存</button>
+      <button  md-raised-button type="button"  (click.stop)="Cancel()">返回</button>
+    </div>
+  </form>
+
+
+
+
+
+
+

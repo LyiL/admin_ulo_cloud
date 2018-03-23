@@ -1,0 +1,48 @@
+<md-card class="mdcard-margin-bottom" >
+<form (ngSubmit)="onSubmit()" [formGroup]="roleAdd">
+    <div class="form-item">
+      <div fxLayout="row">
+        <div class="column"  fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="角色名称" formControlName="roleName" name="roleName" [(ngModel)]="model.roleName" required/>
+          </md-input-container>
+        </div>
+      </div>
+        <div fxLayout="row">
+          <div class="column" fxLayout="column" fxFlex="50">
+            <md-input-container horizontal="true">
+              <input mdInput placeholder="角色描述" formControlName="description" name="description" [(ngModel)]="model.description" required/>
+            </md-input-container>
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div class="column" fxLayout="column" fxFlex="50">
+            <md-select placeholder="角色组"  formControlName="parentIds" name="parentIds" [(ngModel)]="model.parentIds" horizontal="true" floatPlaceholder="never" required>
+              <md-option *ngFor="let role of parentIds" [value]="role?.rolecode" >
+                {{ role?.roleName }}
+              </md-option>
+            </md-select>
+          </div>
+        </div>
+    </div>
+    <div  class="btn-area text-center">
+      <button md-raised-button [disabled]="!roleAdd.valid"   type="button"  color="primary" (click.stop)="onNextSetp()">关联菜单权限</button>
+      <button md-raised-button  [disabled]="!roleAdd.valid"  color="primary" >仅保存</button>
+      <button  md-raised-button type="button"  (click.stop)="back()">返回</button>
+    </div>
+  </form>
+</md-card>
+<md-card class="mdcard-margin-bottom">
+  <div>
+    <p>注意:</p>
+    <div style="margin-left: 20px">
+      <p>各平台编辑角色时,暂时能选择该平台所有角色组</p>
+
+      <p>但只有归属于平台员工角色组的角色,才可以分配给员工</p>
+
+      <p>其他类型角色组暂未使用</p>
+    </div>
+  </div>
+</md-card>
+
+

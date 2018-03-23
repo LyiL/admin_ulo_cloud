@@ -1,0 +1,218 @@
+<md-tab-group (selectedIndexChange)="onChangeTab($event)">
+  <md-tab label="渠道日结">
+    <md-card class="mdcard-margin-bottom search-panel">
+      <form (submit)="onSearch()">
+        <md-card-content>
+          <md-input-group
+            isDateTimeGroup="true"
+            firstPlaceholder="清算开始时间"
+            lastPlaceholder="清算结束时间" [(firstField)]="form.billTimeStart"
+            [(lastField)]="form.billTimeEnd"
+            firstName="billTimeStart"
+            lastName="billTimeEnd"
+            [dateOpts]="tradeTimeOpts"
+          ></md-input-group>
+          <md-input-search placeholder="受理机构" name="agencyCode"  [(ngModel)]="form.agencyCode"
+                           [onBeforClick]="mchBankbeforClickFunc.bind(this)"
+                           [dataSource]="mchBankDataSource"
+                           [displayFn]="mchBankdisplayFn.bind(this)"
+                           (onSelected)="agencySelected($event)"
+                           [optionDisplayFn]="mchBankOptionDisplayFn"
+                           [filterField]="mchBnakFilterFields"
+                           valueField="orgNo">
+          </md-input-search>
+
+
+          <md-input-search placeholder="渠道名称" name="canalNo"  [(ngModel)]="form.canalNo"
+                           [onBeforClick]="mchAgentBeforClickFunc.bind(this)"
+                           [dataSource]="mchAgentDataSource"
+                           [displayFn]="mchAgentDisplayFn.bind(this)"
+                           (onSelected)="canalSelected($event)"
+                           [optionDisplayFn]="mchAgentOptionDisplayFn"
+                           [filterField]="mchAgentFilterFields"
+                           valueField="chanCode"></md-input-search>
+
+          <md-input-search placeholder="服务商名称" name="chanProNo" id="chanProNo" [(ngModel)]="form.chanProNo"
+                           [onBeforClick]="providerBeforClickFunc.bind(this)"
+                           [dataSource]="providerDataSource"
+                           [displayFn]="providerDisplayFn.bind(this)"
+                           (onSelected)="providerSelected($event)"
+                           [optionDisplayFn]="providerOptionDisplayFn"
+                           [filterField]="providerFilterFields"
+                           valueField="chanCode">
+          </md-input-search>
+
+          <md-select placeholder="支付类型" name="transId"   [(ngModel)]="form.transId" >
+            <md-option value="">全部</md-option>
+            <md-option *ngFor="let States of tradeTypes" [value]="States?.transId ">{{ States?.transType}}</md-option>
+          </md-select>
+
+          <md-input-search placeholder="结算账户" name="actId" id="actId" [(ngModel)]="form.ally"
+                           [onBeforClick]="cashCompanionbeforClickFunc.bind(this)"
+                           [dataSource]="cashCompanionDataSource"
+                           [displayFn]="cashCompaniondisplayFn.bind(this)"
+                           (onSelected)="actIdSelected($event)"
+                           [optionDisplayFn]="cashCompanionOptionDisplayFn"
+                           [filterField]="cashCompanionFilterFields"
+                           valueField="companion">
+          </md-input-search>
+
+
+
+
+
+          <button md-raised-button  color="primary" type="submit" >查询</button>
+          <button md-raised-button type="button"   *ngIf="helper.btnRole('BILLCHANREMIT')"  (click.stop)="settlePay($event)">结算打款</button>
+        </md-card-content>
+      </form>
+    </md-card>
+    <div class="count-wrap mdcard-margin-bottom">
+      <md-card class="count-item">
+        <div class="count-title">分润总额（元）</div>
+        <div class="count-content">
+          <i>{{ helper.priceFormat(count?.totalFeeSum ||0)}}</i>
+        </div>
+      </md-card>
+      <md-card class="count-item">
+        <div class="count-title">银行净收入（元）</div>
+        <div class="count-content">
+          <div class="num-wrap">
+            <i>{{ helper.priceFormat(count?.bankTotalFeeSum ||0 )}}</i>
+
+          </div>
+        </div>
+      </md-card>
+      <md-card class="count-item">
+        <div class="count-title">渠道分润额（元）</div>
+        <div class="count-content">
+          <div class="num-wrap">
+            <i>{{ helper.priceFormat(count?.chanTotalFeeSum ||0 )}}</i>
+
+          </div>
+        </div>
+      </md-card>
+      <md-card class="count-item">
+        <div class="count-title">技术服务费（元）</div>
+        <div class="count-content">
+          <div class="num-wrap">
+            <i>{{ helper.priceFormat(count?.techTotalFeeSum ||0 )}}</i>
+
+          </div>
+        </div>
+      </md-card>
+    </div>
+    <md-card>
+      <md-table-extend  #channelDayTable [columns]="channelDayColumn" [database]="channelDayDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+    </md-card>
+  </md-tab>
+  <md-tab label="日结详情">
+    <md-card class="mdcard-margin-bottom search-panel">
+      <form (submit)="onSearchDetail()">
+        <md-card-content>
+          <md-input-group
+            isDateTimeGroup="true"
+            firstPlaceholder="清算开始时间"
+            lastPlaceholder="清算结束时间" [(firstField)]="form.billTimeStart"
+            [(lastField)]="form.billTimeEnd"
+            firstName="billTimeStart"
+            lastName="billTimeEnd"
+            [dateOpts]="tradeTimeOpts"
+          ></md-input-group>
+
+          <md-input-search placeholder="受理机构" name="agencyCode"  [(ngModel)]="form.agencyCode"
+                           [onBeforClick]="mchBankbeforClickFunc.bind(this)"
+                           [dataSource]="mchBankDataSource"
+                           [displayFn]="mchBankdisplayFn.bind(this)"
+                           (onSelected)="agencySelected($event)"
+                           [optionDisplayFn]="mchBankOptionDisplayFn"
+                           [filterField]="mchBnakFilterFields"
+                           valueField="orgNo">
+          </md-input-search>
+
+          <md-input-search placeholder="渠道名称" name="canalNo"  [(ngModel)]="form.canalNo"
+                           [onBeforClick]="mchAgentBeforClickFunc.bind(this)"
+                           [dataSource]="mchAgentDataSource"
+                           [displayFn]="mchAgentDisplayFn.bind(this)"
+                           (onSelected)="canalSelected($event)"
+                           [optionDisplayFn]="mchAgentOptionDisplayFn"
+                           [filterField]="mchAgentFilterFields"
+                           valueField="chanCode">
+          </md-input-search>
+          <md-input-search placeholder="服务商名称" name="chanProNo" id="chanProNo" [(ngModel)]="form.chanProNo"
+                           [onBeforClick]="providerBeforClickFunc.bind(this)"
+                           [dataSource]="providerDataSource"
+                           [displayFn]="providerDisplayFn.bind(this)"
+                           (onSelected)="providerSelected($event)"
+                           [optionDisplayFn]="providerOptionDisplayFn"
+                           [filterField]="providerFilterFields"
+                           valueField="chanCode">
+          </md-input-search>
+
+          <md-input-search placeholder="商户名称" name="merchantNo" id="merchantNo" [(ngModel)]="form.merchantNo"
+                           [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                           [dataSource]="merchantDataSource"
+                           [displayFn]="merchantDisplayFn.bind(this)"
+                           (onSelected)="mchSelected($event)"
+                           [optionDisplayFn]="merchantOptionDisplayFn"
+                           [filterField]="merchantFilterFields"
+                           valueField="merchantNo">
+          </md-input-search>
+
+          <md-select placeholder="支付类型" name="transId"   [(ngModel)]="form.transId" >
+
+            <md-option value="">全部</md-option>
+            <md-option *ngFor="let States of tradeTypes" [value]="States?.transId">{{ States?.transType}}</md-option>
+          </md-select>
+
+
+
+          <md-input-search placeholder="结算账户"  name="actId"  [(ngModel)]="form.ally"
+                           [onBeforClick]="cashCompanionbeforClickFunc.bind(this)"
+                           [dataSource]="cashCompanionDataSource"
+                           [displayFn]="cashCompaniondisplayFn.bind(this)"
+                           (onSelected)="actIdSelected($event)"
+                           [optionDisplayFn]="cashCompanionOptionDisplayFn"
+                           [filterField]="cashCompanionFilterFields"
+                           valueField="companion">
+          ></md-input-search>
+
+
+
+
+          <button md-raised-button color="primary" type="submit" >查询</button>
+          <button md-raised-button type="button" class="check-btn btn-margin-right" color="default"  *ngIf="helper.btnRole('BILLCHANREMIT')" (click.stop)="settlePayDetail($event)" >结算打款</button>
+        </md-card-content>
+      </form>
+    </md-card>
+    <div class="count-wrap mdcard-margin-bottom">
+      <md-card class="count-item">
+        <div class="count-title">交易笔数（笔）</div>
+        <div class="count-content">
+          <i>{{countDetail?.totalCountSum ||0}}</i>
+        </div>
+      </md-card>
+      <md-card class="count-item">
+        <div class="count-title">交易净额（元）</div>
+        <div class="count-content">
+          <div class="num-wrap">
+            <i>{{ helper.priceFormat(countDetail?.totalFeeSum||0 )}}</i>
+
+          </div>
+        </div>
+      </md-card>
+      <md-card class="count-item">
+        <div class="count-title">款项支出（元）</div>
+        <div class="count-content">
+          <i>{{ helper.priceFormat(countDetail?.ntTotalFeeSum||0 )}}</i>
+        </div>
+      </md-card>
+    </div>
+    <md-card>
+      <md-table-extend  #channelDayDetailTable [columns]="channelDayDetailColumn" [database]="channelDayDetailDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+    </md-card>
+  </md-tab>
+</md-tab-group>
+
+
+
+

@@ -1,0 +1,68 @@
+@import '~@angular/material/_theming';
+
+.login-wrap{
+  width: 100%;
+  height:100%;
+  background:url('/webassets/images/bg.png') no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.login-ipt-wrap{
+  width:320px;
+  height:390px;
+  padding-top:30px;
+  margin:-210px auto 0;
+  position: relative;
+  top:50%;
+  background:url('/webassets/images/log_bg.png') no-repeat center top;
+  text-align: center;
+}
+
+.login-title{
+  line-height: 40px;
+  margin:19px 0 30px;
+  color:#fff;
+}
+
+.login-form{
+  text-align: left;
+  *{
+    width:100%;
+    line-height: 30px;
+    color:#fff;
+  }
+  md-checkbox{
+    width:auto;
+    color:#fff;
+  }
+  .form-group{
+    md-input-container{
+      width:60%;
+    }
+    &.yzm-wrap{
+      overflow: hidden;
+      clear: both;
+      zoom: 1;
+      md-input-container{
+        height:70px;
+        line-height: 50px;
+      }
+    }
+    .yzm{
+      width:35%;
+      float:right;
+      margin-top:20px;
+      img{
+        width: 100%;
+        height:30px;
+      }
+    }
+  }
+  button{
+    color:#fff;
+    background-color:#0cb707;
+    border-radius: 20px;
+    margin-top:19px;
+  }
+}

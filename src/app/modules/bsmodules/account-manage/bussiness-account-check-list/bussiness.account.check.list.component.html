@@ -1,0 +1,76 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form #bussinessAccountCheckSearchForm="ngForm" (submit)="onSearch()">
+    <md-card-content>
+    <md-input-group isDateTimeGroup="true"
+                    firstPlaceholder="起始日期"
+                    lastPlaceholder="结束日期"
+                    [(firstField)]="form.startAt"
+                    [(lastField)]="form.finishAt"
+                    [dateOpts]="dateOpts"
+                    firstName="startAt"
+                    lastName="finishAt">
+    </md-input-group>
+    <md-input-search placeholder="结算账户" name="ally" id="ally" [(ngModel)]="form.ally"
+                     [onBeforClick]="cashCompanionbeforClickFunc.bind(this)"
+                     [dataSource]="cashCompanionDataSource"
+                     [displayFn]="cashCompaniondisplayFn.bind(this)"
+                     (onSelected)="allySelected($event)"
+                     [optionDisplayFn]="cashCompanionOptionDisplayFn"
+                     [filterField]="cashCompanionFilterFields"
+                     valueField="companion">
+    </md-input-search>
+    <md-select placeholder="对账状态" name="reconState" [(ngModel)]="form.reconState" class="intoPieces-pt">
+      <md-option value="">全部</md-option>
+      <md-option *ngFor="let checkState of checkStates" [value]="checkState?.id">
+        {{ checkState?.name }}
+      </md-option>
+    </md-select>
+    <md-input-search placeholder="商户名称" name="merchantNo" id="merchantNo" [(ngModel)]="form.merchantNo"
+                     [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                     [dataSource]="merchantDataSource"
+                     [displayFn]="merchantDisplayFn.bind(this)"
+                     (onSelected)="merchantNoSelected($event)"
+                     [optionDisplayFn]="merchantOptionDisplayFn"
+                     [filterField]="merchantFilterFields"
+                     valueField="merchantNo">
+    </md-input-search>
+    <md-input-search placeholder="受理机构" name="agencyCode" id="agencyCode" [(ngModel)]="form.agencyCode"
+                     [onBeforClick]="accountBankbeforClickFunc.bind(this)"
+                     [dataSource]="accountBankDataSource"
+                     [displayFn]="accountBankdisplayFn.bind(this)"
+                     (onSelected)="agencyCodeSelected($event)"
+                     [optionDisplayFn]="accountBankOptionDisplayFn"
+                     [filterField]="accountBnakFilterFields"
+                     valueField="orgNo">
+    </md-input-search>
+    <md-select placeholder="支付类型" name="transId" id="transId"  [(ngModel)]="form.transId" class="intoPieces-pt">
+      <md-option value="">全部</md-option>
+      <md-option *ngFor="let payType of payTypes" [value]="payType?.transId">{{ payType?.transType}}</md-option>
+    </md-select>
+    <md-input-search placeholder="支付中心" name="centerId" id="centerId" [(ngModel)]="form.centerId"
+                     [onBeforClick]="payCenterbeforClickFunc.bind(this)"
+                     [dataSource]="payCenterDataSource"
+                     [displayFn]="payCenterdisplayFn.bind(this)"
+                     (onSelected)="centerIdSelected($event)"
+                     [optionDisplayFn]="payCenterOptionDisplayFn"
+                     [filterField]="payCenterFilterFields"
+                     valueField="id">
+    </md-input-search>
+    <md-input-search placeholder="下属门店" name="secondMchNo" id="secondMchNo" [(ngModel)]="form.secondMchNo"
+                     [onBeforClick]="accountStorebeforClickFunc.bind(this)"
+                     [dataSource]="accountStoreDataSource"
+                     [displayFn]="accountStoredisplayFn.bind(this)"
+                     (onSelected)="secondMchNoSelected($event)"
+                     [optionDisplayFn]="accountStoreOptionDisplayFn"
+                     [filterField]="accountStoreFilterFields"
+                     valueField="merchantNo">
+    </md-input-search>
+    <button md-raised-button type="submit" color="primary">查询</button>
+
+    </md-card-content>
+  </form>
+</md-card>
+
+<md-card>
+  <md-table-extend #bussinessAccountCheckListTable [columns]="bussinessAccountCheckColumns" [database]="bussinessAccountCheckDB"  isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>

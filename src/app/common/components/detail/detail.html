@@ -1,0 +1,33 @@
+<div *ngIf="hasGroup && !hasDataArr()">
+  <fieldset *ngFor="let field of detailFields">
+    <legend>{{field.title}}</legend>
+    <ul *ngIf="field && field.childs">
+      <li *ngFor="let cfield of field.childs;let index=index;">
+        <label>{{cfield?.title}}</label>
+        <div *ngIf="cfield?.type != 'image' && cfield?.type != 'html'">{{render(_data,cfield)}}</div>
+        <div *ngIf="cfield?.type == 'html'" [innerHTML]="render(_data,cfield)"></div>
+        <a *ngIf="cfield?.type == 'image'" class="image" (click.stop)="onImagePreview(_data,cfield,index)">{{!isEmpty(_data[cfield.field]) ? '图片预览' : ' / '}}</a>
+      </li>
+    </ul>
+  </fieldset>
+</div>
+<div *ngIf="!hasGroup && !hasDataArr()">
+  <ul>
+    <li *ngFor="let field of detailFields;let index=index;">
+      <label>{{field?.title}}</label>
+      <div *ngIf="field?.type != 'image' && field?.type != 'html'">{{render(_data,field)}}</div>
+      <div *ngIf="field?.type == 'html'" [innerHTML]="render(_data,field)"></div>
+      <a *ngIf="field?.type == 'image'" class="image" (click.stop)="onImagePreview(_data,field,index)">{{!isEmpty(_data[field.field]) ? '图片预览' : ' / '}}</a>
+    </li>
+  </ul>
+</div>
+<div *ngIf="hasDataArr()">
+  <ul *ngFor="let itemData of _data">
+    <li *ngFor="let field of detailFields;let index=index;">
+      <label>{{field?.title}}</label>
+      <div *ngIf="field?.type != 'image' && field?.type != 'html'">{{render(itemData,field)}}</div>
+      <div *ngIf="field?.type == 'html'" [innerHTML]="render(itemData,field)"></div>
+      <a *ngIf="field?.type == 'image'" class="image" (click.stop)="onImagePreview(itemData,field,index)">{{!isEmpty(itemData[field.field]) ? '图片预览' : ' / '}}</a>
+    </li>
+  </ul>
+</div>

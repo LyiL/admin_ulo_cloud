@@ -1,0 +1,49 @@
+.mat-tab-nav-bar, .mat-tab-header{
+  border:0 none;
+}
+
+.mat-tab-body{
+  &.mat-tab-body-active{
+    margin-top:20px;
+  }
+}
+.mat-row, .mat-header-row{
+  border-bottom-color:#e6eaed;
+}
+
+/**
+ *列表表格里的字体大小重置
+ */
+.mat-cell,.mat-button{
+  font-size: 0.875rem;
+}
+
+.mat-table{
+  .mat-header-cell{
+    line-height: 20px;
+  }
+  md-input-group{
+    md-input-container{
+      width:40%;
+    }
+  }
+}
+
+detail-table{
+  .no-data{
+    background-color:#f5f5f5;
+    color:#fff;
+  }
+}
+
+.mat-select-placeholder,.mat-select-value-text{
+  font-size:14px;
+}
+
+.edit-win-wrap {
+  .mat-focused .mat-input-placeholder.mat-float, .mat-input-placeholder.mat-empty, .mat-input-placeholder.mat-float:not(.mat-empty){
+    -webkit-transform: translateY(0rem) translateX(-4rem) scale(1) perspective(100px) translateZ(0.001px);
+    transform: translateY(0rem) translateX(-4rem) scale(1) perspective(100px) translateZ(0.001px);
+    -ms-transform: translateY(0rem) translateX(-4rem) scale(1) perspective(100px) translateZ(0.001px);
+  }
+}

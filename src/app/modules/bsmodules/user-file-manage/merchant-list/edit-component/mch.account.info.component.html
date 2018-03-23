@@ -1,0 +1,16 @@
+<div class="form-table">
+  <md-table-extend mode="editWin" #accountTable local="true"
+                   [editWinOption]="accountEditWinOption"
+                   [columns]="accountColumns"
+                   [database]="accountDB"
+                   [actionCfg]="accountActionCfg"
+                   (onEditBefore)="onEditAccount($event)"
+                   [saveConfirmFunc]="onBeforeSaveAccount.bind(this)"
+                   (onCancel)="onCancelAccount()"
+                   (onSave)="onSaveAccount()"></md-table-extend>
+  <a (click.stop)="onNewAccount(accountTable)" >新增帐户</a>
+  <div class="btn-area">
+    <button md-raised-button type="button"  color="primary" (click.stop)="onBefore()">返回上一步</button>
+    <button md-raised-button type="button" [disabled]="!hasData()" color="primary" (click.stop)="onSaveAccounts()">保存并下一步</button>
+  </div>
+</div>

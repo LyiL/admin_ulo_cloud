@@ -1,0 +1,88 @@
+<form class="form-layout" [formGroup]="luoAppFormGroup" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <legend>络络应用</legend>
+    <div class="form-item">
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput placeholder="应用名称" required name="appName" formControlName="appName" id="appName" [(ngModel)]="model.appName"/>
+          </md-input-container>
+        </div>
+        <div class="column"  fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput placeholder="开发者名称" required name="devName" formControlName="devName" id="devName" [(ngModel)]="model.devName"/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div  fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput type="number" placeholder="下载量" required name="downloadNum" formControlName="downloadNum" id="downloadNum" [(ngModel)]="model.downloadNum" (focus)="onHint()"/>
+          </md-input-container>
+        </div>
+        <div fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput placeholder="下载地址" required name="downloadUrl" formControlName="downloadUrl" id="downloadUrl" [(ngModel)]="model.downloadUrl"/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <div class="form-group group-h-40">
+            <div class="form-label">
+              应用系统：
+            </div>
+            <div class="form-ctr">
+              <md-select placeholder="应用系统" floatPlaceholder="never"
+                         formControlName="platform" name="platform" id="platform" [(ngModel)]="model.platform">
+                <md-option *ngFor="let plat of platforms | async" [value]="plat.id">{{plat.name}}</md-option>
+              </md-select>
+            </div>
+          </div>
+        </div>
+        <div  fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput [mdDatepicker]="picker" format="yyyy-MM-dd HH:mm:ss" required formControlName="releaseTime" name="releaseTime" id="releaseTime" [(ngModel)]="model.releaseTime" placeholder="发布时间">
+            <button mdSuffix [mdDatepickerToggle]="picker"></button>
+            <md-datepicker #picker format="yyyy-MM-dd HH:mm:ss"></md-datepicker>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div  fxLayout="column" fxFlex="100">
+          <md-input-container horizontal="true" floatPlaceholder="never" fillRow="true">
+            <textarea mdInput placeholder="软件说明" name="remark" required formControlName="remark" id="remark" [(ngModel)]="model.remark"></textarea>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div  fxLayout="column" fxFlex="100">
+          <div class="form-group fill-form-group">
+            <div class="form-label">
+              附件：
+            </div>
+            <div class="form-ctr">
+              <ulo-file-select [options]="defFieldUploadSetting" (onError)="onFileUploadError($event)" id="appLogo" name="appLogo" formControlName="appLogo" [(ngModel)]="model.appLogo" placeholder="应用Logo" required></ulo-file-select>
+              <ulo-file-select [options]="defFieldUploadSetting" (onError)="onFileUploadError($event)" id="appImg1" name="appImg1" formControlName="appImg1" [(ngModel)]="model.appImg1" placeholder="应用图片1" required></ulo-file-select>
+              <ulo-file-select [options]="defFieldUploadSetting" (onError)="onFileUploadError($event)" id="appImg2" name="appImg2" formControlName="appImg2" [(ngModel)]="model.appImg2" placeholder="应用图片2" required></ulo-file-select>
+              <ulo-file-select [options]="defFieldUploadSetting" (onError)="onFileUploadError($event)" id="appImg3" name="appImg3" formControlName="appImg3" [(ngModel)]="model.appImg3" placeholder="应用图片3" required></ulo-file-select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="btn-area txt-align-c">
+    <div>
+      <button md-raised-button color="primary" [disabled]="!(luoAppFormGroup.valid)">保存</button>
+      <button md-raised-button type="button" (click.stop)="onCancel()">取消</button>
+    </div>
+  </div>
+  </fieldset>
+
+  <div class="ulo-desc">
+    <h3>温馨提示</h3>
+    <div>如果应用系统为苹果(iOS)，下载地址格式需为：应用名称/产品Id,例如：tinder/id547702041</div>
+    <div>如果应用系统为安卓(Android)，下载地址格式需以.apk结束,例如：http://******.apk</div>
+  </div>
+</form>
+

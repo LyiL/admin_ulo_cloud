@@ -1,0 +1,156 @@
+.mat-header-cell{
+  color:#6a6a6a;
+  font-weight: bold;
+}
+.mat-row{
+  .cell-edit{
+    text-align: center;
+    padding:0 10px;
+    *{
+      width:100%;
+    }
+  }
+  .mat-cell.action-wrap{
+    .mat-button{
+      line-height: 15px;
+    }
+    span{
+      margin:0;
+      padding:0;
+      font-size:0;
+      &:last-child,&.lborder{
+        .mat-button{
+          border-right-width: 1px;
+        }
+      }
+    }
+  }
+  .mat-cell{
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button{
+      -webkit-appearance: none !important;
+      margin: 0;
+    }
+    input[type="number"]{-moz-appearance:textfield;}
+    &.danger-bg,&.success-bg,&.warning-bg,&.disables-bg{
+      color:#fff;
+      text-align: center;
+    }
+    /*
+      失败，关闭
+    */
+    &.danger-bg{
+      background-color: #ed5466;
+    }
+    /*
+    成功
+    */
+    &.success-bg{
+      background-color: #1ab394;
+    }
+    /*
+    告警
+    */
+    &.warning-bg{
+      background-color: #f8ab59;
+    }
+    /*
+     停用
+    */
+    &.disables-bg{
+      background-color: #b1b1b1;
+    }
+    /*
+      失败，关闭
+    */
+    &.danger-font{
+      color: #ed5466;
+    }
+    /*
+    成功
+    */
+    &.success-font{
+      color: #1ab394;
+    }
+    /*
+    告警
+    */
+    &.warning-font{
+      color: #f8ab59;
+    }
+    /*
+     停用
+    */
+    &.disables-font{
+      color: #b1b1b1;
+    }
+  }
+}
+
+.mat-cell.action-wrap,.mat-header-cell.action-wrap{
+  text-align: center;
+}
+
+.tb-odd{
+  background-color:#f7f7f7;
+}
+.mat-button{
+  border:solid #ddd;
+  background-color:#fff;
+  border-width: 1px 0 1px 1px;
+}
+.mat-paginator{display:none;}
+.show{display:flex;}
+
+.loading-shade{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rate-limit-reached {
+  color: #980000;
+  max-width: 360px;
+  text-align: center;
+}
+
+detail-table{
+  display: table-row;
+}
+
+.detail-table{
+  background-color:#f5f5f5;
+  .mat-header-row, .mat-row{
+    padding:0 24px 0 100px;
+  }
+  .mat-header-row{
+    position: relative;
+    &:before{
+      content: '';
+      height: 0;
+      width: 0;
+      display:block;
+      border:10px transparent solid;
+      border-bottom-width:0;
+      border-top-color:#fff;
+      position:absolute;
+      top:-1px;
+      left:30px;
+    }
+  }
+}
+
+.no-data{
+  line-height: 100px;
+  height:100px;
+  text-align: center;
+  color:#999;
+}
+

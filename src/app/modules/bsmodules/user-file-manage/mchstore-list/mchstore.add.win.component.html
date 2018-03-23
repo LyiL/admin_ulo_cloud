@@ -1,0 +1,35 @@
+<h3>新增门店</h3>
+<hr>
+  <div class="column" fxLayout="column" >
+    <md-input-container horizontal="true" required>
+      <input mdInput placeholder="门店名称" />
+    </md-input-container>
+  </div>
+  <div class="column" fxLayout="column" >
+    <md-input-search horizontal="true" placeholder="所属商户" required></md-input-search>
+  </div>
+  <div class="column" fxLayout="column" >
+    <md-select placeholder="省份" class="reset-md-select " required>
+      <md-option *ngFor="let Role of RoleGroup" [value]="Role.value" >
+        {{ Role.viewValue }}
+      </md-option>
+    </md-select>
+  </div>
+  <div class="column" fxLayout="column">
+    <md-select placeholder="城市" class="reset-md-select " required>
+      <md-option *ngFor="let Role of RoleGroup" [value]="Role.value" >
+        {{ Role.viewValue }}
+      </md-option>
+    </md-select>
+  </div>
+  <div class="column" fxLayout="column" >
+    <md-input-container horizontal="true" required>
+      <input mdInput placeholder="详细地址" />
+    </md-input-container>
+  </div>
+
+
+<!--<md-dialog-actions>-->
+  <button  [md-dialog-close]="true"  md-raised-button type="button" color="primary"  class="check-btn btn-margin-right">保存</button>
+  <button md-button md-dialog-close class="check-btn btn-margin-right">取消</button>
+<!--</md-dialog-actions>-->

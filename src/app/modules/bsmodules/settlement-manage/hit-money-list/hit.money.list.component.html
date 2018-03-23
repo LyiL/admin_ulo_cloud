@@ -1,0 +1,74 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form #hitMoneySearchForm="ngForm" (submit)="onSearch()">
+    <md-card-content>
+
+      <md-input-container>
+        <input mdInput [mdDatepicker]="picker" [value]="form.createTime" format="yyyy-MM-dd" (dateChange)="onChangeTime($event)" placeholder="结算日期">
+        <button mdSuffix [mdDatepickerToggle]="picker"></button>
+        <md-datepicker #picker format="yyyy-MM-dd"></md-datepicker>
+      </md-input-container>
+
+      <md-select placeholder="打款批次号" name="settleNo" [(ngModel)]="form.settleNo" class="intoPieces-pt">
+        <md-option value="">全部</md-option>
+        <md-option *ngFor="let batch of batchs" [value]="batch?.settleNo">
+          {{batch?.settleNo}}
+        </md-option>
+      </md-select>
+      <md-select placeholder="账户类型" name="actType" [(ngModel)]="form.actType" class="intoPieces-pt">
+        <md-option value="">全部</md-option>
+        <md-option *ngFor="let accountType of accountTypes" [value]="accountType?.id">
+          {{accountType?.name}}
+        </md-option>
+      </md-select>
+      <md-input-search placeholder="受理机构" name="agencyCode" id="agencyCode" [(ngModel)]="form.agencyCode"
+                       [onBeforClick]="businessBankbeforClickFunc.bind(this)"
+                       [dataSource]="businessBankDataSource"
+                       [displayFn]="businessBankdisplayFn.bind(this)"
+                       (onSelected)="bankSelected($event)"
+                       [optionDisplayFn]="businessBankOptionDisplayFn"
+                       [filterField]="businessBnakFilterFields"
+                       valueField="orgNo">
+      </md-input-search>
+      <md-input-search placeholder="商户名称" name="specNo" id="specNo" [(ngModel)]="form.specNo"
+                       [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                       [dataSource]="merchantDataSource"
+                       [displayFn]="merchantDisplayFn.bind(this)"
+                       (onSelected)="merchantSelected($event)"
+                       [optionDisplayFn]="merchantOptionDisplayFn"
+                       [filterField]="merchantFilterFields"
+                       valueField="merchantNo">
+      </md-input-search>
+      <md-input-search placeholder="结算账户" name="ally" id="ally" [(ngModel)]="form.ally"
+                       [onBeforClick]="cashCompanionbeforClickFunc.bind(this)"
+                       [dataSource]="cashCompanionDataSource"
+                       [displayFn]="cashCompaniondisplayFn.bind(this)"
+                       (onSelected)="cashCompaniondSelected($event)"
+                       [optionDisplayFn]="cashCompanionOptionDisplayFn"
+                       [filterField]="cashCompanionFilterFields"
+                       valueField="companion">
+    </md-input-search>
+
+      <button md-raised-button type="submit" color="primary">查询</button>
+      <button md-raised-button type="button" *ngIf="helper.btnRole('REMITEXPORT')" (click.stop)="onExport()">导出报表</button>
+    </md-card-content>
+  </form>
+</md-card>
+<div class="count-wrap mdcard-margin-bottom">
+  <md-card class="count-item">
+    <div class="count-title">出款总笔数（笔）</div>
+    <div class="count-content">
+      <i class="number">{{ summaryCount?.totalCount || 0 }}</i>
+    </div>
+  </md-card>
+  <md-card class="count-item">
+    <div class="count-title">出款总金额（元）</div>
+    <div class="count-content">
+      <div class="num-wrap">
+        <i>{{ helper.priceFormat(summaryCount?.ntTotalFee || 0) }}</i>
+      </div>
+    </div>
+  </md-card>
+</div>
+<md-card>
+  <md-table-extend #hitMoneyListTable [columns]="serviceHitMoneyColumns" [database]="hitMoneyListDB" isShowOddEffet="true" [actionCfg]="hitMoneyListActionCfg"></md-table-extend>
+</md-card>

@@ -1,0 +1,28 @@
+<a class="sidenav-anchor"
+   *ngIf="!item.hasSubItems()"
+   md-list-item md-ripple
+   (click)="toggleDropdown()"
+   [routerLink]="[item.route]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+
+  <i class="fa {{item.iconClass}}"></i>
+  <span class="sidenav-item-name fade-in-on-icon-sidenav">{{ item.name }}</span>
+  <span fxFlex><!-- fill space --></span>
+  <span class="badge fade-in-on-icon-sidenav" *ngIf="item.badge" [style.background-color]="item.badgeColor">{{ item.badge }}</span>
+</a>
+
+<a class="sidenav-anchor"
+   *ngIf="item.hasSubItems()"
+   md-list-item md-ripple
+   (click)="toggleDropdown()" routerLinkActive="active">
+
+  <i class="fa {{item.iconClass}}"></i>
+  <span class="sidenav-item-name fade-in-on-icon-sidenav">{{ item.name }}</span>
+  <span fxFlex><!-- fill space --></span>
+  <span class="badge fade-in-on-icon-sidenav" *ngIf="item.badge" [style.background-color]="item.badgeColor" style="margin-right: 12px;">{{ item.badge }}</span>
+  <i class="fa fa-angle-down"></i>
+</a>
+
+<md-nav-list class="sidenav-list sidenav-list-nested"
+             fxLayout="column" [style.height]="getSubItemsHeight()">
+  <sidenav-item *ngFor="let subItem of item.subItems" [item]="subItem"></sidenav-item>
+</md-nav-list>

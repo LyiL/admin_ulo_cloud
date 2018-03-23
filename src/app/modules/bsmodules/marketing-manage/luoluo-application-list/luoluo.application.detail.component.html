@@ -1,0 +1,15 @@
+<md-card class="mdcard-margin-bottom search-panel">
+<div class="detail-item">
+
+  <div class="detail-title">
+    <h3>应用信息</h3><a *ngIf="helper.btnRole('LUOAPPEDIT')" (click.stop)="onEdit()">编辑</a>
+  </div>
+  <ulo-detail #luoAppDetail [detailFields]="LuoAppDetailFields" [reqParams]="LuoAppDetailReqParam"></ulo-detail>
+
+</div>
+
+<div class="align-center-box btn-area">
+  <button md-raised-button type="button" (click.stop)="onBack()">返回</button>
+</div>
+
+</md-card>

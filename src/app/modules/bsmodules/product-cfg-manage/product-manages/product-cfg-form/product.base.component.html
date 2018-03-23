@@ -1,0 +1,56 @@
+<form [formGroup]="formGroup" class="form-layout" (ngSubmit)="helper.isEmpty(model['id'])?onSubmit():onSave()">
+  <div class="form-items">
+    <div fxLayout="row">
+      <div class="column" fxLayout="column" fxFlex="50">
+        <md-input-search horizontal="true" floatPlaceholder="never"
+                         placeholder="所属机构" name="bankNo"
+                         formControlName="bankNo" [(ngModel)]="model.bankNo"
+                         required="true"
+                         [onBeforClick]="beforClickFunc.bind(this)"
+                         [dataSource]="prodDataSource"
+                         [displayFn]="displayFn"
+                         [optionDisplayFn]="prodOptionDisplayFn"
+                         [filterField]="prodFilterFields"
+                         valueField="orgNo"></md-input-search>
+      </div>
+      <div class="column" fxLayout="column" fxFlex="50">
+        <md-input-container horizontal="true" floatPlaceholder="never">
+          <input mdInput placeholder="产品名称" name="combName" formControlName="combName" [(ngModel)]="model.combName" required/>
+        </md-input-container>
+      </div>
+    </div>
+    <div fxLayout="row">
+      <div class="column" fxLayout="column" fxFlex="50">
+        <md-select placeholder="产品类型" name="productType" required formControlName="productType" [(ngModel)]="model.productType" horizontal="true" floatPlaceholder="never">
+          <md-option *ngFor="let prod of productType" [value]="prod.id">{{prod?.name}}</md-option>
+        </md-select>
+      </div>
+      <div class="column" fxLayout="column" fxFlex="50">
+        <div class="form-group">
+          <div class="form-label">适用商家：</div>
+          <div class="form-ctr">
+            <md-checkbox name="applyType" *ngFor="let prodUserType of productUserType" [checked]="prodUserType.completed" (change)="onProdUserTypeChange(prodUserType,$event.checked)">{{prodUserType?.name}}</md-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row">
+      <div class="column" fxLayout="column" fxFlex="100">
+        <md-input-container horizontal="true" floatPlaceholder="never" fillRow="true">
+          <textarea mdInput placeholder="产品描述" name="productDepicts" formControlName="productDepicts" [(ngModel)]="model.productDepicts"></textarea>
+        </md-input-container>
+      </div>
+    </div>
+    <div fxLayout="row">
+      <div class="btn-area">
+        <div [hidden]="!helper.isEmpty(model['id'])">
+          <button md-raised-button color="primary" [disabled]="!formGroup.valid">保存并下一步</button>
+        </div>
+        <div [hidden]="helper.isEmpty(model['id'])">
+          <button md-raised-button [disabled]="!formGroup.valid" color="primary">保存</button>
+          <button md-raised-button type="button" (click.stop)="onGoBack()">返回</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

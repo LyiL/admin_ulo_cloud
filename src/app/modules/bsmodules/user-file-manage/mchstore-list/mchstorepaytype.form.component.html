@@ -1,0 +1,108 @@
+<form class="form-layout">
+  <fieldset>
+    <legend>支付配置信息</legend>
+    <div class="form-items">
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-search horizontal="true" placeholder="支付中心" required></md-input-search>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="结算费率(‰）" required/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never" >
+            <input mdInput placeholder="单笔最小金额(元)" required/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-search horizontal="true" placeholder="结算账户" required></md-input-search>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select placeholder="结算周期" class="reset-md-select " required>
+            <md-option *ngFor="let Role of RoleGroup" [value]="Role.value" >
+              {{ Role.viewValue }}
+            </md-option>
+          </md-select>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="每日交易限额(元)" required/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never" >
+            <input mdInput placeholder="单笔最大金额(元)" required/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="微信商户号" required/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never" >
+            <input mdInput placeholder="微信密钥" required/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="支付宝卖家账户" required/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never" >
+            <input mdInput placeholder="支付宝加密公钥" required/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="支付宝密钥" required/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never" >
+            <input mdInput placeholder="微信AppID" required/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="子商户号" required/>
+          </md-input-container>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never" >
+            <input mdInput placeholder="支付宝加密私钥" required/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true">
+            <input mdInput placeholder="支付宝商户号" required/>
+          </md-input-container>
+        </div>
+      </div>
+
+    </div>
+  </fieldset>
+  <div class="align-center-box">
+    <!--<button (click.stop)="onNextSetp()">保存</button>-->
+  </div>
+
+</form>

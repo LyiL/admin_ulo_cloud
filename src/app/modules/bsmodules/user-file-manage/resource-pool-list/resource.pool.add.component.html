@@ -1,0 +1,70 @@
+<form class="form-layout" [formGroup]="resPoolFormGroup" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <legend>识别码管理</legend>
+    <div class="form-item">
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput placeholder="商户编号"  name="mchNo" formControlName="mchNo" id="mchNo" [(ngModel)]="model.mchNo"/>
+          </md-input-container>
+        </div>
+        <div class="column"  fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput placeholder="服务商编号"  name="chanNo" formControlName="chanNo" id="chanNo" [(ngModel)]="model.chanNo"/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div  fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput placeholder="银行侧商户编号"  name="bankMchno" formControlName="bankMchno" id="bankMchno" [(ngModel)]="model.bankMchno"/>
+          </md-input-container>
+        </div>
+        <div fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput placeholder="微信受理机构号" required name="partner" formControlName="partner" id="partner" [(ngModel)]="model.partner"/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div  fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput placeholder="微信交易识别码" required name="subPartner" formControlName="subPartner" id="subPartner" [(ngModel)]="model.subPartner"/>
+          </md-input-container>
+        </div>
+        <div fxLayout="column" fxFlex="50">
+          <md-input-container horizontal="true" floatPlaceholder="never">
+            <input mdInput placeholder="微信渠道编号"  name="chanPartner" formControlName="chanPartner" id="chanPartner" [(ngModel)]="model.chanPartner"/>
+          </md-input-container>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select placeholder="支付类型" horizontal="true" floatPlaceholder="never" formControlName="tradeType" name="tradeType" id="tradeType" [(ngModel)]="model.tradeType" class="intoPieces-pt">
+            <md-option value="*">全部</md-option>
+            <md-option *ngFor="let payType of payTypes" [value]="payType?.transId">{{payType?.transType}}</md-option>
+          </md-select>
+        </div>
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select placeholder="支付权限" horizontal="true" floatPlaceholder="never" formControlName="payState" name="payState" id="payState" [(ngModel)]="model.payState" class="intoPieces-pt">
+            <md-option *ngFor="let pState of payStates | async" [value]="pState.id">{{pState.name}}</md-option>
+          </md-select>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <div class="column" fxLayout="column" fxFlex="50">
+          <md-select placeholder="启用状态" horizontal="true" floatPlaceholder="never" formControlName="useState" name="useState" id="useState" [(ngModel)]="model.useState" class="intoPieces-pt">
+            <md-option *ngFor="let uState of useStates | async" [value]="uState.id">{{uState.name}}</md-option>
+          </md-select>
+        </div>
+      </div>
+    </div>
+    <div class="btn-area txt-align-c">
+      <div>
+        <button md-raised-button color="primary" [disabled]="!(resPoolFormGroup.valid)">保存</button>
+        <button md-raised-button type="button" (click.stop)="onCancel()">取消</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+

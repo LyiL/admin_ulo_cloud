@@ -1,0 +1,19 @@
+<div class="head-wrap">
+  <div class="head-nav">
+      <ol>
+        <li><a (click.stop)="sidenavServce.onMenuNavigate(homePath)">首页</a></li>
+        <li *ngFor="let nav of navs;let ind = index;">
+          <a *ngIf="ind != navs.length - 1" (click.stop)="sidenavServce.onMenuNavigate(nav?.path)">{{nav?.name}}</a>
+          <span *ngIf="ind == navs.length - 1">{{nav?.name}}</span>
+        </li>
+      </ol>
+  </div>
+  <div class="head-func">
+    <span>
+      欢迎回来，
+      <i>{{userInfo?.userName}}</i>
+    </span>
+    <a (click.stop)="onEdit()"><i class="fa fa-edit"></i>修改密码</a> |
+    <a (click.stop)="onQuit()"><i class="fa fa-power-off"></i>退出</a>
+  </div>
+</div>

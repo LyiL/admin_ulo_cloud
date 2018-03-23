@@ -1,0 +1,38 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form #accountTaskSearchForm="ngForm" (submit)="onSearch()">
+    <md-card-content>
+    <md-input-group isDateTimeGroup="true"
+                    firstPlaceholder="起始日期"
+                    lastPlaceholder="结束日期"
+                    [(firstField)]="form.searchStartTime"
+                    [(lastField)]="form.searchEndTime"
+                    [dateOpts]="dateOpts"
+                    firstName="searchStartTime"
+                    lastName="searchEndTime">
+    </md-input-group>
+    <md-input-search placeholder="结算账户" name="ally" id="ally" [(ngModel)]="form.ally"
+                     [onBeforClick]="cashCompanionbeforClickFunc.bind(this)"
+                     [dataSource]="cashCompanionDataSource"
+                     [displayFn]="cashCompaniondisplayFn.bind(this)"
+                     (onSelected)="allySelected($event)"
+                     [optionDisplayFn]="cashCompanionOptionDisplayFn"
+                     [filterField]="cashCompanionFilterFields"
+                     valueField="companion">
+    </md-input-search>
+    <md-select placeholder="对账状态" name="treatState" [(ngModel)]="form.treatState" class="intoPieces-pt">
+      <md-option value="">全部</md-option>
+      <md-option *ngFor="let checkState of checkStates" [value]="checkState?.id">
+        {{ checkState?.name }}
+      </md-option>
+    </md-select>
+    <button md-raised-button color="primary">查询</button>
+
+    </md-card-content>
+  </form>
+</md-card>
+
+<md-card>
+  <md-table-extend #accountTaskListTable [columns]="accountTaskColumns" [database]="accountTaskDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>
+
+

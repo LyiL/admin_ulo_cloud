@@ -1,0 +1,14 @@
+<md-sidenav-container [ngClass]="{'menu-collapsed':_isMenuCollapsed}">
+  <md-sidenav class="sidenav" align="start" mode="side" opened="true" #sidenav>
+    <app-sidenav></app-sidenav>
+  </md-sidenav>
+
+  <div class="sidenav-container">
+    <app-header></app-header>
+    <div class="main-container" #scrollContainer>
+      <router-outlet (activate)="onActivate(scrollContainer)"></router-outlet>
+    </div>
+
+  </div>
+
+</md-sidenav-container>

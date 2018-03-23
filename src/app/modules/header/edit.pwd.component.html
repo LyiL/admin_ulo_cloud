@@ -1,0 +1,26 @@
+<form [formGroup]="pwdFormGroup" class="form-layout" (ngSubmit)="onSubmit(pwdFormGroup.value)">
+  <div fxLayout="row" class="row">
+    <div fxLayout="column" class="column" fxFlex="100">
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="旧密码" type="password" required formControlName="userPwd" name="userPwd" id="userPwd"/>
+      </md-input-container>
+    </div>
+  </div>
+  <div fxLayout="row" class="row">
+    <div fxLayout="column" class="column" fxFlex="100">
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="新密码" type="password" required formControlName="newPassword" name="newPassword" id="newPassword"/>
+      </md-input-container>
+    </div>
+  </div>
+  <div fxLayout="row" class="row">
+    <div fxLayout="column" class="column" fxFlex="100">
+      <md-input-container horizontal="true" floatPlaceholder="never">
+        <input mdInput placeholder="确认密码" type="password" required formControlName="newpwd2" name="newpwd2" id="newpwd2"/>
+      </md-input-container>
+    </div>
+  </div>
+  <div class="btn-area">
+    <button md-raised-button [disabled]="!pwdFormGroup.valid" color="primary">保存</button>
+  </div>
+</form>

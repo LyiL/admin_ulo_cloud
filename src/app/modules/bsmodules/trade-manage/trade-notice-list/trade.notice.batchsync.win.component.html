@@ -1,0 +1,41 @@
+<form  (ngSubmit)="onSubmit()" [formGroup]="batchsync">
+  <div class=" three-detail">
+    <div  class="column noticeWin" fxLayout="column" >
+
+      <md-input-group required
+        isDateTimeGroup="true"
+       groupPlaceholder="同步时间"
+        firstPlaceholder="开始时间" horizontal="true"
+        lastPlaceholder="结束时间" [(firstField)]="model.tradeTimeStart"
+        [(lastField)]="model.tradeTimeEnd"
+        firstName="tradeTimeStart"
+        lastName="tradeTimeEnd"
+                      [dateOpts]="dateOpts"
+      ></md-input-group>
+
+
+      <md-input-search placeholder="商户名称" name="mchNo" id="mchNo" formControlName="mchNo" [(ngModel)]="model.mchNo" horizontal="true"
+                       floatPlaceholder="never"
+                       [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                       [dataSource]="merchantDataSource"
+                       [displayFn]="merchantDisplayFn"
+                       [optionDisplayFn]="merchantOptionDisplayFn"
+                       [filterField]="merchantFilterFields"
+                       valueField="merchantNo"
+                       required>
+      </md-input-search>
+
+      <md-select placeholder="订单状态" name="orderStatus"  formControlName="orderStatus" [(ngModel)]="model.orderStatus" horizontal="true" floatPlaceholder="never">
+      <md-option *ngFor="let orderStatus of orderStatus" [value]="orderStatus?.id" >
+        {{ orderStatus?.name }}
+      </md-option>
+      </md-select>
+
+    </div>
+    <div class="btn-area text-center">
+      <button md-raised-button color="primary" [disabled]="!batchsync.valid">保存</button>
+    </div>
+  </div>
+
+</form>
+

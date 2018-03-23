@@ -1,0 +1,30 @@
+
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>渠道信息</h3><a *ngIf="helper.btnRole('MCHPGNEW')" (click.stop)="onNewChannel(channelTable,$event)">新增</a>
+  </div>
+  <md-table-extend mode="editWin" #channelTable local="true"
+                   [(columns)]="channelColumns"
+                   [database]="channelDB"
+                   [actionCfg]="channelActionCfg"
+                   [editWinOption]="channelEditWinOption"
+                   (onEditBefore)="onEditMchChannel($event)"
+                   [saveConfirmFunc]="onBeforeSaveChannel.bind(this)"
+                   (onCancel)="onCancelChannel()"
+                   [onSaveOb]="onSaveChannel.bind(this)"></md-table-extend>
+</div>
+
+<div class="detail-item" *ngIf="helper.btnRole('MCHRULECONFEDIT')">
+  <div class="detail-title " >
+    <h3>路由配置</h3>
+  </div>
+  <ulo-detail></ulo-detail>
+    <div class="detail-config-item">
+      <span style="display: inline-block;">业务路由</span> <a style="margin-left: 40px;display: inline-block" class="intoPieces"
+                                                          (click.stop)="onUsed($event)">{{ruleState == 0? "停用":"启用"}}<span><i class="fa fa-toggle-right" ></i></span></a>
+
+    </div>
+  <div class="detail-config-item">
+    <span>业务配置</span> <span style="display: inline-block;margin-left: 40px">{{tradeType? tradeType :"--"  }}</span>
+  </div>
+</div>

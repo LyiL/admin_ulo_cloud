@@ -1,0 +1,15 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (submit)="onSearch()">
+    <md-card-content>
+        <md-input-container>
+          <input mdInput [mdDatepicker]="picker" format="yyyy-MM-dd" [value]="form.billTime" (dateChange)="onChangeTime($event)" placeholder="统计时间">
+          <button mdSuffix [mdDatepickerToggle]="picker"></button>
+          <md-datepicker #picker format="yyyy-MM-dd"></md-datepicker>
+        </md-input-container>
+        <button md-raised-button color="primary" >查询</button>
+    </md-card-content>
+  </form>
+</md-card>
+<md-card class="mdcard-margin-bottom">
+  <md-table-extend #TradeRankingTable [columns]="TradeRankingColumns" [database]="TradeRankingDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>

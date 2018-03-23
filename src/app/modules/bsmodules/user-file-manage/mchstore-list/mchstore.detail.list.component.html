@@ -1,0 +1,15 @@
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>门店基本信息</h3>
+  </div>
+  <ulo-detail [detailFields]="MchStoreDetailFields" [reqParams]="MchStoreDetailReqParam" hasGroup="false"></ulo-detail>
+</div>
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>门店支付配置信息</h3><a (click)="onNewAccount()">添加</a>
+  </div>
+  <md-table-extend mode="edit" #MchStoreDetailTable local="true" [columns]="MchStoreDetailColumns" [database]="dbService" [actionCfg]="MchStoreDetailActionCfg"></md-table-extend>
+</div>
+<div class="align-center-box">
+  <button md-raised-button type="submit" class="check-btn" (click)="back()">返回</button>
+</div>

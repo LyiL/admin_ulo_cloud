@@ -1,0 +1,44 @@
+<form class="detail-config-item">
+  <!--公众号配置-->
+  <fieldset>
+    <legend>
+      <span>公众号配置</span>
+      <a *ngIf="helper.btnRole('PROVIDERWXCONFIGADD') && helper.isEmpty(spWeixinData)" (click.stop)="onEditWeixin()">新增</a>
+      <a *ngIf="helper.btnRole('PROVIDERWXCONFIGUPDATE') && !helper.isEmpty(spWeixinData)" (click.stop)="onEditWeixin()">编辑</a>
+    </legend>
+    <ulo-detail #spWeixinDetail [detailFields]="spWeixinFields" [(reqParams)]="spWeixinReqParam" hasGroup="false"></ulo-detail>
+  </fieldset>
+
+  <!--子商户模式配置-->
+  <fieldset *ngIf="helper.btnRole('SPSUBMCHMODEDEPLOY')">
+    <legend>
+      <span>子商户模式配置</span>
+      <a (click.stop)="onEditSubMchPattern()">配置</a>
+    </legend>
+    <ulo-detail #spSubMchPatternDetail [detailFields]="spSubMchPatternFields" [(reqParams)]="spSubMchPatternReqParam" hasGroup="false"></ulo-detail>
+  </fieldset>
+
+  <!--交易限额配置-->
+  <fieldset *ngIf="helper.btnRole('PROSETTOTALFEELIMIT')">
+    <legend>
+      <span>交易限额配置</span>
+      <a (click.stop)="onEditTradeLimit()">配置</a>
+    </legend>
+    <ulo-detail #spTradeLimitDetail [detailFields]="spTradeLimitFields" [(reqParams)]="spTradeLimitReqParam" hasGroup="false"></ulo-detail>
+  </fieldset>
+
+  <!--rsa公钥配置-->
+  <fieldset *ngIf="helper.btnRole('PROSETRSAKETCONFIG')">
+    <legend>
+      <span>公钥配置</span>
+      <a (click.stop)="onSetOrgRsakey()">配置</a>
+    </legend>
+    <ulo-detail #mchRsakeyDetail [detailFields]="spRsakeyFields" [(reqParams)]="spRsakeyReqParam" hasGroup="false"></ulo-detail>
+  </fieldset>
+
+  <div class="btn-area text-center" *ngIf="!hasSource()">
+  <button md-raised-button type="button" color="primary" (click.stop)="onLastStep()">返回上一步</button>
+  <button md-raised-button type="button" color="primary" (click.stop)="onSave()">保存并提交</button>
+</div>
+</form>
+

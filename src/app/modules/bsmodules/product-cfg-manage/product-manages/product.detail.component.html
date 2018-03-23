@@ -1,0 +1,34 @@
+<div class="detail-item">
+  <div class="prod-state {{productState()}}"><span *ngIf="prodDetailData">{{helper.dictTrans('PRODUCT_EXAMINE_STATUS',prodDetailData['productState'])}}</span></div>
+  <div class="detail-title">
+    <h3>基础信息</h3><a *ngIf="helper.btnRole('PRODEDIT')" (click.stop)="onBaseInfoHeadler()">编辑</a>
+  </div>
+  <ulo-detail #prodDetail [detailFields]="prodDetailFields" [(reqParams)]="prodDetailReqParam" (detailData)="onDetailData($event)"></ulo-detail>
+</div>
+<div class="detail-item detail-tab">
+  <div class="detail-title">
+    <h3>配置信息</h3><a *ngIf="helper.btnRole('PRODCFGEDIT')" (click.stop)="onEditProdCfgInfo()">编辑</a>
+  </div>
+  <md-tab-group (selectChange)="onProdCfgSelectChange($event)">
+    <md-tab *ngFor="let tab of prodCfgTabs | async" label="{{tab?.label}}">
+      <md-table-extend #prodTable local="true" [(columns)]="prodCfgColumns" [database]="prodCfgDB" [actionCfg]="prodActionCfg"></md-table-extend>
+    </md-tab>
+  </md-tab-group>
+</div>
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>操作记录</h3>
+  </div>
+  <div class="operation_record_wrap">
+    <div class="record" *ngFor="let record of prodOperationRecord | async">
+      <span class="time">{{record.examineTime|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+      <span>{{record.examineRemark}}</span>
+      <span class="status">{{record.examineStatus}}</span>
+      <span class="operation">(操作者：{{record.examineUser}})</span>
+    </div>
+  </div>
+  <div class="btn-area align-center-box">
+    <button md-raised-button color="primary" *ngIf="helper.btnRole('PRODEXAMINE') && (prodDetailData?.productState != 3 && prodDetailData?.productState != 1)" (click.stop)="onExamine()">审核</button>
+    <button md-raised-button type="button" (click.stop)="onBack()">返回</button>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<md-card class="mdcard-margin-bottom search-panel">
+  <form (submit)="onSearch()">
+    <md-card-content>
+      <md-input-container  >
+      <input mdInput placeholder="商户名称" name="name" id="name" [(ngModel)]="form.name" >
+      </md-input-container>
+      <md-input-container>
+        <input mdInput placeholder="商户编号"  name="merchantNo"  id="merchantNo" [(ngModel)]="form.merchantNo">
+      </md-input-container>
+      <md-input-search placeholder="所属机构" name="bankNo" id="bankNo" [(ngModel)]="form.bankNo"
+                       [onBeforClick]="mchBankbeforClickFunc.bind(this)"
+                       [dataSource]="mchBankDataSource"
+                       [displayFn]="mchBankdisplayFn.bind(this)"
+                       (onSelected)="bankSelected($event)"
+                       [optionDisplayFn]="mchBankOptionDisplayFn"
+                       [filterField]="mchBnakFilterFields"
+                       valueField="orgNo"></md-input-search>
+      <md-input-search placeholder="所属上级" name="chanNo" id="chanNo" [(ngModel)]="form.chanNo"
+                       [onBeforClick]="mchAgentBeforClickFunc.bind(this)"
+                       [dataSource]="mchAgentDataSource"
+                       [displayFn]="mchAgentDisplayFn.bind(this)"
+                       (onSelected)="chanSelected($event)"
+                       [optionDisplayFn]="mchAgentOptionDisplayFn"
+                       [filterField]="mchAgentFilterFields"
+                       valueField="chanCode"></md-input-search>
+      <md-select placeholder="用户状态"    name="examState" id="examState" [(ngModel)]="form.examState" class="intoPieces-pt">
+        <md-option value="">全部</md-option>
+        <md-option *ngFor="let States of examState" [value]="States?.id">{{States?.name}}</md-option>
+      </md-select>
+      <md-input-container>
+        <input mdInput placeholder="进件批次号"  name="outerBatchId"  id="outerBatchId" [(ngModel)]="form.outerBatchId" >
+      </md-input-container>
+
+      <!--<md-input-container>-->
+        <!--<input mdInput placeholder="商户识别码"  name="ally"  id="ally" [(ngModel)]="form.ally">-->
+      <!--</md-input-container>-->
+      <button md-raised-button color="primary">查询</button>
+      <button md-raised-button type="button" color="default" *ngIf="helper.btnRole('SUBMCHBATCHAUDIT')" (click.stop)="onBatchTest()">批量认证</button>
+      <button md-raised-button type="button" color="default" *ngIf="helper.btnRole('SUBMCHBATCHBACK')" (click.stop)="onBatchSendBack()">批量退回</button>
+    </md-card-content>
+  </form>
+</md-card>
+<md-card class="mt-20">
+  <md-table-extend #submerchantListTable [columns]="submerchantListColumns" [database]="subMchListDB" [actionCfg]="tableActionCfg"></md-table-extend>
+</md-card>

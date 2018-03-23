@@ -1,0 +1,31 @@
+
+<div class="form-table">
+  <md-table-extend mode="editWin" #channelTable local="true"
+                   [editWinOption]="channelEditWinOption"
+                   [columns]="channelColumns"
+                   [database]="channelDB"
+                   [saveConfirmFunc]="onBeforeSaveChannel.bind(this)"
+                   (onCancel)="onCancelChannel($event)"
+                   [actionCfg]="channelActionCfg"
+                   (onEditBefore)="onEditMchChannel($event)"
+                   (onSave)="onSaveChannel($event)" ></md-table-extend>
+  <a (click.stop)="onNewChannel(channelTable)" >新增</a>
+  <div class="detail-item" *ngIf="helper.btnRole('MCHRULECONFEDIT')">
+    <div class="detail-title " >
+      <h3>路由配置</h3>
+    </div>
+    <ulo-detail></ulo-detail>
+    <div class="detail-config-item">
+      <span style="display: inline-block;">业务路由</span> <a style="margin-left: 40px; display: inline-block" class="intoPieces"
+                                                          (click.stop)="onUsed($event)">{{ruleState == 0? "停用":"启用"}}<span><i class="fa fa-toggle-right" ></i></span></a>
+
+    </div>
+    <div class="detail-config-item">
+      <span>业务配置</span> <span style="display: inline-block;margin-left: 40px">{{tradeType? tradeType :"--"  }}</span>
+    </div>
+  </div>
+  <div class="btn-area">
+    <button md-raised-button type="button"  color="primary" (click.stop)="onBefore()">返回上一步</button>
+    <button md-raised-button type="button" [disabled]="!hasData()" color="primary" (click.stop)="onSaveChannels()">保存并下一步</button>
+  </div>
+</div>

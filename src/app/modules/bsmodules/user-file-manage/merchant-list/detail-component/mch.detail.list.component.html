@@ -1,0 +1,41 @@
+<div class="detail-user-state {{userState()}}"><span *ngIf="mchDetailData">{{helper.dictTrans('EXAMINE_STATUS',mchDetailData['examState'])}}</span></div>
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>基础信息</h3><a *ngIf="helper.btnRole('MCHBASEINFOEDIT')" (click.stop)="onBaseInfoHeadler($event)">编辑</a>
+  </div>
+  <ulo-detail #mchDetail [detailFields]="MchDetailFields" [reqParams]="MchDetailReqParam" hasGroup="true" (detailData)="onDetailData($event)"></ulo-detail>
+</div>
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>账户信息</h3><a *ngIf="helper.btnRole('MCHACCOUNTNEW')" (click.stop)="onNewAccount(accountTable)">新增账户</a>
+  </div>
+  <md-table-extend mode="editWin" #accountTable local="true"
+                   [columns]="accountColumns"
+                   [database]="accountDB"
+                   [actionCfg]="accountActionCfg"
+                   [editWinOption]="accountEditWinOption"
+                   [saveConfirmFunc]="onBeforeSaveAccount.bind(this)"
+                   (onEditBefore)="onEditAccount($event)"
+                   (onCancel)="onCancelAccount()"
+                   [onSaveOb]="onSaveAccount.bind(this)"></md-table-extend>
+</div>
+
+<div class="detail-item">
+  <div class="detail-title">
+    <h3>操作记录</h3>
+  </div>
+  <div class="operation_record_wrap">
+    <div class="record" *ngFor="let record of mchOperationRecord | async">
+      <span class="time">{{record.examineTime|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+      <span>{{record.examineRemark}}</span>
+      <span class="status">{{record.examineStatus}}</span>
+      <span class="operation">(操作者：{{record.examineUser}})</span>
+    </div>
+  </div>
+  <div class="align-center-box btn-area">
+    <button md-raised-button type="button" color="primary" *ngIf="helper.btnRole('MCHEXAMINE')" (click.stop)="onExamine($event)">审核</button>
+    <button md-raised-button type="button" *ngIf="helper.btnRole('MCHEMAILSMI')" (click.stop)="onSendEmailAndSTM($event)">发送邮件和短信</button>
+  </div>
+</div>
+
+

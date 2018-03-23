@@ -1,0 +1,19 @@
+ <form (ngSubmit)="onSubmit()" [formGroup]="modifypwd" >
+    <div class="three-detail">
+      <div  fxLayout="column">
+        <md-input-container floatPlaceholder="never"  horizontal="true">
+          <input mdInput placeholder="重新设置密码" type="password"  formControlName="userPwd"  name="userPwd" [(ngModel)]="model.userPwd" required/>
+        </md-input-container>
+        <md-input-container floatPlaceholder="never"  horizontal="true">
+          <input mdInput placeholder="再次确认密码" type="password"  formControlName="userPwdc"  name="userPwdc" [(ngModel)]="model.userPwdc" required/>
+        </md-input-container>
+      </div>
+      <div class="btn-area text-center">
+        <button md-raised-button color="primary" [disabled]="!modifypwd.valid">保存</button>
+      </div>
+    </div>
+
+  </form>
+
+
+

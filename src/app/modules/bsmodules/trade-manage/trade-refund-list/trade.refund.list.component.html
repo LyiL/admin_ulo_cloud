@@ -1,0 +1,127 @@
+<md-tab-group>
+  <md-tab label="批量查询">
+
+    <md-card class="mdcard-margin-bottom search-panel">
+      <form (submit)="onSearch()">
+        <md-card-content>
+
+          <md-input-group
+            isDateTimeGroup="true"
+            firstPlaceholder="申请开始日期"
+            lastPlaceholder="申请结束日期"
+            [(firstField)]="form.tradeTimeStart"
+            [(lastField)]="form.tradeTimeEnd"
+            firstName="tradeTimeStart"
+            lastName="tradeTimeEnd"
+            [dateOpts]="tradeTimeOpts"
+          ></md-input-group>
+
+          <md-input-group
+          isDateTimeGroup="true"
+          firstPlaceholder="退款开始时间"
+          lastPlaceholder="退款结束时间"
+          [(firstField)]="form.refundTimeStart"
+          [(lastField)]="form.refundTimeEnd"
+          firstName="refundTimeStart"
+          lastName="refundTimeEnd"
+          [dateOpts]="tradeTimeOpts"
+          ></md-input-group>
+
+          <md-select placeholder="商户审核"   id="merchantExam"  name="merchantExam"  [(ngModel)]="form.merchantExam">
+            <md-option value="">全部</md-option>
+            <md-option *ngFor="let merchantExam of merchantExam"  [value]="merchantExam?.id">{{merchantExam?.name}}</md-option>
+          </md-select>
+          <md-select placeholder="平台审核"   id="daemonAudit"  name="daemonAudit"  [(ngModel)]="form.daemonAudit">
+            <md-option value="">全部</md-option>
+            <md-option *ngFor="let daemonAudit of daemonAudit" [value]="daemonAudit?.id">{{daemonAudit?.name}}</md-option>
+          </md-select>
+          <md-select placeholder="退款状态"   id="refundState"  name="refundState"  [(ngModel)]="form.refundState">
+            <md-option value="">全部</md-option>
+            <md-option *ngFor="let State of refundState" [value]="State?.id">{{State?.name}}</md-option>
+          </md-select>
+          <md-select placeholder="退款来源"   id="refundSource"  name="refundSource"  [(ngModel)]="form.refundSource">
+            <md-option value="">全部</md-option>
+            <md-option *ngFor="let Source of refundSource" [value]="Source?.id">{{Source?.name}}</md-option>
+          </md-select>
+
+          <md-input-container  >
+            <input mdInput name="" placeholder="第三方单号"  name="transactionId" id="transactionId"  [(ngModel)]="form.transactionId"/>
+          </md-input-container>
+          <md-input-container  >
+            <input mdInput placeholder="退款单号"  name="refundNo" id="refundNo"  [(ngModel)]="form.refundNo"/>
+          </md-input-container >
+          <md-input-container  >
+            <input mdInput placeholder="平台单号"  name="orderNo" id="orderNo"  [(ngModel)]="form.orderNo"/>
+          </md-input-container>
+
+          <md-select placeholder="支付类型" name="transId" id="transId"  [(ngModel)]="form.transId" >
+
+            <md-option value="">全部</md-option>
+            <md-option *ngFor="let States of tradeTypes" [value]="States?.transId">{{ States?.transType}}</md-option>
+          </md-select>
+
+          <md-input-search placeholder="商户名称" name="merchantNo" id="merchantNo" [(ngModel)]="form.merchantNo"
+                           [onBeforClick]="merchantBeforClickFunc.bind(this)"
+                           [dataSource]="merchantDataSource"
+                           [displayFn]="merchantDisplayFn.bind(this)"
+                           (onSelected)="merchantSelected($event)"
+                           [optionDisplayFn]="merchantOptionDisplayFn"
+                           [filterField]="merchantFilterFields"
+                           valueField="merchantNo">
+          </md-input-search>
+
+
+          <button md-raised-button  color="primary" >查询</button>
+          <button md-raised-button type="button" *ngIf="helper.btnRole('REFUNDAPPLY')"  (click.stop)="ApplyRefund($event)">申请退款</button>
+        </md-card-content>
+      </form>
+    </md-card>
+    <div class="count-wrap mdcard-margin-bottom">
+      <md-card class="count-item">
+        <div class="count-title">退款总数（笔）</div>
+        <div class="count-content">
+          <i class="number">{{count?.refundCount ||0}}
+          </i>
+        </div>
+      </md-card>
+      <md-card class="count-item">
+        <div class="count-title">退款金额（元）</div>
+        <div class="count-content">
+          <div class="num-wrap">
+            <i>{{ helper.priceFormat(helper.shuntElement(count?.refundFee ||0 ))}}</i>
+          </div>
+        </div>
+      </md-card>
+    </div>
+    <md-card>
+      <md-table-extend #TradeRefundTable [columns]="serviceTradeRefundListColumns" [database]="TradeRefundDB" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+    </md-card>
+
+  </md-tab>
+
+  <md-tab label="订单号查询">
+    <form (submit)="onSearchOrder()">
+      <md-card-content>
+        <md-card class="mdcard-margin-bottom search-panel" >
+
+          <md-input-container  >
+            <input mdInput placeholder="第三方单号"  name="transactionId" [(ngModel)]="formOrder.transactionId"/>
+          </md-input-container>
+
+          <md-input-container  >
+            <input mdInput placeholder="退款单号"  name="refundNo" [(ngModel)]="formOrder.refundNo"/>
+          </md-input-container >
+
+          <md-input-container  >
+            <input mdInput placeholder="平台单号"  name="orderNo" [(ngModel)]="formOrder.orderNo"/>
+          </md-input-container>
+
+          <button md-raised-button color="primary">查询</button>
+        </md-card>
+      </md-card-content>
+    </form>
+    <md-card  class="mdcard-margin-bottom">
+      <md-table-extend #tradeRefundOrderTable initLoad="false"  [columns]="serviceTradeRefundListColumns" [database]="TradeRefundOrderListDb" isShowOddEffet="true" [actionCfg]="tableActionCfg"></md-table-extend>
+    </md-card>
+  </md-tab>
+</md-tab-group>
